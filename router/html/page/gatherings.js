@@ -25,7 +25,7 @@ exports.create = function (api) {
 
     const composer = api.message.html.compose({
       meta: { type: 'gathering' },
-      placeholder: 'Write a public gathering'
+      placeholder: 'Create a public gathering'
     })
 
     const { container, content } = api.main.html.scroller({prepend: composer})
