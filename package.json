@@ -13,6 +13,7 @@
     "tape": "^4.6.3"
   },
   "dependencies": {
-    "moment": "^2.18.0"
+    "moment": "^2.18.0",
+    "pull-scroll": "^1.0.3"
   }
 }

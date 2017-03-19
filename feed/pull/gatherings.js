@@ -2,18 +2,30 @@ const nest = require('depnest')
 const pull = require('pull-stream')
 const moment = require('moment')
 
-exports.gives = nest('feed.pull.gatherings')
+exports.gives = nest({'feed.pull.gatherings': [
+  'find',
+  'hosting',
+  'future'
+]})
 
 exports.needs = nest({
   'sbot.pull.messagesByType': 'first',
+  'sbot.pull.links': 'first',
 })
 
 exports.create = function (api) {
 
-  return nest('feed.pull.gatherings', find)
+  const {messagesByType, links} = api.sbot.pull 
+
+  return nest({'feed.pull.gatherings': {
+    find,
+    future,
+    hosting,
+  }})
+
   function find(opts){
     var _opts = Object.assign({type: 'gathering', live: true}, opts)
-    return api.sbot.pull.messagesByType(_opts)
+    return messagesByType(_opts)
   }
   function future(opts) {
     return pull(
@@ -34,7 +46,7 @@ exports.create = function (api) {
   function linksToGathering(gatheringId, opts) {
     var _opts = Object.assign({dest: gatheringId, live: true}, opts)
     return pull(
-      sbot.links(_opts), 
+      links(_opts), 
       pull.asyncMap(function(data, cb) {
         sbot.get(data.key, cb)
       }))
@@ -53,10 +65,11 @@ exports.create = function (api) {
         return data.content.type == 'rsvp' 
       }))
   }
+
   function myRsvps(opts) {
     var _opts = Object.assign({type: 'rsvp', live: true}, opts)
     return pull(
-      sbot.messagesByType(_opts),
+      messagesByType(_opts),
       pull.filter(function(message) {
         return message.value.author == sbot.whoami().id
       }),
@@ -65,5 +78,5 @@ exports.create = function (api) {
       })
     )
   }
-
+  
 }  
