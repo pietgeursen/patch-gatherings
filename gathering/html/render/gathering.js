@@ -5,10 +5,10 @@ var extend = require('xtend')
 exports.needs = nest({
 })
 
-exports.gives = nest('message.html.render')
+exports.gives = nest('gathering.html.render')
 
 exports.create = function (api) {
-  return nest('message.html.render', function renderGathering (msg, opts) {
+  return nest('gathering.html.render', function renderGathering (msg, opts) {
     if (msg.value.content.type !== 'gathering') return
     return h('div', {}, 'Gatherings')
 
