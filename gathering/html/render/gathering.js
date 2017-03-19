@@ -3,6 +3,12 @@ var nest = require('depnest')
 var extend = require('xtend')
 
 exports.needs = nest({
+  'message.html': {
+    decorate: 'reduce',
+    layout: 'first',
+    link: 'first',
+    markdown: 'first'
+  }
 })
 
 exports.gives = nest('gathering.html.render')
@@ -10,7 +16,6 @@ exports.gives = nest('gathering.html.render')
 exports.create = function (api) {
   return nest('gathering.html.render', function renderGathering (msg, opts) {
     if (msg.value.content.type !== 'gathering') return
-    return h('div', {}, 'Gatherings')
 
     var element = api.message.html.layout(msg, extend({
       title: messageTitle(msg),
