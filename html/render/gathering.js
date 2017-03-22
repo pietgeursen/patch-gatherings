@@ -11,10 +11,10 @@ exports.needs = nest({
   }
 })
 
-exports.gives = nest('gathering.html.render')
+exports.gives = nest('gatherings.html.render')
 
 exports.create = function (api) {
-  return nest('gathering.html.render', function renderGathering (msg, opts) {
+  return nest('gatherings.html.render', function renderGathering (msg, opts) {
     if (msg.value.content.type !== 'gathering') return
 
     var element = api.message.html.layout(msg, extend({

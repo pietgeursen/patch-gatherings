@@ -6,7 +6,7 @@ const Scroller = require('pull-scroll')
 exports.gives = nest('router.html.page')
 
 exports.needs = nest({
-  'gathering.html.render': 'first',
+  'gatherings.html.render': 'first',
   'main.html.scroller': 'first',
   'message.html.compose': 'first',
   'feed.pull.gatherings.find': 'first'
