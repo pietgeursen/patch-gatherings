@@ -40,7 +40,7 @@ A gathering message is extremely simple. It is little more than intent to have a
 Returns a new [pull-stream](https://pull-stream.github.io/) of gatherings. Valid `opts` keys include
 
 - `past` (default: `false`) - `true`: Get all gatherings whose utcDateTime is from the past
-- `future` (default: `true`) - `true`: Get all gatherings whose utcDateTime is in th efuture
+- `future` (default: `true`) - `true`: Get all gatherings whose utcDateTime is in the future
 - `hostedBy` (optional) - Get gatherings hosted by a given id
 - `attendedBy` (optional) - Get gatherings attended by a given id
 
