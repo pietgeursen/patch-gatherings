@@ -1,4 +1,4 @@
-> '[patchcore](https://github.com/ssbc/patchcore) gatherings [depject](https://github.com/depject/depject) plugin for [secure scuttlebutt](https://github.com/ssbc/secure-scuttlebutt)'
+> [patchcore](https://github.com/ssbc/patchcore) gatherings [depject](https://github.com/depject/depject) plugin for [secure scuttlebutt](https://github.com/ssbc/secure-scuttlebutt)
 
 `gives` pull-stream sources and async methods for finding and publishing gatherings on secure scuttlebutt
 
