@@ -93,6 +93,16 @@ Adds or removes hosts of the gathering and calls cb when done. Valid `opts` keys
 - `hosts` (required) - an array of hosts where each host is an object that has the form:
   `{id: isHosting}`
 
+eg:
+```js
+gatherings.async.hosts({
+  id: '',
+  hosts: [
+    {id: '', true},  //adds the host
+    {id: '', false}, // removes the host 
+  ]
+}, err => console.log(err))
+```
 ### gatherings.async.images(opts={}, cb)
 
 Adds or removes images of the gathering and calls cb when done. Valid `opts` keys include
@@ -101,7 +111,7 @@ Adds or removes images of the gathering and calls cb when done. Valid `opts` key
 - `images` (required) - an array of blob ids:
 eg:
 ```js
-gatherings.async.hosts({
+gatherings.async.images({
   id: '',
   images: [
     '',
@@ -118,6 +128,16 @@ Adds or removes attendees of the gathering and calls cb when done. Valid `opts` 
 - `attendees` (required) - an array of attendees where each host is an object that has the form:
   `{id: isAttending}`
 
+eg:
+```js
+gatherings.async.attendees({
+  id: '',
+  attendees: [
+    {id: '', true},  //adds the attendee
+    {id: '', false}, // removes the attendee 
+  ]
+}, err => console.log(err))
+```
 ### gatherings.async.contributors(opts={}, cb)
 
 Adds or removes contributors of the gathering and calls cb when done. Valid `opts` keys include
