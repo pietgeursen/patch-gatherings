@@ -4,12 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "tape **/*.test.js"
+    "test": "node test.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "browser-run": "^4.0.2",
+    "browserify": "^14.1.0",
+    "pull-test": "^1.2.3",
+    "scuttlebot": "^9.4.6",
+    "ssb-keys": "^7.0.6",
     "tape": "^4.6.3"
   },
   "dependencies": {
