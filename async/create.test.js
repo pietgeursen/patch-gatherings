@@ -11,18 +11,18 @@ exports.create = function (api) {
 
   return nest('tests', tests)
 
-  function tests(obj) {
-    obj['create is requireable'] = function(assert, cb) {
+  function tests(tests) {
+    tests['create is requireable'] = function(assert, cb) {
       assert(api.async.create) 
       cb()
     }
-    obj['creates empty gathering without error'] = function(assert, cb) {
+    tests['creates empty gathering without error'] = function(assert, cb) {
       api.async.create({}, function(err) {
         assert(!err) 
         cb()
       }) 
     }
-    return obj
+    return tests
   }  
 }
 
