@@ -1,6 +1,6 @@
 var nest = require('depnest')
 
-exports.gives = nest('test')
+exports.gives = nest('tests')
 
 exports.needs = nest({
   'pull.find': 'first',
@@ -9,15 +9,14 @@ exports.needs = nest({
 
 exports.create = function (api) {
 
-  return nest('test', test)
+  return nest('tests', tests)
 
-  function test() {
-    return {
-      ['find is requireable']: function(assert, cb) {
+  function tests(obj) {
+    obj['find is requireable'] = function(assert, cb) {
         assert(api.pull.find) 
         api.sbot.close()
         cb()
-      }
-    }  
-  }
+    }
+    return obj
+  }  
 }

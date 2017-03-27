@@ -5,22 +5,21 @@ const {first} = require('depject/apply')
 const test = require('pull-test')
 
 const depTest = {
-  gives: nest('runTests'),
+  gives: nest('test'),
   needs: nest({
-    'test': 'map',
+    'tests': 'reduce',
   }),
   create: function (api) {
-    return nest('runTests', function() {
-      const tests = api.test()
-      const reducedTests = tests.reduce((test, obj) => Object.assign(obj, test), {})
-      test(reducedTests)
+    return nest('test', function() {
+      const tests = api.tests({})
+      test(tests)
     })
   }
 }
 
-const modules = combine(bulk(__dirname, ['!(node_modules|html|router|async)/**/*.js']), depTest)
+const modules = combine(bulk(__dirname, ['!(node_modules|html|router)/**/*.js']), depTest)
 
 
-first(modules.runTests)()
+first(modules.test)()
 
 
