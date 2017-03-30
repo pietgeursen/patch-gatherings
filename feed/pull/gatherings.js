@@ -2,7 +2,7 @@ const nest = require('depnest')
 const pull = require('pull-stream')
 const moment = require('moment')
 
-exports.gives = nest({'feed.pull.gatherings': [
+exports.gives = nest({'pull': [
   'find',
   'hosting',
   'future'
@@ -17,7 +17,7 @@ exports.create = function (api) {
 
   const {messagesByType, links} = api.sbot.pull 
 
-  return nest({'feed.pull.gatherings': {
+  return nest({'pull': {
     find,
     future,
     hosting,

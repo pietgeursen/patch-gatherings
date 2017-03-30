@@ -18,7 +18,6 @@ exports.create = function (api) {
       cb()
     }
     tests['creates empty gathering without error'] = function(assert, cb) {
-      console.log('here')
       api.sbot.create()
       api.async.create({}, function(err) {
         assert(!err) 
