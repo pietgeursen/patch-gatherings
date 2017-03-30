@@ -3,7 +3,7 @@ var createSbot = require('scuttlebot')
 var nest = require('depnest')
 
 exports.gives = nest({
-  'sbot': ['close'],
+  'sbot': ['close','create'],
   'sbot.async': ['publish'],
   'sbot.pull': [
     'messagesByType',
@@ -12,14 +12,27 @@ exports.gives = nest({
 })
 
 exports.create = function (api) {
-  const sbot = createSbot({keys: ssbKeys.generate(), temp: Math.random().toString()})
+  var sbot;
   return nest({
-    'sbot.pull': {
-      messagesByType: sbot.messagesByType,
-      links: sbot.links,
+    'sbot':{ 
+      create: function() {
+        sbot = createSbot({keys: ssbKeys.generate(), temp: Math.random().toString()})
+      },
+      close: function() {
+        sbot.close()
+      },
+      'async.publish': function(content, cb) {
+        sbot.publish(content, cb)
+      },
+      pull: {
+        messagesByType: function(opts) {
+          return sbot.messagesByType(opts)  
+        },
+        links: function() {
+          return sbot.links
+        } 
+      }
     },
-    'sbot.close': sbot.close,
-    'sbot.async.publish': sbot.publish
   })
 }
  

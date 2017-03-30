@@ -4,7 +4,8 @@ exports.gives = nest('tests')
 
 exports.needs = nest({
   'async.create': 'first',
-  'sbot.close': 'first'
+  'sbot.close': 'first',
+  'sbot.create': 'first'
 })
 
 exports.create = function (api) {
@@ -17,8 +18,11 @@ exports.create = function (api) {
       cb()
     }
     tests['creates empty gathering without error'] = function(assert, cb) {
+      console.log('here')
+      api.sbot.create()
       api.async.create({}, function(err) {
         assert(!err) 
+        api.sbot.close()
         cb()
       }) 
     }
