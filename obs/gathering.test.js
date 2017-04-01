@@ -22,7 +22,7 @@ exports.create = function (api) {
       assert(api.obs.gathering) 
       cb()
     }
-    tests['obs.gathering name obs updates when a name of a gathering is published'] = function(assert, cb) {
+    tests['obs.gathering title obs updates when a title of a gathering is published'] = function(assert, cb) {
       const title = 'meow!'
       api.sbot.create()
       api.async.create({}, function(err) {})

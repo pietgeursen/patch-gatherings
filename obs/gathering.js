@@ -1,9 +1,9 @@
 var nest = require('depnest')
 var pull = require('pull-stream')
-var pullCat = require('pull-cat')
 var sort = require('ssb-sort')
+var Notify = require('pull-notify')
 var ref = require('ssb-ref')
-var { Value, Set, map, computed, Struct } = require('mutant')
+var { Value, Set, Array, Set, computed, Struct } = require('mutant')
 
 exports.needs = nest({
   'sbot.pull.links': 'first',
@@ -15,23 +15,56 @@ exports.gives = nest('obs.gathering')
 exports.create = function (api) {
   return nest('obs.gathering', function (gatheringId) {
     if (!ref.isLink(gatheringId)) throw new Error('an id must be specified')
-    const titleObs = Value('')
+    const subscription = subscribeToLinks(gatheringId)
+    const gathering = Struct({
+      title: Value(''),
+      description: Value(''),
+      contributors: Set(),
+      startDate: Value({}),
+      endDate: Value({}),
+      location: Value(''),
+      hosts: Array([]),
+      attendees: Array([]),
+      images: Array([]),
+    })
+
     pull(
-      api.sbot.pull.links({dest: gatheringId, live: true}),
+      subsribeToLinksByKey(subscription, 'title'),
+      pull.drain(gathering.title.set)
+    )
+    pull(
+      subsribeToLinksByKey(subscription, 'description'),
+      pull.drain(gathering.description.set)
+    )
+    pull(
+      subscription(),
+      pull.drain(host => {
+        console.log(host)
+      })
+    )
+    return gathering
+  })
+
+  function subsribeToLinksByKey(subscription, key) {
+    return pull(
+      subscription(),
+      pull.filter(link => {
+        return link.content[key]
+      }),
+      pull.map(link => link.content[key])
+    )
+  }
+  function subscribeToLinks(id) {
+    const notify = Notify()
+    pull(
+      api.sbot.pull.links({dest: id, live: true}),
       pull.filter(data => data.key),
       pull.asyncMap(function(data, cb) {
         api.sbot.async.get(data.key, cb)
       }),
-      pull.filter(link => {
-        return link.content.title
-      }),
-      pull.map(link => link.content.title),
-      pull.drain(titleObs.set)
+      pull.drain(notify)
     )
-
-    return Struct({
-      title: titleObs
-    })
-  })
+    return notify.listen
+  }
 }
 
