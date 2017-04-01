@@ -12,6 +12,7 @@
   "devDependencies": {
     "browser-run": "^4.0.2",
     "browserify": "^14.1.0",
+    "pull-async": "^1.0.0",
     "pull-test": "^1.2.3",
     "scuttlebot": "^9.4.6",
     "ssb-keys": "^7.0.6",
@@ -19,6 +20,7 @@
   },
   "dependencies": {
     "moment": "^2.18.0",
+    "mutant": "^3.18.0",
     "pull-scroll": "^1.0.3"
   }
 }

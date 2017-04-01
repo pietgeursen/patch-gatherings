@@ -4,7 +4,7 @@ var nest = require('depnest')
 
 exports.gives = nest({
   'sbot': ['close','create'],
-  'sbot.async': ['publish'],
+  'sbot.async': ['publish', 'get'],
   'sbot.pull': [
     'messagesByType',
     'links',
@@ -20,6 +20,9 @@ exports.create = function (api) {
       },
       close: function() {
         sbot.close()
+      },
+      'async.get': function(id, cb) {
+        sbot.get(id, cb)
       },
       'async.publish': function(content, cb) {
         sbot.publish(content, cb)
