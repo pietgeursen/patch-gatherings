@@ -19,7 +19,7 @@ exports.gives = nest({
   ],
   'gatherings.async': [
     'create',
-    'name',
+    'title',
     'description',
     'contributors',
     'startDate',
@@ -49,48 +49,48 @@ Returns a new [pull-stream](https://pull-stream.github.io/) of gatherings. Valid
 
 ### gatherings.async.create(opts={}, cb)
 
-Creates a new gathering message and calls cb when done. Valid `opts` keys are any of the other async function names, eg `name`, `description` etc
+Creates a new gathering message and calls cb when done. Valid `opts` keys are any of the other async function names, eg `title`, `description` etc
 
-### gatherings.async.name(opts={}, cb)
+### gatherings.async.title(opts={}, cb)
 
-Sets the name of the gathering and calls cb when done. Valid `opts` keys include
+Sets the title of the gathering and calls cb when done. Valid `opts` keys include
 
-- `id` (required) - The id of the gathering to name
-- `name` (required) - The name of the gathering 
+- `id` (required) - The id of the gathering to title
+- `title` (required) - The title of the gathering 
 
 ### gatherings.async.startDate(opts={}, cb)
 
 Sets the utc start dateTime of the gathering and calls cb when done. Valid `opts` keys include
 
-- `id` (required) - The id of the gathering to name
+- `id` (required) - The id of the gathering to link to.
 - `utcDateTime` (required) - The time of the gathering 
 
 ### gatherings.async.endDate(opts={}, cb)
 
 Sets the utc end dateTime of the gathering and calls cb when done. Valid `opts` keys include
 
-- `id` (required) - The id of the gathering to name
+- `id` (required) - The id of the gathering to link to.
 - `utcDateTime` (required) - The time of the gathering 
 
 ### gatherings.async.location(opts={}, cb)
 
 Sets the physical location of the gathering and calls cb when done. Valid `opts` keys include
 
-- `id` (required) - The id of the gathering to name
+- `id` (required) - The id of the gathering to link to.
 - `location` (required) - The location of the gathering 
 
 ### gatherings.async.description(opts={}, cb)
 
 Sets the physical location of the gathering and calls cb when done. Valid `opts` keys include
 
-- `id` (required) - The id of the gathering to name
+- `id` (required) - The id of the gathering to link to.
 - `description` (required) - The description of the gathering 
 
 ### gatherings.async.hosts(opts={}, cb)
 
 Adds or removes hosts of the gathering and calls cb when done. Valid `opts` keys include
 
-- `id` (required) - The id of the gathering to name
+- `id` (required) - The id of the gathering to link to.
 - `hosts` (required) - an array of hosts where each host is an object that has the form:
   `{id: isHosting}`
 
@@ -108,7 +108,7 @@ gatherings.async.hosts({
 
 Adds or removes images of the gathering and calls cb when done. Valid `opts` keys include
 
-- `id` (required) - The id of the gathering to name
+- `id` (required) - The id of the gathering to link to.
 - `images` (required) - an array of blob ids:
 eg:
 ```js
@@ -125,7 +125,7 @@ gatherings.async.images({
 
 Adds or removes attendees of the gathering and calls cb when done. Valid `opts` keys include
 
-- `id` (required) - The id of the gathering to name
+- `id` (required) - The id of the gathering to link to.
 - `attendees` (required) - an array of attendees where each host is an object that has the form:
   `{id: isAttending}`
 
@@ -143,7 +143,7 @@ gatherings.async.attendees({
 
 Adds or removes contributors of the gathering and calls cb when done. Valid `opts` keys include
 
-- `id` (required) - The id of the gathering to name
+- `id` (required) - The id of the gathering to link to.
 - `contributors` (required) - an array of contributors where each host is an object that has the form:
   `{id: isContributing}`
 
