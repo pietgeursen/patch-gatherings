@@ -3,7 +3,7 @@ var pull = require('pull-stream')
 var sort = require('ssb-sort')
 var Notify = require('pull-notify')
 var ref = require('ssb-ref')
-var { Value, Set, Array, Set, computed, Struct } = require('mutant')
+var { Value, Array, Set, Dict, computed, Struct } = require('mutant')
 
 exports.needs = nest({
   'sbot.pull.links': 'first',
@@ -23,10 +23,11 @@ exports.create = function (api) {
       startDate: Value({}),
       endDate: Value({}),
       location: Value(''),
-      hosts: Array([]),
+      hosts: Dict({}),
       attendees: Array([]),
       images: Array([]),
     })
+    
 
     pull(
       subsribeToLinksByKey(subscription, 'title'),
@@ -38,8 +39,10 @@ exports.create = function (api) {
     )
     pull(
       subscription(),
-      pull.drain(host => {
-        console.log(host)
+      pull.filter(msg => msg && msg.content && msg.content && msg.content.host),
+      pull.drain(msg => {
+        const host = msg.content.host
+        host.isHosting ? gathering.hosts.put(host.id, true) : gathering.hosts.delete(host.id)
       })
     )
     return gathering

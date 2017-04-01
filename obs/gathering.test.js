@@ -7,6 +7,7 @@ exports.gives = nest('tests')
 exports.needs = nest({
   'async.create': 'first',
   'async.title': 'first',
+  'async.hosts': 'first',
   'obs.gathering': 'first',
   'pull.find': 'first',
   'sbot.close': 'first',
@@ -22,6 +23,30 @@ exports.create = function (api) {
       assert(api.obs.gathering) 
       cb()
     }
+    tests['obs.gathering hosts obs updates when a host of a gathering is added '] = function(assert, cb) {
+      const hostId = '123dfj'
+      api.sbot.create()
+      api.async.create({}, function(err) {})
+      pull(
+        api.pull.find(),
+        pull.map(gathering => api.obs.gathering(gathering.key)),
+        pull.drain(gathering => {
+          gathering(val => {
+            assert(val.hosts[hostId]) 
+            api.sbot.close()
+            cb()
+          })
+        })
+      )
+      pull(
+        api.pull.find(),
+        pull.asyncMap((gathering, cb) => {
+          api.async.hosts({hosts: [{id: hostId, isHosting: true}], id: gathering.key}, cb)
+        }),
+        pull.drain(host => {
+        })
+      )
+    }
     tests['obs.gathering title obs updates when a title of a gathering is published'] = function(assert, cb) {
       const title = 'meow!'
       api.sbot.create()
@@ -32,8 +57,8 @@ exports.create = function (api) {
         pull.drain(gathering => {
           gathering(val => {
             assert(val.title === title) 
-            cb()
             api.sbot.close()
+            cb()
           })
         })
       )

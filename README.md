@@ -92,15 +92,15 @@ Adds or removes hosts of the gathering and calls cb when done. Valid `opts` keys
 
 - `id` (required) - The id of the gathering to link to.
 - `hosts` (required) - an array of hosts where each host is an object that has the form:
-  `{id: isHosting}`
+  `{id:'', isHosting: boolean}`
 
 eg:
 ```js
 gatherings.async.hosts({
   id: '',
   hosts: [
-    {id: '', true},  //adds the host
-    {id: '', false}, // removes the host 
+    {id: '', isHosting: true},  //adds the host
+    {id: '', isHotsing: false}, // removes the host 
   ]
 }, err => console.log(err))
 ```
