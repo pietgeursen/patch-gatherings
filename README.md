@@ -13,6 +13,7 @@
   - [x] contributors
   - [x] description
 - [ ] rework render to use obs
+- [ ] think about how to use message timestamps to throw away outdated messages that are emitted on a stream 
 - [ ] make a thing that plugs this into a patch app
 
 > [patchcore](https://github.com/ssbc/patchcore) gatherings [depject](https://github.com/depject/depject) plugin for [secure scuttlebutt](https://github.com/ssbc/secure-scuttlebutt)
