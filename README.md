@@ -91,16 +91,17 @@ Sets the physical location of the gathering and calls cb when done. Valid `opts`
 Adds or removes hosts of the gathering and calls cb when done. Valid `opts` keys include
 
 - `id` (required) - The id of the gathering to link to.
-- `hosts` (required) - an array of hosts where each host is an object that has the form:
-  `{id:'', isHosting: boolean}`
+- `hosts` (required) - an array of hosts where each host is an object that has keys:
+  - `id` (required) - The id of the host.
+  - `remove` (default: false) - Remove this id as a host.
 
 eg:
 ```js
 gatherings.async.hosts({
   id: '',
   hosts: [
-    {id: '', isHosting: true},  //adds the host
-    {id: '', isHotsing: false}, // removes the host 
+    {id: ''},  //adds the host
+    {id: '', remove: true}, // removes the host 
   ]
 }, err => console.log(err))
 ```
@@ -126,16 +127,17 @@ gatherings.async.images({
 Adds or removes attendees of the gathering and calls cb when done. Valid `opts` keys include
 
 - `id` (required) - The id of the gathering to link to.
-- `attendees` (required) - an array of attendees where each host is an object that has the form:
-  `{id: isAttending}`
+- `attendees` (required) - an array of attendees where each host is an object that has the keys:
+  - `id` (required) - The id of the host.
+  - `remove` (default: false) - Remove this id as an attendee.
 
 eg:
 ```js
 gatherings.async.attendees({
   id: '',
   attendees: [
-    {id: '', true},  //adds the attendee
-    {id: '', false}, // removes the attendee 
+    {id: ''},  //adds the attendee
+    {id: '', remove: true}, // removes the attendee 
   ]
 }, err => console.log(err))
 ```
@@ -144,16 +146,17 @@ gatherings.async.attendees({
 Adds or removes contributors of the gathering and calls cb when done. Valid `opts` keys include
 
 - `id` (required) - The id of the gathering to link to.
-- `contributors` (required) - an array of contributors where each host is an object that has the form:
-  `{id: isContributing}`
+- `contributors` (required) - an array of contributors where each host is an object that has the keys:
+  - `id` (required) - The id of the host.
+  - `remove` (default: false) - Remove this id as a contributor.
 
 eg:
 ```js
 gatherings.async.contributors({
   id: '',
   contributors: [
-    {id: '', true},  //adds the contributor
-    {id: '', false}, // removes the contributor 
+    {id: ''},  //adds the contributor
+    {id: '', remove: true}, // removes the contributor 
   ]
 }, err => console.log(err))
 ```
