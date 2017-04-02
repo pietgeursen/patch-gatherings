@@ -115,7 +115,8 @@ eg:
 gatherings.async.hosts({
   id: '',
   hosts: [
-    {id: ''},  //adds the host {id: '', remove: true}, // removes the host 
+    {id: ''},  //adds the host 
+    {id: '', remove: true}, // removes the host 
   ]
 }, err => console.log(err))
 ```
@@ -124,14 +125,16 @@ gatherings.async.hosts({
 Adds or removes images of the gathering and calls cb when done. Valid `opts` keys include
 
 - `id` (required) - The id of the gathering to link to.
-- `images` (required) - an array of blob ids:
+- `images` (required) - an array of images where each image is an object that has keys:
+  - `id` (required) - The blob id of the image.
+  - `remove` (default: false) - Remove this blob as an image.
 eg:
 ```js
 gatherings.async.images({
   id: '',
   images: [
-    '',
-    ''
+    {id: ''},  //adds the image 
+    {id: '', remove: true}, // removes the image 
   ]
 }, err => console.log(err))
 ```
