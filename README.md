@@ -1,4 +1,20 @@
 # !!! WIP !!!
+
+- [ ] make and test find api with all the options
+  - [ ] past
+  - [ ] future
+  - [ ] hostedBy
+- [ ] make and test async api
+  - [ ] location
+  - [ ] start
+  - [ ] end
+  - [ ] images
+  - [ ] attendees
+  - [ ] contributors
+  - [ ] description
+- [ ] rework render to use obs
+- [ ] make a thing that plugs this into a patch app
+
 > [patchcore](https://github.com/ssbc/patchcore) gatherings [depject](https://github.com/depject/depject) plugin for [secure scuttlebutt](https://github.com/ssbc/secure-scuttlebutt)
 
 `gives` pull-stream sources and async methods for finding and publishing gatherings on secure scuttlebutt
@@ -45,7 +61,6 @@ Returns a new [pull-stream](https://pull-stream.github.io/) of gatherings. Valid
 - `past` (default: `false`) - `true`: Get all gatherings whose utcDateTime is from the past
 - `future` (default: `true`) - `true`: Get all gatherings whose utcDateTime is in the future
 - `hostedBy` (optional) - Get gatherings hosted by a given id
-- `attendedBy` (optional) - Get gatherings attended by a given id
 
 ### gatherings.async.create(opts={}, cb)
 
@@ -100,8 +115,7 @@ eg:
 gatherings.async.hosts({
   id: '',
   hosts: [
-    {id: ''},  //adds the host
-    {id: '', remove: true}, // removes the host 
+    {id: ''},  //adds the host {id: '', remove: true}, // removes the host 
   ]
 }, err => console.log(err))
 ```
