@@ -4,14 +4,14 @@
   - [ ] past
   - [ ] future
   - [ ] hostedBy
-- [ ] make and test async api
-  - [ ] location
-  - [ ] start
-  - [ ] end
-  - [ ] images
-  - [ ] attendees
-  - [ ] contributors
-  - [ ] description
+- [x] make and test async api
+  - [x] location
+  - [x] start
+  - [x] end
+  - [x] images
+  - [x] attendees
+  - [x] contributors
+  - [x] description
 - [ ] rework render to use obs
 - [ ] make a thing that plugs this into a patch app
 
@@ -38,8 +38,8 @@ exports.gives = nest({
     'title',
     'description',
     'contributors',
-    'startDate',
-    'endDate',
+    'startDateTime',
+    'endDateTime',
     'location',
     'hosts',
     'attendees',
@@ -73,14 +73,14 @@ Sets the title of the gathering and calls cb when done. Valid `opts` keys includ
 - `id` (required) - The id of the gathering to title
 - `title` (required) - The title of the gathering 
 
-### gatherings.async.startDate(opts={}, cb)
+### gatherings.async.startDateTime(opts={}, cb)
 
 Sets the utc start dateTime of the gathering and calls cb when done. Valid `opts` keys include
 
 - `id` (required) - The id of the gathering to link to.
 - `utcDateTime` (required) - The time of the gathering 
 
-### gatherings.async.endDate(opts={}, cb)
+### gatherings.async.endDateTime(opts={}, cb)
 
 Sets the utc end dateTime of the gathering and calls cb when done. Valid `opts` keys include
 
