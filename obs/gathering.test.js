@@ -47,6 +47,31 @@ exports.create = function (api) {
         })
       )
     }
+    tests['obs.gathering hosts obs updates when a host of a gathering is removed '] = function(assert, cb) {
+      const hostId = '123dfj'
+      api.sbot.create()
+      api.async.create({}, function(err) {})
+      pull(
+        api.pull.find(),
+        pull.map(gathering => api.obs.gathering(gathering.key)),
+        pull.drain(gathering => {
+          gathering.hosts.put(hostId, true)
+          gathering(val => {
+            assert(!val.hosts[hostId]) 
+            api.sbot.close()
+            cb()
+          })
+        })
+      )
+      pull(
+        api.pull.find(),
+        pull.asyncMap((gathering, cb) => {
+          api.async.hosts({hosts: [{id: hostId, isHosting: false}], id: gathering.key}, cb)
+        }),
+        pull.drain(host => {
+        })
+      )
+    }
     tests['obs.gathering title obs updates when a title of a gathering is published'] = function(assert, cb) {
       const title = 'meow!'
       api.sbot.create()
