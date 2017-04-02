@@ -42,7 +42,7 @@ exports.create = function (api) {
       pull.filter(msg => msg && msg.content && msg.content && msg.content.host),
       pull.drain(msg => {
         const host = msg.content.host
-        host.isHosting ? gathering.hosts.put(host.id, true) : gathering.hosts.delete(host.id)
+        host.remove ? gathering.hosts.delete(host.id) : gathering.hosts.put(host.id, true)
       })
     )
     return gathering

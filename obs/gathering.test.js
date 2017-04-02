@@ -41,7 +41,7 @@ exports.create = function (api) {
       pull(
         api.pull.find(),
         pull.asyncMap((gathering, cb) => {
-          api.async.hosts({hosts: [{id: hostId, isHosting: true}], id: gathering.key}, cb)
+          api.async.hosts({hosts: [{id: hostId}], id: gathering.key}, cb)
         }),
         pull.drain(host => {
         })
@@ -66,7 +66,7 @@ exports.create = function (api) {
       pull(
         api.pull.find(),
         pull.asyncMap((gathering, cb) => {
-          api.async.hosts({hosts: [{id: hostId, isHosting: false}], id: gathering.key}, cb)
+          api.async.hosts({hosts: [{id: hostId, remove: true}], id: gathering.key}, cb)
         }),
         pull.drain(host => {
         })
