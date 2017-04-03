@@ -17,7 +17,12 @@ const depTest = {
   }
 }
 
-const modules = combine(bulk(__dirname, ['!(node_modules|html|router)/**/*.js']), depTest)
+const modules = combine(bulk(__dirname, [
+  'gathering/async/*.js', 
+  'gathering/obs/*.js', 
+  'gathering/pull/*.js', 
+  'util/*.js'
+]), depTest)
 
 first(modules.test)()
 
