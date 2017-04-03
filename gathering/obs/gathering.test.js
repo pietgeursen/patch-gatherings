@@ -28,7 +28,7 @@ exports.create = function (api) {
       api.sbot.create()
       api.async.create({}, function(err) {})
       pull(
-        api.pull.find(),
+        api.pull.find({past: true, future: true}),
         pull.map(gathering => api.obs.gathering(gathering.key)),
         pull.drain(gathering => {
           gathering(val => {
@@ -39,7 +39,7 @@ exports.create = function (api) {
         })
       )
       pull(
-        api.pull.find(),
+        api.pull.find({past: true, future: true}),
         pull.asyncMap((gathering, cb) => {
           api.async.hosts({hosts: [{id: hostId}], id: gathering.key}, cb)
         }),
@@ -52,7 +52,7 @@ exports.create = function (api) {
       api.sbot.create()
       api.async.create({}, function(err) {})
       pull(
-        api.pull.find(),
+        api.pull.find({past: true, future: true}),
         pull.map(gathering => api.obs.gathering(gathering.key)),
         pull.drain(gathering => {
           gathering.hosts.put(hostId, true)
@@ -64,7 +64,7 @@ exports.create = function (api) {
         })
       )
       pull(
-        api.pull.find(),
+        api.pull.find({past: true, future: true}),
         pull.asyncMap((gathering, cb) => {
           api.async.hosts({hosts: [{id: hostId, remove: true}], id: gathering.key}, cb)
         }),
@@ -77,7 +77,7 @@ exports.create = function (api) {
       api.sbot.create()
       api.async.create({}, function(err) {})
       pull(
-        api.pull.find(),
+        api.pull.find({past: true, future: true}),
         pull.map(gathering => api.obs.gathering(gathering.key)),
         pull.drain(gathering => {
           gathering(val => {
@@ -88,7 +88,7 @@ exports.create = function (api) {
         })
       )
       pull(
-        api.pull.find(),
+        api.pull.find({past: true, future: true}),
         pull.asyncMap((gathering, cb) => {
           api.async.title({title, id: gathering.key}, cb)
         }),
