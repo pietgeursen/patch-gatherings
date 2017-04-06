@@ -3,7 +3,7 @@ const nest = require('depnest')
 exports.gives = nest('tests')
 
 exports.needs = nest({
-  'async.create': 'first',
+  'gathering.async.create': 'first',
   'sbot.close': 'first',
   'sbot.create': 'first'
 })
@@ -14,12 +14,12 @@ exports.create = function (api) {
 
   function tests(tests) {
     tests['create is requireable'] = function(assert, cb) {
-      assert(api.async.create) 
+      assert(api.gathering.async.create) 
       cb()
     }
     tests['creates empty gathering without error'] = function(assert, cb) {
       api.sbot.create()
-      api.async.create({}, function(err) {
+      api.gathering.async.create({}, function(err) {
         assert(!err) 
         api.sbot.close()
         cb()

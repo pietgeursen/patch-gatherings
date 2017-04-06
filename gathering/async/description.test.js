@@ -3,8 +3,8 @@ const nest = require('depnest')
 exports.gives = nest('tests')
 
 exports.needs = nest({
-  'async.create': 'first',
-  'async.description': 'first',
+  'gathering.async.create': 'first',
+  'gathering.async.description': 'first',
   'sbot.close': 'first',
   'sbot.create': 'first'
 })
@@ -15,14 +15,14 @@ exports.create = function (api) {
 
   function tests(tests) {
     tests['description is requireable'] = function(assert, cb) {
-      assert(api.async.description) 
+      assert(api.gathering.async.description) 
       cb()
     }
     tests['can publish a description message without error'] = function(assert, cb) {
       const description = 'piet'
       const id = 1
       api.sbot.create()
-      api.async.description({description, id}, function(err) {
+      api.gathering.async.description({description, id}, function(err) {
         assert(!err) 
         api.sbot.close()
         cb()
