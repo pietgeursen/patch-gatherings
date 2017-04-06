@@ -10,10 +10,10 @@ exports.needs = nest({
   'sbot.async.get': 'first'
 })
 
-exports.gives = nest('obs.gathering')
+exports.gives = nest('gathering.obs.gathering')
 
 exports.create = function (api) {
-  return nest('obs.gathering', function (gatheringId) {
+  return nest('gathering.obs.gathering', function (gatheringId) {
     if (!ref.isLink(gatheringId)) throw new Error('an id must be specified')
     const subscription = subscribeToLinks(gatheringId)
     const gathering = Struct({
@@ -30,6 +30,18 @@ exports.create = function (api) {
     
 
     pull(
+      subsribeToLinksByKey(subscription, 'location'),
+      pull.drain(gathering.location.set)
+    )
+    pull(
+      subsribeToLinksByKey(subscription, 'endDate'),
+      pull.drain(gathering.endDate.set)
+    )
+    pull(
+      subsribeToLinksByKey(subscription, 'startDate'),
+      pull.drain(gathering.startDate.set)
+    )
+    pull(
       subsribeToLinksByKey(subscription, 'title'),
       pull.drain(gathering.title.set)
     )
@@ -43,6 +55,22 @@ exports.create = function (api) {
       pull.drain(msg => {
         const host = msg.content.host
         host.remove ? gathering.hosts.delete(host.id) : gathering.hosts.put(host.id, true)
+      })
+    )
+    pull(
+      subscription(),
+      pull.filter(msg => msg && msg.content && msg.content && msg.content.attendees),
+      pull.drain(msg => {
+        const attendees = msg.content.attendees
+        attendees.remove ? gathering.attendees.delete(attendee.id) : gathering.attendees.put(attendee.id, true)
+      })
+    )
+    pull(
+      subscription(),
+      pull.filter(msg => msg && msg.content && msg.content && msg.content.images),
+      pull.drain(msg => {
+        const images = msg.content.images
+        images.remove ? gathering.images.delete(images.id) : gathering.images.put(images.id, true)
       })
     )
     return gathering

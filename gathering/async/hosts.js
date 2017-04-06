@@ -1,14 +1,14 @@
 const nest = require('depnest')
 const pull = require('pull-stream')
 
-exports.gives = nest('async.hosts')
+exports.gives = nest('gathering.async.hosts')
 
 exports.needs = nest({
   'sbot.async.publish': 'first'
 })
 
 exports.create = function (api) {
-  return nest('async.hosts', function(data, cb) {
+  return nest('gathering.async.hosts', function(data, cb) {
     pull(
       pull.values(data.hosts), 
       pull.asyncMap((host, cb) =>{

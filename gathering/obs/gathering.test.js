@@ -5,11 +5,11 @@ const async = require('pull-async')
 exports.gives = nest('tests')
 
 exports.needs = nest({
-  'async.create': 'first',
-  'async.title': 'first',
-  'async.hosts': 'first',
-  'obs.gathering': 'first',
-  'pull.find': 'first',
+  'gathering.async.create': 'first',
+  'gathering.async.title': 'first',
+  'gathering.async.hosts': 'first',
+  'gathering.obs.gathering': 'first',
+  'gathering.pull.find': 'first',
   'sbot.close': 'first',
   'sbot.create': 'first'
 })
@@ -20,16 +20,16 @@ exports.create = function (api) {
 
   function tests(tests) {
     tests['obs.gathering is requireable'] = function(assert, cb) {
-      assert(api.obs.gathering) 
+      assert(api.gathering.obs.gathering) 
       cb()
     }
     tests['obs.gathering hosts obs updates when a host of a gathering is added '] = function(assert, cb) {
       const hostId = '123dfj'
       api.sbot.create()
-      api.async.create({}, function(err) {})
+      api.gathering.async.create({}, function(err) {})
       pull(
-        api.pull.find({past: true, future: true}),
-        pull.map(gathering => api.obs.gathering(gathering.key)),
+        api.gathering.pull.find({past: true, future: true}),
+        pull.map(gathering => api.gathering.obs.gathering(gathering.key)),
         pull.drain(gathering => {
           gathering(val => {
             assert(val.hosts[hostId]) 
@@ -39,9 +39,9 @@ exports.create = function (api) {
         })
       )
       pull(
-        api.pull.find({past: true, future: true}),
+        api.gathering.pull.find({past: true, future: true}),
         pull.asyncMap((gathering, cb) => {
-          api.async.hosts({hosts: [{id: hostId}], id: gathering.key}, cb)
+          api.gathering.async.hosts({hosts: [{id: hostId}], id: gathering.key}, cb)
         }),
         pull.drain(host => {
         })
@@ -50,10 +50,10 @@ exports.create = function (api) {
     tests['obs.gathering hosts obs updates when a host of a gathering is removed '] = function(assert, cb) {
       const hostId = '123dfj'
       api.sbot.create()
-      api.async.create({}, function(err) {})
+      api.gathering.async.create({}, function(err) {})
       pull(
-        api.pull.find({past: true, future: true}),
-        pull.map(gathering => api.obs.gathering(gathering.key)),
+        api.gathering.pull.find({past: true, future: true}),
+        pull.map(gathering => api.gathering.obs.gathering(gathering.key)),
         pull.drain(gathering => {
           gathering.hosts.put(hostId, true)
           gathering(val => {
@@ -64,9 +64,9 @@ exports.create = function (api) {
         })
       )
       pull(
-        api.pull.find({past: true, future: true}),
+        api.gathering.pull.find({past: true, future: true}),
         pull.asyncMap((gathering, cb) => {
-          api.async.hosts({hosts: [{id: hostId, remove: true}], id: gathering.key}, cb)
+          api.gathering.async.hosts({hosts: [{id: hostId, remove: true}], id: gathering.key}, cb)
         }),
         pull.drain(host => {
         })
@@ -75,10 +75,10 @@ exports.create = function (api) {
     tests['obs.gathering title obs updates when a title of a gathering is published'] = function(assert, cb) {
       const title = 'meow!'
       api.sbot.create()
-      api.async.create({}, function(err) {})
+      api.gathering.async.create({}, function(err) {})
       pull(
-        api.pull.find({past: true, future: true}),
-        pull.map(gathering => api.obs.gathering(gathering.key)),
+        api.gathering.pull.find({past: true, future: true}),
+        pull.map(gathering => api.gathering.obs.gathering(gathering.key)),
         pull.drain(gathering => {
           gathering(val => {
             assert(val.title === title) 
@@ -88,9 +88,9 @@ exports.create = function (api) {
         })
       )
       pull(
-        api.pull.find({past: true, future: true}),
+        api.gathering.pull.find({past: true, future: true}),
         pull.asyncMap((gathering, cb) => {
-          api.async.title({title, id: gathering.key}, cb)
+          api.gathering.async.title({title, id: gathering.key}, cb)
         }),
         pull.drain(title => {
         })

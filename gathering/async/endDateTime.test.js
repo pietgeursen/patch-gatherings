@@ -3,8 +3,8 @@ const nest = require('depnest')
 exports.gives = nest('tests')
 
 exports.needs = nest({
-  'async.create': 'first',
-  'async.endDateTime': 'first',
+  'gathering.async.create': 'first',
+  'gathering.async.endDateTime': 'first',
   'sbot.close': 'first',
   'sbot.create': 'first'
 })
@@ -15,14 +15,14 @@ exports.create = function (api) {
 
   function tests(tests) {
     tests['endDateTime is requireable'] = function(assert, cb) {
-      assert(api.async.endDateTime) 
+      assert(api.gathering.async.endDateTime) 
       cb()
     }
     tests['can publish a endDateTime message without error'] = function(assert, cb) {
       const endDateTime = 'piet'
       const id = 1
       api.sbot.create()
-      api.async.endDateTime({endDateTime, id}, function(err) {
+      api.gathering.async.endDateTime({endDateTime, id}, function(err) {
         assert(!err) 
         api.sbot.close()
         cb()

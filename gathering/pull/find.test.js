@@ -5,11 +5,11 @@ const moment = require('moment')
 exports.gives = nest('tests')
 
 exports.needs = nest({
-  'pull.find': 'first',
+  'gathering.pull.find': 'first',
   'sbot.close': 'first',
   'sbot.create': 'first',
-  'async.create': 'first',
-  'async.startDateTime': 'first'
+  'gathering.async.create': 'first',
+  'gathering.async.startDateTime': 'first'
 })
 
 exports.create = function (api) {
@@ -18,15 +18,15 @@ exports.create = function (api) {
 
   function tests(tests) {
     tests['find is requireable'] = function(assert, cb) {
-      assert(api.pull.find) 
+      assert(api.gathering.pull.find) 
       cb()
     }
     tests['can create and find a gathering'] = function(assert, cb) {
       api.sbot.create()
-      api.async.create({}, function(err) {
+      api.gathering.async.create({}, function(err) {
         assert(!err) 
         pull(
-          api.pull.find({past: true, future: true}),
+          api.gathering.pull.find({past: true, future: true}),
           pull.drain(function(data) {
             assert(data) 
             api.sbot.close()
@@ -35,41 +35,6 @@ exports.create = function (api) {
         )
       }) 
     }
-    tests['can create and find a future gathering'] = function(assert, cb) {
-      api.sbot.create()
-      api.async.create({}, function(err, gathering) {
-        assert(!err) 
-        api.async.startDateTime({id: gathering.key, startDateTime: moment().add(1, 'days').format()}, function(err) {
-          assert(!err) 
-          pull(
-            api.pull.find({past: false, future: true}),
-            pull.drain(function(data) {
-              assert(data) 
-              api.sbot.close()
-              cb()
-            })
-          )
-        })
-      }) 
-    }
-    tests['can create and find a past gathering'] = function(assert, cb) {
-      api.sbot.create()
-      api.async.create({}, function(err, gathering) {
-        assert(!err) 
-        api.async.startDateTime({id: gathering.key, startDateTime: moment().subtract(1, 'days').format()}, function(err) {
-          assert(!err) 
-          pull(
-            api.pull.find({past: true, future: false}),
-            pull.drain(function(data) {
-              assert(data) 
-              api.sbot.close()
-              cb()
-            })
-          )
-        })
-      }) 
-    }
-
     return tests
   }  
   
