@@ -1,5 +1,5 @@
 const nest = require('depnest')
-const { h } = require('mutant')
+const { h, Array } = require('mutant')
 const pull = require('pull-stream')
 const Scroller = require('pull-scroll')
 
@@ -11,9 +11,9 @@ exports.gives = nest({
 })
 
 exports.needs = nest({
-  'feed.pull.public': 'first',
+  'gathering.pull.find': 'first',
   'gathering.html.compose': 'first',
-  'message.html': {
+  'gathering.html': {
     render: 'first'
   },
 })
@@ -38,11 +38,19 @@ exports.create = function (api) {
   function publicPage (path) {
     if (path !== route) return
 
-    const composer = api.gathering.html.compose({
-    })
+    const composer = api.gathering.html.compose({})
+    const gatherings = Array([])
+    const content = h('div', {}, gatherings)
+    const container = h('div', {}, [content, composer])
 
-    return composer
+    pull(
+      api.gathering.pull.find(),
+      pull.drain(msg => {
+        gatherings.push(api.gathering.html.render(msg))
+      })
+    )
 
+    return container
   }
 }
 

@@ -3,6 +3,7 @@ const nest = require('depnest')
 const extend = require('xtend')
 
 exports.needs = nest({
+  'gathering.async.create': 'first',
   'blob.html.input': 'first',
   'message.html.confirm': 'first'
 })
@@ -13,10 +14,8 @@ exports.create = function (api) {
   return nest({ 'gathering.html.compose': compose })
 
   function compose() {
-    const textArea = 'hi'
-    const actions =  ['publish', 'cancel']
+    const actions = h('button', {'ev-click': () => api.gathering.async.create()}, 'Create')
     var composer = h('ComposeGathering', [
-      textArea,
       actions
     ])
     return composer

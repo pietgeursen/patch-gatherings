@@ -24,7 +24,7 @@ exports.create = function (api) {
       endDate: Value({}),
       location: Value(''),
       hosts: Dict({}),
-      attendees: Array([]),
+      attendees: Set([]),
       images: Array([]),
     })
     
@@ -59,10 +59,10 @@ exports.create = function (api) {
     )
     pull(
       subscription(),
-      pull.filter(msg => msg && msg.content && msg.content && msg.content.attendees),
+      pull.filter(msg => msg && msg.content && msg.content && msg.content.attendee),
       pull.drain(msg => {
-        const attendees = msg.content.attendees
-        attendees.remove ? gathering.attendees.delete(attendee.id) : gathering.attendees.put(attendee.id, true)
+        const attendee = msg.content.attendee
+        attendee.remove ? gathering.attendees.delete(attendee.id) : gathering.attendees.add(attendee.id)
       })
     )
     pull(
