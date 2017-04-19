@@ -36,7 +36,11 @@ exports.create = function (api) {
     obs.attendees(console.log)
     return h('div', [
       h('div', {}, obs.description),
+      h('div', {}, obs.startDate),
+      h('div', {}, obs.location),
+      h('div', {}, obs.hosts),
       h('div', {}, obs.attendees),
+      h('div', {}, obs.contributors),
       h('button', {'ev-click': () => api.gathering.async.attendees({attendees: [{id: myKey }], id: msg.key}, console.log)}, 'Attend' ),
       h('button', {'ev-click': () => api.gathering.async.attendees({attendees: [{id: myKey, remove: true }], id: msg.key}, console.log)}, 'Not going' )
     ])

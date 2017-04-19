@@ -1,5 +1,6 @@
 var nest = require('depnest')
 var pull = require('pull-stream')
+var cat = require('pull-cat')
 var sort = require('ssb-sort')
 var Notify = require('pull-notify')
 var ref = require('ssb-ref')
@@ -20,10 +21,10 @@ exports.create = function (api) {
       title: Value(''),
       description: Value(''),
       contributors: Set(),
-      startDate: Value({}),
+      startDate: Value(''),
       endDate: Value({}),
       location: Value(''),
-      hosts: Dict({}),
+      hosts: Set([]),
       attendees: Set([]),
       images: Array([]),
     })
@@ -42,7 +43,7 @@ exports.create = function (api) {
       pull.drain(gathering.startDate.set)
     )
     pull(
-      subsribeToLinksByKey(subscription, 'title'),
+      cat([pull.once(gatheringId), subsribeToLinksByKey(subscription, 'title')]),
       pull.drain(gathering.title.set)
     )
     pull(
