@@ -29,7 +29,6 @@ exports.create = function (api) {
       images: Array([]),
     })
     
-
     pull(
       subsribeToLinksByKey(subscription, 'location'),
       pull.drain(gathering.location.set)
@@ -52,7 +51,7 @@ exports.create = function (api) {
     )
     pull(
       subscription(),
-      pull.filter(msg => msg && msg.content && msg.content && msg.content.host),
+      pull.filter(msg => msg && msg.content && msg.content.host),
       pull.drain(msg => {
         const host = msg.content.host
         host.remove ? gathering.hosts.delete(host.id) : gathering.hosts.put(host.id, true)
@@ -60,7 +59,7 @@ exports.create = function (api) {
     )
     pull(
       subscription(),
-      pull.filter(msg => msg && msg.content && msg.content && msg.content.attendee),
+      pull.filter(msg => msg && msg.content && msg.content.attendee),
       pull.drain(msg => {
         const attendee = msg.content.attendee
         attendee.remove ? gathering.attendees.delete(attendee.id) : gathering.attendees.add(attendee.id)
@@ -68,7 +67,7 @@ exports.create = function (api) {
     )
     pull(
       subscription(),
-      pull.filter(msg => msg && msg.content && msg.content && msg.content.images),
+      pull.filter(msg => msg && msg.content && msg.content.images),
       pull.drain(msg => {
         const images = msg.content.images
         images.remove ? gathering.images.delete(images.id) : gathering.images.put(images.id, true)

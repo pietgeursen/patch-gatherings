@@ -12,7 +12,7 @@ exports.gives = nest({
 
 exports.needs = nest({
   'gathering.pull.find': 'first',
-  'gathering.html.compose': 'first',
+  'gathering.html.create': 'first',
   'gathering.html': {
     render: 'first'
   },
@@ -38,10 +38,10 @@ exports.create = function (api) {
   function publicPage (path) {
     if (path !== route) return
 
-    const composer = api.gathering.html.compose({})
+    const creater = api.gathering.html.create({})
     const gatherings = Array([])
     const content = h('div', {}, gatherings)
-    const container = h('div', {}, [content, composer])
+    const container = h('div', {}, [content, creater])
 
     pull(
       api.gathering.pull.find(),

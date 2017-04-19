@@ -8,14 +8,14 @@ exports.needs = nest({
   'message.html.confirm': 'first'
 })
 
-exports.gives = nest('gathering.html.compose')
+exports.gives = nest('gathering.html.create')
 
 exports.create = function (api) {
-  return nest({ 'gathering.html.compose': compose })
+  return nest({ 'gathering.html.create': create })
 
-  function compose() {
+  function create() {
     const actions = h('button', {'ev-click': () => api.gathering.async.create()}, 'Create')
-    var composer = h('ComposeGathering', [
+    var composer = h('div', [
       actions
     ])
     return composer
