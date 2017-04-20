@@ -75,7 +75,7 @@ exports.create = function (api) {
       h('div', {}, obs.contributors),
       h('button', {'ev-click': () => api.gathering.async.attendees({attendees: [{id: myKey }], id: msg.key}, console.log)}, 'Attend' ),
       h('button', {'ev-click': () => api.gathering.async.attendees({attendees: [{id: myKey, remove: true }], id: msg.key}, console.log)}, 'Not going' ),
-      h('button', {'ev-click': () => isEditing.set(!isEditing()) }, when(isEditing, 'Cance', 'Edit'))
+      h('button', {'ev-click': () => isEditing.set(!isEditing()) }, when(isEditing, 'Cancel', 'Edit'))
     ])
   }
 
