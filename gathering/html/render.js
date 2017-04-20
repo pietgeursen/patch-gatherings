@@ -2,6 +2,7 @@ var h = require('mutant/h')
 var map = require('mutant/map')
 var Value = require('mutant/value')
 var when = require('mutant/when')
+var computed = require('mutant/computed')
 var nest = require('depnest')
 var extend = require('xtend')
 
@@ -43,13 +44,32 @@ exports.create = function (api) {
   }
   function messageContent (obs, msg, isEditing) {
     const myKey = api.keys.sync.load().public
-    obs.attendees(console.log)
+    const prettyDescription = computed(obs.description, api.message.html.markdown )
+    const prettyLocation = computed(obs.location, api.message.html.markdown )
     return h('div', [
-      h('div', {}, obs.description),
-      h('div', {}, obs.startDate),
-      h('div', {}, obs.location),
-      h('div', {}, obs.hosts),
-      h('div', {}, obs.attendees),
+      h('section.description', {}, [
+        h('h3', 'What:'),
+        h('div', prettyDescription),
+
+      ]),
+      h('section.location', {}, [
+        h('h3', 'Where:'),
+        h('div', obs.prettyLocation),
+
+      ]),
+      h('section.time', {}, [
+        h('h3', 'When:'),
+        h('div', ['starts: ', obs.startDate]),
+        h('div', ['ends: ', obs.endDate]),
+      ]),
+      h('section.hosts', {}, [
+        h('h3', 'Hosted by:'),
+        h('div', obs.hosts),
+      ]),
+      h('section.attendees', {}, [
+        h('h3', 'Going:'),
+        h('div', obs.attendees),
+      ]),
       h('div', {}, obs.contributors),
       h('button', {'ev-click': () => api.gathering.async.attendees({attendees: [{id: myKey }], id: msg.key}, console.log)}, 'Attend' ),
       h('button', {'ev-click': () => api.gathering.async.attendees({attendees: [{id: myKey, remove: true }], id: msg.key}, console.log)}, 'Not going' ),
@@ -58,6 +78,7 @@ exports.create = function (api) {
   }
 
   function messageTitle (obs, msg) {
-    return h('a', {href: msg.key}, obs.title)
+    const prettyTitle = computed(obs.title, api.message.html.markdown )
+    return h('a', {href: msg.key}, prettyTitle)
   }
 }

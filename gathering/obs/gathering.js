@@ -8,7 +8,8 @@ var { Value, Array, Set, Dict, computed, Struct } = require('mutant')
 
 exports.needs = nest({
   'sbot.pull.links': 'first',
-  'sbot.async.get': 'first'
+  'sbot.async.get': 'first',
+  'message.html.markdown': 'first'
 })
 
 exports.gives = nest('gathering.obs.gathering')
@@ -20,9 +21,9 @@ exports.create = function (api) {
     const gathering = Struct({
       title: Value(''),
       description: Value(''),
-      contributors: Set(),
+      contributors: Set([]),
       startDate: Value(''),
-      endDate: Value({}),
+      endDate: Value(''),
       location: Value(''),
       hosts: Set([]),
       attendees: Set([]),
