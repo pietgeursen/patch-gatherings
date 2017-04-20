@@ -19,10 +19,17 @@ exports.needs = nest({
   }
 })
 
-exports.gives = nest('gathering.html.render')
+exports.gives = nest({
+  'message.html': ['render'],
+  'gathering.html': ['render']
+})
 
 exports.create = function (api) {
-  return nest('gathering.html.render', function renderGathering (msg, opts) {
+  return nest({
+    'message.html.render': renderGathering, 
+    'gathering.html.render': renderGathering
+  })
+  function renderGathering (msg, opts) {
     if (!msg.value || (msg.value.content.type !== 'gathering')) return
     const isEditing = Value(false) 
     obs = api.gathering.obs.gathering(msg.key) 
@@ -33,8 +40,7 @@ exports.create = function (api) {
     }, opts))
 
     return api.message.html.decorate(element, { msg })
-  })
-
+  }
   function messageContent (obs, msg, isEditing) {
     const myKey = api.keys.sync.load().public
     obs.attendees(console.log)
