@@ -12,6 +12,7 @@ exports.needs = nest({
   'gathering.async.attendees': 'first',
   'feed.html.render':'first',
   'keys.sync.load': 'first',
+  'about.html.link': 'first',
   'message.html': {
     decorate: 'reduce',
     layout: 'first',
@@ -43,9 +44,10 @@ exports.create = function (api) {
     return api.message.html.decorate(element, { msg })
   }
   function messageContent (obs, msg, isEditing) {
-    const myKey = api.keys.sync.load().public
+    const myKey = '@' + api.keys.sync.load().public
     const prettyDescription = computed(obs.description, api.message.html.markdown )
     const prettyLocation = computed(obs.location, api.message.html.markdown )
+    const linkedAttendees = computed(obs.attendees, (attendees) => attendees.map(api.about.html.link))
     return h('div', [
       h('section.description', {}, [
         h('h3', 'What:'),
@@ -68,7 +70,7 @@ exports.create = function (api) {
       ]),
       h('section.attendees', {}, [
         h('h3', 'Going:'),
-        h('div', obs.attendees),
+        h('div', linkedAttendees),
       ]),
       h('div', {}, obs.contributors),
       h('button', {'ev-click': () => api.gathering.async.attendees({attendees: [{id: myKey }], id: msg.key}, console.log)}, 'Attend' ),
