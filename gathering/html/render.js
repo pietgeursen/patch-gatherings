@@ -34,7 +34,7 @@ exports.create = function (api) {
     const isEditing = Value(false) 
     obs = api.gathering.obs.gathering(msg.key) 
     const element = api.message.html.layout(msg, extend({
-      title: messageTitle(obs),
+      title: messageTitle(obs, msg),
       content: when(isEditing, api.gathering.html.edit(obs, msg, isEditing), messageContent(obs, msg, isEditing)),
       layout: 'default'
     }, opts))
@@ -57,7 +57,7 @@ exports.create = function (api) {
     ])
   }
 
-  function messageTitle (obs) {
-    return h('span', {}, obs.title)
+  function messageTitle (obs, msg) {
+    return h('a', {href: msg.key}, obs.title)
   }
 }
