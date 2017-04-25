@@ -2,22 +2,20 @@ var h = require('mutant/h')
 var map = require('mutant/map')
 var Value = require('mutant/value')
 var when = require('mutant/when')
-var dictToCollection = require('mutant/dict-to-collection')
 var computed = require('mutant/computed')
 var nest = require('depnest')
-var extend = require('xtend')
 
 exports.needs = nest({
   'blob.sync.url': 'first',
   'gathering.obs.gathering': 'first',
   'gathering.html.edit': 'first',
+  'gathering.html.layout': 'first',
   'gathering.async.attendees': 'first',
   'feed.html.render':'first',
   'keys.sync.load': 'first',
   'about.html.link': 'first',
   'message.html': {
     decorate: 'reduce',
-    layout: 'first',
     link: 'first',
     markdown: 'first'
   }
@@ -36,55 +34,30 @@ exports.create = function (api) {
   function renderGathering (msg, opts) {
     if (!msg.value || (msg.value.content.type !== 'gathering')) return
     const isEditing = Value(false) 
+    const isSummary = Value(true) 
     obs = api.gathering.obs.gathering(msg.key) 
-    const element = api.message.html.layout(msg, extend({
-      title: messageTitle(obs, msg),
-      content: when(isEditing, api.gathering.html.edit(obs, msg, isEditing), messageContent(obs, msg, isEditing)),
-      layout: 'default'
-    }, opts))
+
+    const element = h('Message', {attributes: {tabindex:'0'}}, computed([isSummary], (summary) => {
+      const layout = summary ? 'summary' : 'default'
+
+      return api.gathering.html.layout(msg, {layout, isEditing, isSummary, obs})
+    }))
 
     return api.message.html.decorate(element, { msg })
   }
   function messageContent (obs, msg, isEditing) {
     const myKey = '@' + api.keys.sync.load().public
-    const prettyDescription = computed(obs.description, api.message.html.markdown )
-    const prettyLocation = computed(obs.location, api.message.html.markdown )
-    const linkedAttendees = computed(obs.attendees, (attendees) => attendees.map(api.about.html.link))
-    const images = h('div', {}, map(obs.images, image => h('img', {src: api.blob.sync.url(image)} )))
 
     return h('div', [
-      images,
-      h('section.description', {}, [
-        h('h3', 'What:'),
-        h('div', prettyDescription),
-      ]),
-      h('section.location', {}, [
-        h('h3', 'Where:'),
-        h('div', obs.prettyLocation),
-
-      ]),
       h('section.time', {}, [
         h('h3', 'When:'),
         h('div', ['starts: ', obs.startDate]),
         h('div', ['ends: ', obs.endDate]),
       ]),
-      h('section.hosts', {}, [
-        h('h3', 'Hosted by:'),
-        h('div', obs.hosts),
-      ]),
-      h('section.attendees', {}, [
-        h('h3', 'Going:'),
-        h('div', linkedAttendees),
-      ]),
-      h('div', {}, obs.contributors),
       h('button', {'ev-click': () => api.gathering.async.attendees({attendees: [{id: myKey }], id: msg.key}, console.log)}, 'Attend' ),
       h('button', {'ev-click': () => api.gathering.async.attendees({attendees: [{id: myKey, remove: true }], id: msg.key}, console.log)}, 'Not going' ),
       h('button', {'ev-click': () => isEditing.set(!isEditing()) }, when(isEditing, 'Cancel', 'Edit'))
     ])
   }
 
-  function messageTitle (obs, msg) {
-    const prettyTitle = computed(obs.title, api.message.html.markdown )
-    return h('a', {href: msg.key}, prettyTitle)
-  }
 }
