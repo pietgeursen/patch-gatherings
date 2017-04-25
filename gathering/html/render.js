@@ -28,7 +28,7 @@ exports.gives = nest({
 
 exports.create = function (api) {
   return nest({
-    'message.html.render': renderGathering, 
+    'message.html.render': renderGathering,
     'gathering.html.render': renderGathering
   })
   function renderGathering (msg, opts) {
@@ -49,10 +49,10 @@ exports.create = function (api) {
     const prettyLocation = computed(obs.location, api.message.html.markdown )
     const linkedAttendees = computed(obs.attendees, (attendees) => attendees.map(api.about.html.link))
     return h('div', [
+      h('img', {href: obs.images[0]}),
       h('section.description', {}, [
         h('h3', 'What:'),
         h('div', prettyDescription),
-
       ]),
       h('section.location', {}, [
         h('h3', 'Where:'),

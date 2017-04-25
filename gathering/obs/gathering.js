@@ -27,7 +27,7 @@ exports.create = function (api) {
       location: Value(''),
       hosts: Set([]),
       attendees: Set([]),
-      images: Array([]),
+      images: Set([]),
     })
     
     pull(
