@@ -9,7 +9,6 @@ var { Value, Array, Set, Dict, computed, Struct } = require('mutant')
 exports.needs = nest({
   'sbot.pull.links': 'first',
   'sbot.async.get': 'first',
-  'message.html.markdown': 'first'
 })
 
 exports.gives = nest('gathering.obs.gathering')
@@ -21,6 +20,7 @@ exports.create = function (api) {
     const gathering = Struct({
       title: Value(''),
       description: Value(''),
+      thumbnail: Value(''),
       contributors: Set([]),
       startDate: Value(''),
       endDate: Value(''),
@@ -33,6 +33,10 @@ exports.create = function (api) {
     pull(
       subsribeToLinksByKey(subscription, 'location'),
       pull.drain(gathering.location.set)
+    )
+    pull(
+      subsribeToLinksByKey(subscription, 'location'),
+      pull.drain(gathering.thumbnail.set)
     )
     pull(
       subsribeToLinksByKey(subscription, 'endDate'),
@@ -55,7 +59,7 @@ exports.create = function (api) {
       pull.filter(msg => msg && msg.content && msg.content.host),
       pull.drain(msg => {
         const host = msg.content.host
-        host.remove ? gathering.hosts.delete(host.id) : gathering.hosts.put(host.id, true)
+        host.remove ? gathering.hosts.delete(host.id) : gathering.hosts.add(host.id)
       })
     )
     pull(

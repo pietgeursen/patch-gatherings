@@ -32,7 +32,7 @@ exports.create = function (api) {
         pull.map(gathering => api.gathering.obs.gathering(gathering.key)),
         pull.drain(gathering => {
           gathering(val => {
-            assert(val.hosts[hostId]) 
+            assert(val.hosts.includes(hostId)) 
             api.sbot.close()
             cb()
           })
@@ -55,9 +55,9 @@ exports.create = function (api) {
         api.gathering.pull.find({past: true, future: true}),
         pull.map(gathering => api.gathering.obs.gathering(gathering.key)),
         pull.drain(gathering => {
-          gathering.hosts.put(hostId, true)
+          gathering.hosts.add(hostId)
           gathering(val => {
-            assert(!val.hosts[hostId]) 
+            assert(!val.hosts.includes(hostId)) 
             api.sbot.close()
             cb()
           })
