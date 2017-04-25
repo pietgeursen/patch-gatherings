@@ -1,4 +1,4 @@
-const { h, when, concat, send, resolve, Value, computed, Array, Set, map} = require('mutant')
+const { h, when, concat, send, resolve, Value, computed, forEach, Array, Set, map} = require('mutant')
 const nest = require('depnest')
 const extend = require('xtend')
 
@@ -26,13 +26,16 @@ exports.create = function (api) {
     var hasContent = Value(false)
     var getProfileSuggestions = api.about.async.suggest()
     var imagesToAdd = Set([]) 
+    var allImages = Set([]) 
+    imagesToAdd(images => forEach(images, image => allImages.add(image.link))) //TODO: so that we still publish an image with all the info but just use the link for now.
+    obs.images(images => forEach(images, image => allImages.add(image)))
 
     var blurTimeout = null
 
     var description = h('textarea', {}, obs.description)
     var title = h('textarea', {}, obs.title)
     var location = h('textarea', {}, obs.location)
-    var images = h('div', {}, map(imagesToAdd, image => h('img', {src: api.blob.sync.url(image.link)} )))
+    var images = h('div', {}, map(allImages, image => h('img', {src: api.blob.sync.url(image)} )))
 
     const cancel = h('button', {'ev-click': () => isEditing.set(false)}, 'Cancel')
     const update = h('button', {'ev-click': () => {
@@ -44,10 +47,7 @@ exports.create = function (api) {
     }}, 'Update')
 
     var fileInput = api.blob.html.input(file => {
-      console.log('file', file) 
-      console.log('obs.images', obs.images()) 
       imagesToAdd.add(file)
-      console.log('imagesToAdd', imagesToAdd())
     })
 
     fileInput.onclick = () => hasContent.set(true)

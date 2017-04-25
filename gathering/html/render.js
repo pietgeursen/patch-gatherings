@@ -2,11 +2,13 @@ var h = require('mutant/h')
 var map = require('mutant/map')
 var Value = require('mutant/value')
 var when = require('mutant/when')
+var dictToCollection = require('mutant/dict-to-collection')
 var computed = require('mutant/computed')
 var nest = require('depnest')
 var extend = require('xtend')
 
 exports.needs = nest({
+  'blob.sync.url': 'first',
   'gathering.obs.gathering': 'first',
   'gathering.html.edit': 'first',
   'gathering.async.attendees': 'first',
@@ -48,8 +50,10 @@ exports.create = function (api) {
     const prettyDescription = computed(obs.description, api.message.html.markdown )
     const prettyLocation = computed(obs.location, api.message.html.markdown )
     const linkedAttendees = computed(obs.attendees, (attendees) => attendees.map(api.about.html.link))
+    const images = h('div', {}, map(obs.images, image => h('img', {src: api.blob.sync.url(image)} )))
+
     return h('div', [
-      h('img', {href: obs.images[0]}),
+      images,
       h('section.description', {}, [
         h('h3', 'What:'),
         h('div', prettyDescription),

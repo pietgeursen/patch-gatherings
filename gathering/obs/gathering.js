@@ -27,7 +27,7 @@ exports.create = function (api) {
       location: Value(''),
       hosts: Set([]),
       attendees: Set([]),
-      images: Set([]),
+      images: Set([])
     })
     
     pull(
@@ -68,10 +68,10 @@ exports.create = function (api) {
     )
     pull(
       subscription(),
-      pull.filter(msg => msg && msg.content && msg.content.images),
+      pull.filter(msg => msg && msg.content && msg.content.image),
       pull.drain(msg => {
-        const images = msg.content.images
-        images.remove ? gathering.images.delete(images.id) : gathering.images.put(images.id, true)
+        const image = msg.content.image
+        image.remove ? gathering.images.delete(image.link) : gathering.images.add(image.link)
       })
     )
     return gathering
