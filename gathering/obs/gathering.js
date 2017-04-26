@@ -21,10 +21,10 @@ exports.create = function (api) {
       title: Value(''),
       description: Value(''),
       thumbnail: Value(''),
-      contributors: Set([]),
       startDate: Value(''),
       endDate: Value(''),
       location: Value(''),
+      contributors: Set([]),
       hosts: Set([]),
       attendees: Set([]),
       images: Set([])
@@ -66,19 +66,36 @@ exports.create = function (api) {
       })
     )
     pull(
-      subscription(),
-      pull.filter(msg => msg && msg.content && msg.content.attendee),
+      api.sbot.pull.links({dest: '@', rel: 'attendee', live: true}),
+      pull.filter(data => data.key),
+      pull.asyncMap(function(data, cb) {
+        api.sbot.async.get(data.key, cb)
+      }),
       pull.drain(msg => {
         const attendee = msg.content.attendee
-        attendee.remove ? gathering.attendees.delete(attendee.id) : gathering.attendees.add(attendee.id)
+        attendee.remove ? gathering.attendees.delete(attendee.link) : gathering.attendees.add(attendee.link)
       })
     )
     pull(
-      subscription(),
-      pull.filter(msg => msg && msg.content && msg.content.image),
+      api.sbot.pull.links({dest: '@', rel: 'image', live: true}),
+      pull.filter(data => data.key),
+      pull.asyncMap(function(data, cb) {
+        api.sbot.async.get(data.key, cb)
+      }),
       pull.drain(msg => {
         const image = msg.content.image
         image.remove ? gathering.images.delete(image.link) : gathering.images.add(image.link)
+      })
+    )
+    pull(
+      api.sbot.pull.links({dest: '@', rel: 'contibutor', live: true}),
+      pull.filter(data => data.key),
+      pull.asyncMap(function(data, cb) {
+        api.sbot.async.get(data.key, cb)
+      }),
+      pull.drain(msg => {
+        const contibutor = msg.content.contibutor
+        contibutor.remove ? gathering.contributors.delete(contibutor.link) : gathering.contributors.add(contibutor.link)
       })
     )
     return gathering

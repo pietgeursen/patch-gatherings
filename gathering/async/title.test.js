@@ -22,7 +22,7 @@ exports.create = function (api) {
       const title = 'piet'
       const id = 1
       api.sbot.create()
-      api.gathering.async.title({title, id}, function(err) {
+      api.gathering.async.title({title, id: {link: id}}, function(err) {
         assert(!err) 
         api.sbot.close()
         cb()

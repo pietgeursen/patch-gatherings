@@ -12,7 +12,7 @@ exports.create = function (api) {
     pull(
       pull.values(data.attendees), 
       pull.asyncMap((attendee, cb) =>{
-        api.sbot.async.publish({type: 'about', about: data.id, attendee}, cb) 
+        api.sbot.async.publish({type: 'about', link: data.gathering, attendee: {link: attendee.id, remove: attendee.remove}}, cb)
       }),
       pull.collect(cb)
     )

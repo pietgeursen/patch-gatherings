@@ -20,9 +20,9 @@ exports.create = function (api) {
     }
     tests['can publish a description message without error'] = function(assert, cb) {
       const description = 'piet'
-      const id = 1
+      const link = 1
       api.sbot.create()
-      api.gathering.async.description({description, id}, function(err) {
+      api.gathering.async.description({description, link}, function(err) {
         assert(!err) 
         api.sbot.close()
         cb()

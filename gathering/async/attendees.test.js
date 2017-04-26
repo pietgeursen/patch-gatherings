@@ -19,7 +19,7 @@ exports.create = function (api) {
     }
     tests['creates attendee without error'] = function(assert, cb) {
       api.sbot.create()
-      api.gathering.async.attendees({attendees: [{id: '123'}], id: '456'},  function(err) {
+      api.gathering.async.attendees({attendees: [{id: '123'}], link: '456'},  function(err) {
         assert(!err) 
         api.sbot.close()
         cb()

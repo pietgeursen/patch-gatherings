@@ -7,7 +7,7 @@ exports.needs = nest({
 })
 
 exports.create = function (api) {
-  return nest('gathering.async.description', function({description, id}, cb) {
-    api.sbot.async.publish({type: 'about', about: id, description}, cb) 
+  return nest('gathering.async.description', function({description, gathering}, cb) {
+    api.sbot.async.publish({type: 'about', link: gathering, description}, cb) 
   })
 } 

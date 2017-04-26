@@ -20,9 +20,9 @@ exports.create = function (api) {
     }
     tests['can publish a location message without error'] = function(assert, cb) {
       const location = 'piet'
-      const id = 1
+      const link = 1
       api.sbot.create()
-      api.gathering.async.location({location, id}, function(err) {
+      api.gathering.async.location({location, link}, function(err) {
         assert(!err) 
         api.sbot.close()
         cb()

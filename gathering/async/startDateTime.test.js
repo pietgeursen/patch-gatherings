@@ -20,9 +20,9 @@ exports.create = function (api) {
     }
     tests['can publish a startDateTime message without error'] = function(assert, cb) {
       const startDateTime = 'piet'
-      const id = 1
+      const link = 1
       api.sbot.create()
-      api.gathering.async.startDateTime({startDateTime, id}, function(err) {
+      api.gathering.async.startDateTime({startDateTime, link}, function(err) {
         assert(!err) 
         api.sbot.close()
         cb()

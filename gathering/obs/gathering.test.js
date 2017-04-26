@@ -91,7 +91,7 @@ exports.create = function (api) {
       pull(
         api.gathering.pull.find({past: true, future: true}),
         pull.asyncMap((gathering, cb) => {
-          api.gathering.async.title({title, id: gathering.key}, cb)
+          api.gathering.async.title({title, gathering: gathering.key}, cb)
         }),
         pull.drain(title => {
         })

@@ -20,9 +20,9 @@ exports.create = function (api) {
     }
     tests['can publish a endDateTime message without error'] = function(assert, cb) {
       const endDateTime = 'piet'
-      const id = 1
+      const link = 1
       api.sbot.create()
-      api.gathering.async.endDateTime({endDateTime, id}, function(err) {
+      api.gathering.async.endDateTime({endDateTime, link}, function(err) {
         assert(!err) 
         api.sbot.close()
         cb()
