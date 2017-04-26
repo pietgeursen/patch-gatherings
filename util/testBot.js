@@ -3,7 +3,7 @@ var createSbot = require('scuttlebot')
 var nest = require('depnest')
 
 exports.gives = nest({
-  'sbot': ['close','create'],
+  'sbot': ['close','create', 'whoami'],
   'sbot.async': ['publish', 'get'],
   'sbot.pull': [
     'messagesByType',
@@ -20,6 +20,9 @@ exports.create = function (api) {
       },
       close: function() {
         sbot.close()
+      },
+      whoami: function() {
+        return sbot.whoami()
       },
       'async.get': function(id, cb) {
         sbot.get(id, cb)

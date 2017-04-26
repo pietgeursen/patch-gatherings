@@ -55,11 +55,14 @@ exports.create = function (api) {
       pull.drain(gathering.description.set)
     )
     pull(
-      subscription(),
-      pull.filter(msg => msg && msg.content && msg.content.host),
+      api.sbot.pull.links({dest: '@', rel: 'host', live: true}),
+      pull.filter(data => data.key),
+      pull.asyncMap(function(data, cb) {
+        api.sbot.async.get(data.key, cb)
+      }),
       pull.drain(msg => {
         const host = msg.content.host
-        host.remove ? gathering.hosts.delete(host.id) : gathering.hosts.add(host.id)
+        host.remove ? gathering.hosts.delete(host.link) : gathering.hosts.add(host.link)
       })
     )
     pull(

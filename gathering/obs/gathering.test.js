@@ -11,6 +11,7 @@ exports.needs = nest({
   'gathering.obs.gathering': 'first',
   'gathering.pull.find': 'first',
   'sbot.close': 'first',
+  'sbot.whoami': 'first',
   'sbot.create': 'first'
 })
 
@@ -24,8 +25,8 @@ exports.create = function (api) {
       cb()
     }
     tests['obs.gathering hosts obs updates when a host of a gathering is added '] = function(assert, cb) {
-      const hostId = '123dfj'
       api.sbot.create()
+      const hostId = api.sbot.whoami().id 
       api.gathering.async.create({}, function(err) {})
       pull(
         api.gathering.pull.find({past: true, future: true}),
@@ -41,15 +42,15 @@ exports.create = function (api) {
       pull(
         api.gathering.pull.find({past: true, future: true}),
         pull.asyncMap((gathering, cb) => {
-          api.gathering.async.hosts({hosts: [{id: hostId}], id: gathering.key}, cb)
+          api.gathering.async.hosts({hosts: [{id: hostId}], gathering: gathering.key}, cb)
         }),
         pull.drain(host => {
         })
       )
     }
     tests['obs.gathering hosts obs updates when a host of a gathering is removed '] = function(assert, cb) {
-      const hostId = '123dfj'
       api.sbot.create()
+      const hostId = api.sbot.whoami().id 
       api.gathering.async.create({}, function(err) {})
       pull(
         api.gathering.pull.find({past: true, future: true}),
@@ -66,7 +67,7 @@ exports.create = function (api) {
       pull(
         api.gathering.pull.find({past: true, future: true}),
         pull.asyncMap((gathering, cb) => {
-          api.gathering.async.hosts({hosts: [{id: hostId, remove: true}], id: gathering.key}, cb)
+          api.gathering.async.hosts({hosts: [{id: hostId, remove: true}], gathering: gathering.key}, cb)
         }),
         pull.drain(host => {
         })
