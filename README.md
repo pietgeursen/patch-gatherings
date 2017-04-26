@@ -55,7 +55,7 @@ exports.gives = nest({
     'endDateTime',
     'hosts',
     'images',
-    'layout: [
+    'layout': [
       'default',
       'summary', 
     ],
