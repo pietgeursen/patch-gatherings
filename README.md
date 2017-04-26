@@ -48,22 +48,22 @@ exports.gives = nest({
     'images',
   ]
   'gatherings.html': [
-    'attendees'
-    'contributors'
-    'create'
-    'description'
-    'endDateTime'
-    'hosts'
-    'images'
+    'attendees',
+    'contributors',
+    'create',
+    'description',
+    'endDateTime',
+    'hosts',
+    'images',
     'layout: [
-      'default' 
-      'summary' 
-    ]
-    'location'
-    'render'
-    'startDateTime'
-    'thumbnail' //TODO
-    'title'
+      'default',
+      'summary', 
+    ],
+    'location',
+    'render',
+    'startDateTime',
+    'thumbnail' ,
+    'title',
   ],
   'gatherings.obs': [
     'gathering'
