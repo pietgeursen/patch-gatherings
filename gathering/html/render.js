@@ -45,19 +45,5 @@ exports.create = function (api) {
 
     return api.message.html.decorate(element, { msg })
   }
-  function messageContent (obs, msg, isEditing) {
-    const myKey = '@' + api.keys.sync.load().public
-
-    return h('div', [
-      h('section.time', {}, [
-        h('h3', 'When:'),
-        h('div', ['starts: ', obs.startDate]),
-        h('div', ['ends: ', obs.endDate]),
-      ]),
-      h('button', {'ev-click': () => api.gathering.async.attendees({attendees: [{id: myKey }], id: msg.key}, console.log)}, 'Attend' ),
-      h('button', {'ev-click': () => api.gathering.async.attendees({attendees: [{id: myKey, remove: true }], id: msg.key}, console.log)}, 'Not going' ),
-      h('button', {'ev-click': () => isEditing.set(!isEditing()) }, when(isEditing, 'Cancel', 'Edit'))
-    ])
-  }
 
 }

@@ -6,6 +6,7 @@ exports.needs = nest({
   'about.html.link': 'first',
   'blob.sync.url': 'first',
   'gathering.async.attendees': 'first',
+  'gathering.async.title': 'first',
   'keys.sync.load': 'first',
   'message.html': {
     markdown: 'first'
@@ -30,24 +31,31 @@ exports.create = (api) => {
     const { layout, obs, isEditing, isSummary } = opts
 
     const { title, images, location, attendees } = api.gathering.html
+    const editedTitle = Value(obs.title())
+    editedTitle(console.log)
     const myKey = '@' + api.keys.sync.load().public
 
     return h('Message', {attributes: {tabindex:'0'}}, [
-      h('button', {'ev-click': () => isSummary.set(false) }, 'More...'),
+      h('button', {'ev-click': () => isSummary.set(true) }, 'Less...'),
       h('section.content', [
-        title({obs, msg}),
-        images({obs, msg}),
-        location({obs, msg}),
-        attendees({obs, msg}),
+        title({obs, msg, isEditing, editedTitle}),
+        images({obs, msg, isEditing}),
+        location({obs, msg, isEditing}),
+        attendees({obs, msg, isEditing}),
         h('section.time', {}, [
           h('h3', 'When:'),
           h('div', ['starts: ', obs.startDate]),
           h('div', ['ends: ', obs.endDate]),
         ]), 
-        h('button', {'ev-click': () => api.gathering.async.attendees({attendees: [{id: myKey }], id: msg.key}, console.log)}, 'Attend' ),
-        h('button', {'ev-click': () => api.gathering.async.attendees({attendees: [{id: myKey, remove: true }], id: msg.key}, console.log)}, 'Not going' ),
-        h('button', {'ev-click': () => isEditing.set(!isEditing()) }, when(isEditing, 'Cancel', 'Edit'))
+        h('button', {'ev-click': () => api.gathering.async.attendees({attendees: [{id: myKey }], gathering: msg.key}, console.log)}, 'Attend' ),
+        h('button', {'ev-click': () => api.gathering.async.attendees({attendees: [{id: myKey, remove: true }], gathering: msg.key}, console.log)}, 'Not going' ),
+        h('button', {'ev-click': () => isEditing.set(!isEditing()) }, when(isEditing, 'Cancel', 'Edit')),
+        when(isEditing, h('button', {'ev-click': save}, 'Update'))
       ])
     ])
+
+    function save() {
+      api.gathering.async.title({title: editedTitle(), gathering: msg.key}, console.log) 
+    }
   }
 }
