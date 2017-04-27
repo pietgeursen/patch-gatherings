@@ -9,7 +9,7 @@ exports.gives = nest('gathering.html.description')
 
 exports.create = (api) => {
   return nest('gathering.html.description', description)
-  function description({obs, msg}) {
+  function description({obs, msg, isEditing}) {
     const markdown = api.message.html.markdown
     return h('div', {}, computed(obs.description, markdown))
   }

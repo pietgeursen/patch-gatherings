@@ -10,7 +10,7 @@ exports.gives = nest('gathering.html.hosts')
 exports.create = (api) => {
   return nest('gathering.html.hosts', hosts)
   
-  function hosts({obs, msg}) {
+  function hosts({obs, msg, isEditing}) {
     //TODO handle when hosts / attendees / contributors are not ssb users
     const linkedHosts = computed(obs.hosts, (hosts) => hosts.map(api.about.html.link))
     return h('section.hosts', {}, [

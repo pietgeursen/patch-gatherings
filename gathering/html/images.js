@@ -9,7 +9,7 @@ exports.gives = nest('gathering.html.images')
 
 exports.create = (api) => {
   return nest('gathering.html.images', images)
-  function images({obs, msg}) {
+  function images({obs, msg, isEditing}) {
     return h('div', {}, map(obs.images, image => h('img', {src: api.blob.sync.url(image)} )))
   }
 }
