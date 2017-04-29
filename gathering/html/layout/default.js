@@ -7,6 +7,7 @@ exports.needs = nest({
   'blob.sync.url': 'first',
   'gathering.async.attendees': 'first',
   'gathering.async.title': 'first',
+  'gathering.obs.struct': 'first',
   'keys.sync.load': 'first',
   'message.html': {
     markdown: 'first'
@@ -31,14 +32,14 @@ exports.create = (api) => {
     const { layout, obs, isEditing, isSummary } = opts
 
     const { title, images, location, attendees } = api.gathering.html
-    const editedTitle = Value(obs.title())
-    editedTitle(console.log)
+    const editedGathering = api.gathering.obs.struct(obs()) 
+
     const myKey = '@' + api.keys.sync.load().public
 
     return h('Message', {attributes: {tabindex:'0'}}, [
       h('button', {'ev-click': () => isSummary.set(true) }, 'Less...'),
       h('section.content', [
-        title({obs, msg, isEditing, editedTitle}),
+        title({obs, msg, isEditing, value: editedGathering.title}),
         images({obs, msg, isEditing}),
         location({obs, msg, isEditing}),
         attendees({obs, msg, isEditing}),
@@ -55,7 +56,9 @@ exports.create = (api) => {
     ])
 
     function save() {
-      api.gathering.async.title({title: editedTitle(), gathering: msg.key}, console.log) 
+      api.gathering.async.title({title: editedGathering.title(), gathering: msg.key}, (err, data) => {
+        if(!err) isEditing.set(false) 
+      }) 
     }
   }
 }

@@ -9,6 +9,7 @@ var { Value, Array, Set, Dict, computed, Struct } = require('mutant')
 exports.needs = nest({
   'sbot.pull.links': 'first',
   'sbot.async.get': 'first',
+  'gathering.obs.struct': 'first'
 })
 
 exports.gives = nest('gathering.obs.gathering')
@@ -16,19 +17,10 @@ exports.gives = nest('gathering.obs.gathering')
 exports.create = function (api) {
   return nest('gathering.obs.gathering', function (gatheringId) {
     if (!ref.isLink(gatheringId)) throw new Error('an id must be specified')
+
     const subscription = subscribeToLinks(gatheringId)
-    const gathering = Struct({
-      title: Value(''),
-      description: Value(''),
-      thumbnail: Value(''),
-      startDate: Value(''),
-      endDate: Value(''),
-      location: Value(''),
-      contributors: Set([]),
-      hosts: Set([]),
-      attendees: Set([]),
-      images: Set([])
-    })
+
+    const gathering = api.gathering.obs.struct() 
     
     pull(
       subsribeToLinksByKey(subscription, 'location'),
