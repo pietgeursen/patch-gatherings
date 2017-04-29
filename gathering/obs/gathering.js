@@ -69,7 +69,7 @@ exports.create = function (api) {
       })
     )
     pull(
-      api.sbot.pull.links({dest: '@', rel: 'image', live: true}),
+      api.sbot.pull.links({dest: '&', rel: 'image', live: true}),
       pull.filter(data => data.key),
       pull.asyncMap(function(data, cb) {
         api.sbot.async.get(data.key, cb)

@@ -7,7 +7,7 @@ exports.needs = nest({
   'gathering.obs.gathering': 'first',
   'gathering.html': {
     'title': 'first',
-    'images': 'first',
+    'thumbnail': 'first',
     'location': 'first',
     'endDateTime': 'first',
     'startDateTime': 'first',
@@ -24,13 +24,13 @@ exports.create = (api) => {
 
     if (!(layout === undefined || layout === 'summary')) return
 
-    const { title, images, location, startDateTime, endDateTime } = api.gathering.html
+    const { title, thumbnail, location, startDateTime, endDateTime } = api.gathering.html
 
     return h('Message', {attributes: {tabindex:'0'}}, [
       h('button', {'ev-click': () => isSummary.set(false) }, 'More...'),
       h('section.content', [
         title({obs, msg}),
-        images({obs, msg}),
+        thumbnail({obs, msg}),
         location({obs, msg}),
         h('section.time', {}, [
           h('h3', 'When:'),

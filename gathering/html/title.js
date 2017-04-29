@@ -16,7 +16,7 @@ exports.create = (api) => {
     const markdown = api.message.html.markdown
 
     return when(isEditing, 
-      h('input', {'ev-input': e => value.set(e.target.value), value}),
+      h('input', {'ev-input': e => value.set(e.target.value), value: obs.title}),
       h('a', {href: msg.key}, computed(obs.title, markdown))
     )
   }

@@ -8,19 +8,23 @@ exports.gives = nest('gathering.obs.struct')
 
 exports.create = function (api) {
   return nest('gathering.obs.struct', function (opts = {}) {
-    const defaults = {
-      title: '',
-      description: '',
-      thumbnail: '',
-      startDate: '',
-      endDate: '',
-      location: '',
-      contributors: [],
-      hosts: [],
-      attendees: [],
-      images: []
-    }
-    return Struct(Object.assign({}, defaults, opts))
+    const struct = Struct({
+      title: Value(''),
+      description: Value(''),
+      thumbnail: Value(''),
+      startDate: Value(''),
+      endDate: Value(''),
+      location: Value(''),
+      contributors: Set([]),
+      hosts: Set([]),
+      attendees: Set([]),
+      images: Set([])
+    })
+    Object.keys(opts).forEach((k) => {
+      if(opts[k])
+        struct[k].set(opts[k])
+    })
+    return struct
   })
 }
 

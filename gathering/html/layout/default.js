@@ -1,12 +1,18 @@
 const nest = require('depnest')
-const { h, Value, computed, map, when } = require('mutant')
+const { h, Value, computed, map, when, forEachPair } = require('mutant')
 const { isMsg } = require('ssb-ref')
 
 exports.needs = nest({
   'about.html.link': 'first',
   'blob.sync.url': 'first',
-  'gathering.async.attendees': 'first',
-  'gathering.async.title': 'first',
+  'gathering.async': {
+    'title': 'first',
+    'description': 'first',
+    'images': 'first',
+    'location': 'first',
+    'attendees': 'first',
+    'hosts': 'first',
+  },
   'gathering.obs.struct': 'first',
   'keys.sync.load': 'first',
   'message.html': {
@@ -14,9 +20,11 @@ exports.needs = nest({
   },
   'gathering.html': {
     'title': 'first',
+    'description': 'first',
     'images': 'first',
     'location': 'first',
     'attendees': 'first',
+    'hosts': 'first',
   }
 
 })
@@ -31,8 +39,8 @@ exports.create = (api) => {
 
     const { layout, obs, isEditing, isSummary } = opts
 
-    const { title, images, location, attendees } = api.gathering.html
-    const editedGathering = api.gathering.obs.struct(obs()) 
+    const { attendees, title, images, location, description } = api.gathering.html
+    const editedGathering = api.gathering.obs.struct() 
 
     const myKey = '@' + api.keys.sync.load().public
 
@@ -40,9 +48,10 @@ exports.create = (api) => {
       h('button', {'ev-click': () => isSummary.set(true) }, 'Less...'),
       h('section.content', [
         title({obs, msg, isEditing, value: editedGathering.title}),
-        images({obs, msg, isEditing}),
-        location({obs, msg, isEditing}),
-        attendees({obs, msg, isEditing}),
+        images({obs, msg, isEditing, value: editedGathering.images}),
+        location({obs, msg, isEditing, value: editedGathering.location}),
+        description({obs, msg, isEditing, value: editedGathering.description}),
+        attendees({ obs, msg }),
         h('section.time', {}, [
           h('h3', 'When:'),
           h('div', ['starts: ', obs.startDate]),
@@ -56,9 +65,13 @@ exports.create = (api) => {
     ])
 
     function save() {
-      api.gathering.async.title({title: editedGathering.title(), gathering: msg.key}, (err, data) => {
-        if(!err) isEditing.set(false) 
-      }) 
+      forEachPair(editedGathering, (k, v) => {
+        if(api.gathering.async[k] && v){
+          console.log(k,v)
+          api.gathering.async[k]({[k]: v, gathering: msg.key}, console.log) 
+        }
+      })      
+      isEditing.set(false)
     }
   }
 }

@@ -12,7 +12,7 @@ exports.create = function (api) {
     pull(
       pull.values(data.images), 
       pull.asyncMap((image, cb) =>{
-        api.sbot.async.publish({type: 'about', link: data.gathering, image: {link: image.id, remove: image.remove}}, cb)
+        api.sbot.async.publish({type: 'about', link: data.gathering, image: {link: image.link, remove: image.remove}}, cb)
       }),
       pull.collect(cb)
     )

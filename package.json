@@ -23,6 +23,7 @@
     "mutant": "^3.18.0",
     "pull-cat": "^1.1.11",
     "pull-notify": "^0.1.1",
-    "pull-scroll": "^1.0.3"
+    "pull-scroll": "^1.0.3",
+    "suggest-box": "^2.2.3"
   }
 }
