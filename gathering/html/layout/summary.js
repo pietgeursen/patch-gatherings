@@ -26,7 +26,7 @@ exports.create = (api) => {
 
     const { title, thumbnail, location, startDateTime, endDateTime } = api.gathering.html
 
-    return h('Message', {attributes: {tabindex:'0'}}, [
+    return [
       h('button', {'ev-click': () => isSummary.set(false) }, 'More...'),
       h('section.content', [
         title({obs, msg}),
@@ -38,7 +38,7 @@ exports.create = (api) => {
           endDateTime({obs, msg}),
         ]), 
       ])
-    ])
+    ]
   }
 }
 

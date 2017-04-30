@@ -15,9 +15,11 @@ exports.create = (api) => {
   function title({obs, msg, isEditing, value}) {
     const markdown = api.message.html.markdown
 
-    return when(isEditing, 
-      h('input', {'ev-input': e => value.set(e.target.value), value: obs.title}),
-      h('a', {href: msg.key}, computed(obs.title, markdown))
+    return h('section.title', 
+      when(isEditing, 
+        h('input', {'ev-input': e => value.set(e.target.value), value: obs.title}),
+        h('a', {href: msg.key}, computed(obs.title, markdown))
+      )
     )
   }
 }

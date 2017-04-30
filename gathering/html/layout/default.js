@@ -44,10 +44,10 @@ exports.create = (api) => {
 
     const myKey = '@' + api.keys.sync.load().public
 
-    return h('Message', {attributes: {tabindex:'0'}}, [
+    return [
       h('button', {'ev-click': () => isSummary.set(true) }, 'Less...'),
+      title({obs, msg, isEditing, value: editedGathering.title}),
       h('section.content', [
-        title({obs, msg, isEditing, value: editedGathering.title}),
         images({obs, msg, isEditing, value: editedGathering.images}),
         location({obs, msg, isEditing, value: editedGathering.location}),
         description({obs, msg, isEditing, value: editedGathering.description}),
@@ -62,7 +62,7 @@ exports.create = (api) => {
         h('button', {'ev-click': () => isEditing.set(!isEditing()) }, when(isEditing, 'Cancel', 'Edit')),
         when(isEditing, h('button', {'ev-click': save}, 'Update'))
       ])
-    ])
+    ]
 
     function save() {
       forEachPair(editedGathering, (k, v) => {
