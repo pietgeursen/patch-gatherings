@@ -1,8 +1,6 @@
 const h = require('mutant/h')
-const map = require('mutant/map')
 const Value = require('mutant/value')
 const when = require('mutant/when')
-const computed = require('mutant/computed')
 const nest = require('depnest')
 
 exports.needs = nest({
@@ -35,7 +33,7 @@ exports.create = function (api) {
     if (!msg.value || (msg.value.content.type !== 'gathering')) return
     const isEditing = Value(false)
     const isSummary = Value(true)
-    obs = api.gathering.obs.gathering(msg.key)
+    const obs = api.gathering.obs.gathering(msg.key)
 
     const element = h('Message', {attributes: {tabindex: '0'}},
       when(isSummary,

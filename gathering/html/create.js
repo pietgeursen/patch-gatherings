@@ -1,6 +1,5 @@
-const { h, when, send, resolve, Value, computed } = require('mutant')
+const { h } = require('mutant')
 const nest = require('depnest')
-const extend = require('xtend')
 
 exports.needs = nest({
   'gathering.async.create': 'first',
@@ -21,4 +20,3 @@ exports.create = function (api) {
     return composer
   }
 }
-

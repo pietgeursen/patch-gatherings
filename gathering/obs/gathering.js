@@ -2,10 +2,8 @@ const spacetime = require('spacetime')
 const nest = require('depnest')
 const pull = require('pull-stream')
 const cat = require('pull-cat')
-const sort = require('ssb-sort')
 const Notify = require('pull-notify')
 const ref = require('ssb-ref')
-const { Value, Array, Set, Dict, computed, Struct } = require('mutant')
 
 exports.needs = nest({
   'sbot.pull.links': 'first',
@@ -89,4 +87,3 @@ exports.create = function (api) {
     return notify.listen
   }
 }
-

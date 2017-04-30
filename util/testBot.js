@@ -16,7 +16,7 @@ exports.create = function (api) {
   return nest({
     'sbot': {
       create: function (name = Math.random().toString()) {
-        sbot = createSbot({keys: ssbKeys.generate(), temp: name })
+        sbot = createSbot({ keys: ssbKeys.generate(), temp: name })
       },
       close: function () {
         sbot.close()
@@ -41,4 +41,3 @@ exports.create = function (api) {
     }
   })
 }
-

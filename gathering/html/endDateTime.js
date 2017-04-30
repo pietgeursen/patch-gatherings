@@ -1,5 +1,5 @@
 const nest = require('depnest')
-const { h, Value, map, computed } = require('mutant')
+const { h } = require('mutant')
 
 exports.needs = nest({
 })
@@ -12,4 +12,3 @@ exports.create = (api) => {
     return h('div', {}, obs.endDateTime)
   }
 }
-

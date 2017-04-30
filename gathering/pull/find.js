@@ -1,6 +1,5 @@
 const nest = require('depnest')
 const pull = require('pull-stream')
-const moment = require('moment')
 
 exports.gives = nest('gathering.pull.find')
 
@@ -11,7 +10,7 @@ exports.needs = nest({
 })
 
 exports.create = function (api) {
-  const {messagesByType, links} = api.sbot.pull
+  const { messagesByType } = api.sbot.pull
 
   return nest({'gathering.pull.find': find})
 
@@ -23,4 +22,3 @@ exports.create = function (api) {
     )
   }
 }
-

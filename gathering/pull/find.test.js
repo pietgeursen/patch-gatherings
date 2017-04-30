@@ -1,6 +1,5 @@
 const nest = require('depnest')
 const pull = require('pull-stream')
-const moment = require('moment')
 
 exports.gives = nest('tests')
 

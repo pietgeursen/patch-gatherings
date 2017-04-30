@@ -28,4 +28,3 @@ exports.create = function (api) {
     return struct
   })
 }
-

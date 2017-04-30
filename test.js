@@ -25,4 +25,3 @@ const modules = combine(bulk(__dirname, [
 ]), depTest)
 
 first(modules.test)()
-

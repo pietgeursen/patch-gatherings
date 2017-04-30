@@ -1,5 +1,5 @@
 const nest = require('depnest')
-const { h, Value, map, computed, when } = require('mutant')
+const { h, computed, when } = require('mutant')
 const addSuggest = require('suggest-box')
 
 exports.needs = nest({
@@ -39,4 +39,3 @@ exports.create = (api) => {
     )
   }
 }
-

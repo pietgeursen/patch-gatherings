@@ -1,6 +1,5 @@
 const nest = require('depnest')
 const pull = require('pull-stream')
-const async = require('pull-async')
 
 exports.gives = nest('tests')
 
@@ -26,7 +25,7 @@ exports.create = function (api) {
     tests['obs.gathering attendees obs updates when a attendee of a gathering is added '] = function (assert, cb) {
       api.sbot.create()
       const attendeeId = api.sbot.whoami().id
-      api.gathering.async.create({}, function (err) {})
+      api.gathering.async.create({}, function (err) { assert(!err) })
       pull(
         api.gathering.pull.find({past: true, future: true}),
         pull.map(gathering => api.gathering.obs.gathering(gathering.key)),
@@ -50,7 +49,7 @@ exports.create = function (api) {
     tests['obs.gathering attendees obs updates when a attendee of a gathering is removed '] = function (assert, cb) {
       api.sbot.create()
       const attendeeId = api.sbot.whoami().id
-      api.gathering.async.create({}, function (err) {})
+      api.gathering.async.create({}, function (err) { assert(!err) })
       pull(
         api.gathering.pull.find({past: true, future: true}),
         pull.map(gathering => api.gathering.obs.gathering(gathering.key)),
@@ -75,7 +74,7 @@ exports.create = function (api) {
     tests['obs.gathering title obs updates when a title of a gathering is published'] = function (assert, cb) {
       const title = 'meow!'
       api.sbot.create()
-      api.gathering.async.create({}, function (err) {})
+      api.gathering.async.create({}, function (err) { assert(!err) })
       pull(
         api.gathering.pull.find({past: true, future: true}),
         pull.map(gathering => api.gathering.obs.gathering(gathering.key)),
@@ -99,4 +98,3 @@ exports.create = function (api) {
     return tests
   }
 }
-

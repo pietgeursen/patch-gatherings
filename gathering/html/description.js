@@ -24,4 +24,3 @@ exports.create = (api) => {
     )
   }
 }
-

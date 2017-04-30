@@ -1,5 +1,5 @@
 const nest = require('depnest')
-const { h, Value, Set, map, computed, concat, forEach, when } = require('mutant')
+const { h, Set, map, forEach, when } = require('mutant')
 
 exports.needs = nest({
   'blob.sync.url': 'first',
@@ -11,7 +11,6 @@ exports.gives = nest('gathering.html.images')
 exports.create = (api) => {
   return nest('gathering.html.images', images)
   function images ({obs, msg, isEditing, value}) {
-    const imagesToAdd = Set([])
     const allImages = Set([])
     value(images => forEach(images, image => allImages.add(image.link))) // TODO: so that we still publish an image with all the info but just use the link for now.
     obs.images(images => forEach(images, image => allImages.add(image)))
@@ -26,4 +25,3 @@ exports.create = (api) => {
     ])
   }
 }
-

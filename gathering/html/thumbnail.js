@@ -14,4 +14,3 @@ exports.create = (api) => {
     return h('img', { src: computed([obs.images], (images) => api.blob.sync.url(images[images.length - 1])) })
   }
 }
-

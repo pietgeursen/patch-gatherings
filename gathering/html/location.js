@@ -1,5 +1,5 @@
 const nest = require('depnest')
-const { h, Value, map, computed } = require('mutant')
+const { h, computed } = require('mutant')
 
 exports.needs = nest({
   'message.html.markdown': 'first'
@@ -14,4 +14,3 @@ exports.create = (api) => {
     return h('div', {}, computed(obs.location, markdown))
   }
 }
-

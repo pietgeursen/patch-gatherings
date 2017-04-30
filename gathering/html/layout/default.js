@@ -1,6 +1,5 @@
 const nest = require('depnest')
-const { h, Value, computed, map, when, forEachPair } = require('mutant')
-const { isMsg } = require('ssb-ref')
+const { h, when, forEachPair } = require('mutant')
 
 exports.needs = nest({
   'about.html.link': 'first',
@@ -39,7 +38,7 @@ exports.create = (api) => {
   function gatheringLayout (msg, opts) {
     if (!(opts.layout === undefined || opts.layout === 'default')) return
 
-    const { layout, obs, isEditing, isSummary } = opts
+    const { obs, isEditing, isSummary } = opts
 
     const { attendees, title, images, location, description, startDateTime } = api.gathering.html
     const editedGathering = api.gathering.obs.struct()
@@ -47,17 +46,17 @@ exports.create = (api) => {
     const myKey = '@' + api.keys.sync.load().public
 
     return [
-      h('button', {'ev-click': () => isSummary.set(true) }, 'Less...'),
-      title({obs, msg, isEditing, value: editedGathering.title}),
+      h('button', { 'ev-click': () => isSummary.set(true) }, 'Less...'),
+      title({ obs, msg, isEditing, value: editedGathering.title }),
       h('section.content', [
         images({obs, msg, isEditing, value: editedGathering.images}),
         location({obs, msg, isEditing, value: editedGathering.location}),
         description({obs, msg, isEditing, value: editedGathering.description}),
         attendees({ obs, msg }),
         startDateTime({obs, msg, isEditing, value: editedGathering.startDateTime}),
-        h('button', {'ev-click': () => api.gathering.async.attendees({attendees: [{id: myKey }], gathering: msg.key}, console.log)}, 'Attend'),
-        h('button', {'ev-click': () => api.gathering.async.attendees({attendees: [{id: myKey, remove: true }], gathering: msg.key}, console.log)}, 'Not going'),
-        h('button', {'ev-click': () => isEditing.set(!isEditing()) }, when(isEditing, 'Cancel', 'Edit')),
+        h('button', { 'ev-click': () => api.gathering.async.attendees({ attendees: [{ id: myKey }], gathering: msg.key }, console.log) }, 'Attend'),
+        h('button', { 'ev-click': () => api.gathering.async.attendees({ attendees: [{ id: myKey, remove: true }], gathering: msg.key }, console.log) }, 'Not going'),
+        h('button', { 'ev-click': () => isEditing.set(!isEditing()) }, when(isEditing, 'Cancel', 'Edit')),
         when(isEditing, h('button', {'ev-click': save}, 'Update'))
       ])
     ]

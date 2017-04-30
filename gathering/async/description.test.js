@@ -30,4 +30,3 @@ exports.create = function (api) {
     return tests
   }
 }
-

@@ -1,6 +1,5 @@
 const nest = require('depnest')
-const { h, Value, map } = require('mutant')
-const { isMsg } = require('ssb-ref')
+const { h } = require('mutant')
 
 exports.needs = nest({
   'blob.sync.url': 'first',
@@ -20,14 +19,14 @@ exports.create = (api) => {
   return nest('gathering.html.layout', gatheringLayout)
 
   function gatheringLayout (msg, opts) {
-    const { layout, obs, isEditing, isSummary } = opts
+    const { layout, obs, isSummary } = opts
 
     if (!(layout === undefined || layout === 'summary')) return
 
     const { title, thumbnail, location, startDateTime, endDateTime } = api.gathering.html
 
     return [
-      h('button', {'ev-click': () => isSummary.set(false) }, 'More...'),
+      h('button', { 'ev-click': () => isSummary.set(false) }, 'More...'),
       h('section.content', [
         title({obs, msg}),
         thumbnail({obs, msg}),
@@ -41,4 +40,3 @@ exports.create = (api) => {
     ]
   }
 }
-

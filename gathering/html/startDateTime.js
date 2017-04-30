@@ -1,7 +1,6 @@
 const nest = require('depnest')
 const spacetime = require('spacetime')
-const moment = require('moment')
-const { h, Value, map, computed, when } = require('mutant')
+const { h, computed, when } = require('mutant')
 
 exports.needs = nest({
 })
@@ -26,4 +25,3 @@ exports.create = (api) => {
     )
   }
 }
-
