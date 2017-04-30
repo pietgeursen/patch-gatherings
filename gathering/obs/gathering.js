@@ -1,3 +1,4 @@
+var spacetime = require('spacetime')
 var nest = require('depnest')
 var pull = require('pull-stream')
 var cat = require('pull-cat')
@@ -36,6 +37,7 @@ exports.create = function (api) {
     )
     pull(
       subsribeToLinksByKey(subscription, 'startDateTime'),
+      pull.map(spacetime),
       pull.drain(gathering.startDateTime.set)
     )
     pull(

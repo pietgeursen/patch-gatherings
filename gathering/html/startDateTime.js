@@ -1,4 +1,6 @@
 const nest = require('depnest')
+const spacetime = require('spacetime')
+const moment = require('moment')
 const { h, Value, map, computed, when } = require('mutant')
 
 exports.needs = nest({
@@ -12,11 +14,17 @@ exports.create = (api) => {
     obs.startDateTime(console.log)
     return when(isEditing, 
       h('input', { 
-        'ev-input': e => value.set(e.target.value), 
+        'ev-input': e => {
+          const dt = e.target.value + 'Z' //HACK? datetime-local doesn't append the zone so we need to.
+          const st = spacetime(dt)
+          value.set(dt)
+        }, 
         value: obs.startDateTime, 
         type: 'datetime-local'
       }), 
-      h('div', {}, obs.startDateTime)
+      h('div', {}, computed(obs.startDateTime, time => {
+        return spacetime(time).format('nice') 
+      }))
     )
   }
 }
