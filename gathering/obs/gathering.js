@@ -47,23 +47,9 @@ exports.create = function (api) {
       pull.drain(gathering.description.set)
     )
     pull(
-      api.sbot.pull.links({dest: '@', rel: 'host', live: true}),
-      pull.filter(data => data.key),
-      pull.asyncMap(function(data, cb) {
-        api.sbot.async.get(data.key, cb)
-      }),
-      pull.drain(msg => {
-        const host = msg.content.host
-        host.remove ? gathering.hosts.delete(host.link) : gathering.hosts.add(host.link)
-      })
-    )
-    pull(
-      api.sbot.pull.links({dest: '@', rel: 'attendee', live: true}),
-      pull.filter(data => data.key),
-      pull.asyncMap(function(data, cb) {
-        api.sbot.async.get(data.key, cb)
-      }),
-      pull.drain(msg => {
+      subscription(),
+      pull.filter(msg => msg.content.attendee),
+      pull.drain((msg) => {
         const attendee = msg.content.attendee
         attendee.remove ? gathering.attendees.delete(attendee.link) : gathering.attendees.add(attendee.link)
       })
@@ -74,17 +60,6 @@ exports.create = function (api) {
       pull.drain((msg) => {
         const image = msg.content.image
         image.remove ? gathering.images.delete(image.link) : gathering.images.add(image.link)
-      })
-    )
-    pull(
-      api.sbot.pull.links({dest: '@', rel: 'contibutor', live: true}),
-      pull.filter(data => data.key),
-      pull.asyncMap(function(data, cb) {
-        api.sbot.async.get(data.key, cb)
-      }),
-      pull.drain(msg => {
-        const contibutor = msg.content.contibutor
-        contibutor.remove ? gathering.contributors.delete(contibutor.link) : gathering.contributors.add(contibutor.link)
       })
     )
     return gathering
