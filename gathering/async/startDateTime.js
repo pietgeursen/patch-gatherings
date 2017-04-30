@@ -8,7 +8,7 @@ exports.needs = nest({
 })
 
 exports.create = function (api) {
-  return nest('gathering.async.startDateTime', function({startDateTime, gathering}, cb) {
-    api.sbot.async.publish({type: 'about', link: gathering, startDateTime: spacetime(startDateTime)}, cb) 
+  return nest('gathering.async.startDateTime', function ({startDateTime, gathering}, cb) {
+    api.sbot.async.publish({type: 'about', link: gathering, startDateTime: spacetime(startDateTime)}, cb)
   })
-} 
+}

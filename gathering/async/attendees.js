@@ -8,13 +8,13 @@ exports.needs = nest({
 })
 
 exports.create = function (api) {
-  return nest('gathering.async.attendees', function(data, cb) {
+  return nest('gathering.async.attendees', function (data, cb) {
     pull(
-      pull.values(data.attendees), 
-      pull.asyncMap((attendee, cb) =>{
+      pull.values(data.attendees),
+      pull.asyncMap((attendee, cb) => {
         api.sbot.async.publish({type: 'about', link: data.gathering, attendee: {link: attendee.id, remove: attendee.remove}}, cb)
       }),
       pull.collect(cb)
     )
   })
-} 
+}

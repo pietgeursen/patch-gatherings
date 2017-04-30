@@ -11,7 +11,7 @@ exports.needs = nest({
   'gathering.html.edit': 'first',
   'gathering.html.layout': 'first',
   'gathering.async.attendees': 'first',
-  'feed.html.render':'first',
+  'feed.html.render': 'first',
   'keys.sync.load': 'first',
   'about.html.link': 'first',
   'message.html': {
@@ -33,17 +33,16 @@ exports.create = function (api) {
   })
   function renderGathering (msg, opts) {
     if (!msg.value || (msg.value.content.type !== 'gathering')) return
-    const isEditing = Value(false) 
-    const isSummary = Value(true) 
-    obs = api.gathering.obs.gathering(msg.key) 
+    const isEditing = Value(false)
+    const isSummary = Value(true)
+    obs = api.gathering.obs.gathering(msg.key)
 
-    const element = h('Message', {attributes: {tabindex:'0'}}, 
-      when(isSummary, 
-        api.gathering.html.layout(msg, {layout: 'summary', isEditing, isSummary, obs}), 
+    const element = h('Message', {attributes: {tabindex: '0'}},
+      when(isSummary,
+        api.gathering.html.layout(msg, {layout: 'summary', isEditing, isSummary, obs}),
         api.gathering.html.layout(msg, {layout: 'default', isEditing, isSummary, obs})
     ))
 
     return api.message.html.decorate(element, { msg })
   }
-
 }

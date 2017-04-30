@@ -10,25 +10,24 @@ exports.needs = nest({
 })
 
 exports.create = function (api) {
-
   return nest('tests', tests)
 
-  function tests(tests) {
-    tests['endDateTime is requireable'] = function(assert, cb) {
-      assert(api.gathering.async.endDateTime) 
+  function tests (tests) {
+    tests['endDateTime is requireable'] = function (assert, cb) {
+      assert(api.gathering.async.endDateTime)
       cb()
     }
-    tests['can publish a endDateTime message without error'] = function(assert, cb) {
+    tests['can publish a endDateTime message without error'] = function (assert, cb) {
       const endDateTime = 'piet'
       const link = 1
       api.sbot.create()
-      api.gathering.async.endDateTime({endDateTime, link}, function(err) {
-        assert(!err) 
+      api.gathering.async.endDateTime({endDateTime, link}, function (err) {
+        assert(!err)
         api.sbot.close()
         cb()
-      }) 
+      })
     }
     return tests
-  }  
+  }
 }
 

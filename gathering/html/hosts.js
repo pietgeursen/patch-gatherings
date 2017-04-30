@@ -4,16 +4,16 @@ const addSuggest = require('suggest-box')
 
 exports.needs = nest({
   'about.html.link': 'first',
-  'about.async.suggest': 'first',
+  'about.async.suggest': 'first'
 })
 
 exports.gives = nest('gathering.html.hosts')
 
 exports.create = (api) => {
   return nest('gathering.html.hosts', hosts)
-  
-  function hosts({obs, msg, isEditing, value}) {
-    //TODO handle when hosts / attendees / contributors are not ssb users
+
+  function hosts ({obs, msg, isEditing, value}) {
+    // TODO handle when hosts / attendees / contributors are not ssb users
     const input = h('input', {'ev-input': e => value.set(e.target.value), value: value()})
     const linkedHosts = computed(obs.hosts, (hosts) => hosts.map(api.about.html.link))
 
@@ -33,11 +33,10 @@ exports.create = (api) => {
       value.set(ev.detail.id)
     })
 
-    return when(isEditing, 
+    return when(isEditing,
       inputWithLabel,
-      h('div',linkedHosts)
+      h('div', linkedHosts)
     )
-    
   }
 }
 

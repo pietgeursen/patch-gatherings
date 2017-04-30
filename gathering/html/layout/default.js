@@ -12,7 +12,7 @@ exports.needs = nest({
     'location': 'first',
     'attendees': 'first',
     'hosts': 'first',
-    'startDateTime': 'first',
+    'startDateTime': 'first'
   },
   'gathering.obs.struct': 'first',
   'keys.sync.load': 'first',
@@ -26,7 +26,7 @@ exports.needs = nest({
     'location': 'first',
     'attendees': 'first',
     'hosts': 'first',
-    'startDateTime': 'first',
+    'startDateTime': 'first'
   }
 
 })
@@ -42,7 +42,7 @@ exports.create = (api) => {
     const { layout, obs, isEditing, isSummary } = opts
 
     const { attendees, title, images, location, description, startDateTime } = api.gathering.html
-    const editedGathering = api.gathering.obs.struct() 
+    const editedGathering = api.gathering.obs.struct()
 
     const myKey = '@' + api.keys.sync.load().public
 
@@ -55,20 +55,20 @@ exports.create = (api) => {
         description({obs, msg, isEditing, value: editedGathering.description}),
         attendees({ obs, msg }),
         startDateTime({obs, msg, isEditing, value: editedGathering.startDateTime}),
-        h('button', {'ev-click': () => api.gathering.async.attendees({attendees: [{id: myKey }], gathering: msg.key}, console.log)}, 'Attend' ),
-        h('button', {'ev-click': () => api.gathering.async.attendees({attendees: [{id: myKey, remove: true }], gathering: msg.key}, console.log)}, 'Not going' ),
+        h('button', {'ev-click': () => api.gathering.async.attendees({attendees: [{id: myKey }], gathering: msg.key}, console.log)}, 'Attend'),
+        h('button', {'ev-click': () => api.gathering.async.attendees({attendees: [{id: myKey, remove: true }], gathering: msg.key}, console.log)}, 'Not going'),
         h('button', {'ev-click': () => isEditing.set(!isEditing()) }, when(isEditing, 'Cancel', 'Edit')),
         when(isEditing, h('button', {'ev-click': save}, 'Update'))
       ])
     ]
 
-    function save() {
+    function save () {
       forEachPair(editedGathering, (k, v) => {
-        if(api.gathering.async[k] && v){
-          console.log(k,v)
-          api.gathering.async[k]({[k]: v, gathering: msg.key}, console.log) 
+        if (api.gathering.async[k] && v) {
+          console.log(k, v)
+          api.gathering.async[k]({[k]: v, gathering: msg.key}, console.log)
         }
-      })      
+      })
       isEditing.set(false)
     }
   }

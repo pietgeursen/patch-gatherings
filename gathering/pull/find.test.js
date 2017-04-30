@@ -13,30 +13,27 @@ exports.needs = nest({
 })
 
 exports.create = function (api) {
-
   return nest('tests', tests)
 
-  function tests(tests) {
-    tests['find is requireable'] = function(assert, cb) {
-      assert(api.gathering.pull.find) 
+  function tests (tests) {
+    tests['find is requireable'] = function (assert, cb) {
+      assert(api.gathering.pull.find)
       cb()
     }
-    tests['can create and find a gathering'] = function(assert, cb) {
+    tests['can create and find a gathering'] = function (assert, cb) {
       api.sbot.create()
-      api.gathering.async.create({}, function(err) {
-        assert(!err) 
+      api.gathering.async.create({}, function (err) {
+        assert(!err)
         pull(
           api.gathering.pull.find({past: true, future: true}),
-          pull.drain(function(data) {
-            assert(data) 
+          pull.drain(function (data) {
+            assert(data)
             api.sbot.close()
             cb()
           })
         )
-      }) 
+      })
     }
     return tests
-  }  
-  
-
+  }
 }

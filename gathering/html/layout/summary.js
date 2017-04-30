@@ -10,7 +10,7 @@ exports.needs = nest({
     'thumbnail': 'first',
     'location': 'first',
     'endDateTime': 'first',
-    'startDateTime': 'first',
+    'startDateTime': 'first'
   }
 })
 
@@ -35,8 +35,8 @@ exports.create = (api) => {
         h('section.time', {}, [
           h('h3', 'When:'),
           startDateTime({obs, msg}),
-          endDateTime({obs, msg}),
-        ]), 
+          endDateTime({obs, msg})
+        ])
       ])
     ]
   }

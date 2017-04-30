@@ -16,24 +16,23 @@ exports.needs = nest({
 })
 
 exports.create = function (api) {
-
   return nest('tests', tests)
 
-  function tests(tests) {
-    tests['obs.gathering is requireable'] = function(assert, cb) {
-      assert(api.gathering.obs.gathering) 
+  function tests (tests) {
+    tests['obs.gathering is requireable'] = function (assert, cb) {
+      assert(api.gathering.obs.gathering)
       cb()
     }
-    tests['obs.gathering attendees obs updates when a attendee of a gathering is added '] = function(assert, cb) {
+    tests['obs.gathering attendees obs updates when a attendee of a gathering is added '] = function (assert, cb) {
       api.sbot.create()
-      const attendeeId = api.sbot.whoami().id 
-      api.gathering.async.create({}, function(err) {})
+      const attendeeId = api.sbot.whoami().id
+      api.gathering.async.create({}, function (err) {})
       pull(
         api.gathering.pull.find({past: true, future: true}),
         pull.map(gathering => api.gathering.obs.gathering(gathering.key)),
         pull.drain(gathering => {
           gathering(val => {
-            assert(val.attendees.includes(attendeeId)) 
+            assert(val.attendees.includes(attendeeId))
             api.sbot.close()
             cb()
           })
@@ -48,17 +47,17 @@ exports.create = function (api) {
         })
       )
     }
-    tests['obs.gathering attendees obs updates when a attendee of a gathering is removed '] = function(assert, cb) {
+    tests['obs.gathering attendees obs updates when a attendee of a gathering is removed '] = function (assert, cb) {
       api.sbot.create()
-      const attendeeId = api.sbot.whoami().id 
-      api.gathering.async.create({}, function(err) {})
+      const attendeeId = api.sbot.whoami().id
+      api.gathering.async.create({}, function (err) {})
       pull(
         api.gathering.pull.find({past: true, future: true}),
         pull.map(gathering => api.gathering.obs.gathering(gathering.key)),
         pull.drain(gathering => {
           gathering.attendees.add(attendeeId)
           gathering(val => {
-            assert(!val.attendees.includes(attendeeId)) 
+            assert(!val.attendees.includes(attendeeId))
             api.sbot.close()
             cb()
           })
@@ -73,16 +72,16 @@ exports.create = function (api) {
         })
       )
     }
-    tests['obs.gathering title obs updates when a title of a gathering is published'] = function(assert, cb) {
+    tests['obs.gathering title obs updates when a title of a gathering is published'] = function (assert, cb) {
       const title = 'meow!'
       api.sbot.create()
-      api.gathering.async.create({}, function(err) {})
+      api.gathering.async.create({}, function (err) {})
       pull(
         api.gathering.pull.find({past: true, future: true}),
         pull.map(gathering => api.gathering.obs.gathering(gathering.key)),
         pull.drain(gathering => {
           gathering(val => {
-            assert(val.title === title) 
+            assert(val.title === title)
             api.sbot.close()
             cb()
           })
@@ -98,6 +97,6 @@ exports.create = function (api) {
       )
     }
     return tests
-  }  
+  }
 }
 

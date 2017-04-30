@@ -9,12 +9,9 @@ exports.gives = nest('gathering.html.location')
 
 exports.create = (api) => {
   return nest('gathering.html.location', location)
-  function location({obs, msg, isEditing}) {
+  function location ({obs, msg, isEditing}) {
     const markdown = api.message.html.markdown
     return h('div', {}, computed(obs.location, markdown))
   }
 }
-
- 
-
 

@@ -21,8 +21,9 @@ exports.create = function (api) {
       images: Set([])
     })
     Object.keys(opts).forEach((k) => {
-      if(opts[k])
+      if (opts[k]) {
         struct[k].set(opts[k])
+      }
     })
     return struct
   })

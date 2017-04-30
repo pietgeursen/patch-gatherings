@@ -13,7 +13,7 @@ exports.gives = nest('gathering.html.create')
 exports.create = function (api) {
   return nest({ 'gathering.html.create': create })
 
-  function create() {
+  function create () {
     const actions = h('button', {'ev-click': () => api.gathering.async.create()}, 'Create')
     const composer = h('div', [
       actions

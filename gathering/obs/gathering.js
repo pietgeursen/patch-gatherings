@@ -21,8 +21,8 @@ exports.create = function (api) {
 
     const subscription = subscribeToLinks(gatheringId)
 
-    const gathering = api.gathering.obs.struct() 
-    
+    const gathering = api.gathering.obs.struct()
+
     pull(
       subsribeToLinksByKey(subscription, 'location'),
       pull.drain(gathering.location.set)
@@ -67,7 +67,7 @@ exports.create = function (api) {
     return gathering
   })
 
-  function subsribeToLinksByKey(subscription, key) {
+  function subsribeToLinksByKey (subscription, key) {
     return pull(
       subscription(),
       pull.filter(link => {
@@ -76,12 +76,12 @@ exports.create = function (api) {
       pull.map(link => link.content[key])
     )
   }
-  function subscribeToLinks(id) {
+  function subscribeToLinks (id) {
     const notify = Notify()
     pull(
       api.sbot.pull.links({dest: id, live: true}),
       pull.filter(data => data.key),
-      pull.asyncMap(function(data, cb) {
+      pull.asyncMap(function (data, cb) {
         api.sbot.async.get(data.key, cb)
       }),
       pull.drain(notify)

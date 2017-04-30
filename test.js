@@ -7,10 +7,10 @@ const test = require('pull-test')
 const depTest = {
   gives: nest('test'),
   needs: nest({
-    'tests': 'reduce',
+    'tests': 'reduce'
   }),
   create: function (api) {
-    return nest('test', function() {
+    return nest('test', function () {
       const tests = api.tests({})
       test(tests)
     })
@@ -18,12 +18,11 @@ const depTest = {
 }
 
 const modules = combine(bulk(__dirname, [
-  'gathering/async/*.js', 
-  'gathering/obs/*.js', 
-  'gathering/pull/*.js', 
+  'gathering/async/*.js',
+  'gathering/obs/*.js',
+  'gathering/pull/*.js',
   'util/*.js'
 ]), depTest)
 
 first(modules.test)()
-
 

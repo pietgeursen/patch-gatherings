@@ -9,23 +9,22 @@ exports.needs = nest({
 })
 
 exports.create = function (api) {
-
   return nest('tests', tests)
 
-  function tests(tests) {
-    tests['create is requireable'] = function(assert, cb) {
-      assert(api.gathering.async.create) 
+  function tests (tests) {
+    tests['create is requireable'] = function (assert, cb) {
+      assert(api.gathering.async.create)
       cb()
     }
-    tests['creates empty gathering without error'] = function(assert, cb) {
+    tests['creates empty gathering without error'] = function (assert, cb) {
       api.sbot.create()
-      api.gathering.async.create({}, function(err) {
-        assert(!err) 
+      api.gathering.async.create({}, function (err) {
+        assert(!err)
         api.sbot.close()
         cb()
-      }) 
+      })
     }
     return tests
-  }  
+  }
 }
 

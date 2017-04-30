@@ -10,25 +10,24 @@ exports.needs = nest({
 })
 
 exports.create = function (api) {
-
   return nest('tests', tests)
 
-  function tests(tests) {
-    tests['title is requireable'] = function(assert, cb) {
-      assert(api.gathering.async.title) 
+  function tests (tests) {
+    tests['title is requireable'] = function (assert, cb) {
+      assert(api.gathering.async.title)
       cb()
     }
-    tests['can publish a title message without error'] = function(assert, cb) {
+    tests['can publish a title message without error'] = function (assert, cb) {
       const title = 'piet'
       const id = 1
       api.sbot.create()
-      api.gathering.async.title({title, id: {link: id}}, function(err) {
-        assert(!err) 
+      api.gathering.async.title({title, id: {link: id}}, function (err) {
+        assert(!err)
         api.sbot.close()
         cb()
-      }) 
+      })
     }
     return tests
-  }  
+  }
 }
 
