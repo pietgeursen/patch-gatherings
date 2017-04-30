@@ -10,5 +10,10 @@ Message {
     a {
       font-size: 2rem 
     }  
+    input {
+      border: 1px solid gainsboro
+      width: 100%
+      font-size: 1em
+    }
   }
 }
