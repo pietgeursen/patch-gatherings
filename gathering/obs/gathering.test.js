@@ -7,7 +7,7 @@ exports.gives = nest('tests')
 exports.needs = nest({
   'gathering.async.create': 'first',
   'gathering.async.title': 'first',
-  'gathering.async.hosts': 'first',
+  'gathering.async.attendees': 'first',
   'gathering.obs.gathering': 'first',
   'gathering.pull.find': 'first',
   'sbot.close': 'first',
@@ -24,16 +24,16 @@ exports.create = function (api) {
       assert(api.gathering.obs.gathering) 
       cb()
     }
-    tests['obs.gathering hosts obs updates when a host of a gathering is added '] = function(assert, cb) {
+    tests['obs.gathering attendees obs updates when a attendee of a gathering is added '] = function(assert, cb) {
       api.sbot.create()
-      const hostId = api.sbot.whoami().id 
+      const attendeeId = api.sbot.whoami().id 
       api.gathering.async.create({}, function(err) {})
       pull(
         api.gathering.pull.find({past: true, future: true}),
         pull.map(gathering => api.gathering.obs.gathering(gathering.key)),
         pull.drain(gathering => {
           gathering(val => {
-            assert(val.hosts.includes(hostId)) 
+            assert(val.attendees.includes(attendeeId)) 
             api.sbot.close()
             cb()
           })
@@ -42,23 +42,23 @@ exports.create = function (api) {
       pull(
         api.gathering.pull.find({past: true, future: true}),
         pull.asyncMap((gathering, cb) => {
-          api.gathering.async.hosts({hosts: [{id: hostId}], gathering: gathering.key}, cb)
+          api.gathering.async.attendees({attendees: [{id: attendeeId}], gathering: gathering.key}, cb)
         }),
-        pull.drain(host => {
+        pull.drain(attendee => {
         })
       )
     }
-    tests['obs.gathering hosts obs updates when a host of a gathering is removed '] = function(assert, cb) {
+    tests['obs.gathering attendees obs updates when a attendee of a gathering is removed '] = function(assert, cb) {
       api.sbot.create()
-      const hostId = api.sbot.whoami().id 
+      const attendeeId = api.sbot.whoami().id 
       api.gathering.async.create({}, function(err) {})
       pull(
         api.gathering.pull.find({past: true, future: true}),
         pull.map(gathering => api.gathering.obs.gathering(gathering.key)),
         pull.drain(gathering => {
-          gathering.hosts.add(hostId)
+          gathering.attendees.add(attendeeId)
           gathering(val => {
-            assert(!val.hosts.includes(hostId)) 
+            assert(!val.attendees.includes(attendeeId)) 
             api.sbot.close()
             cb()
           })
@@ -67,9 +67,9 @@ exports.create = function (api) {
       pull(
         api.gathering.pull.find({past: true, future: true}),
         pull.asyncMap((gathering, cb) => {
-          api.gathering.async.hosts({hosts: [{id: hostId, remove: true}], gathering: gathering.key}, cb)
+          api.gathering.async.attendees({attendees: [{id: attendeeId, remove: true}], gathering: gathering.key}, cb)
         }),
-        pull.drain(host => {
+        pull.drain(attendee => {
         })
       )
     }
