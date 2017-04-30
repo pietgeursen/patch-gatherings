@@ -37,11 +37,11 @@ exports.create = function (api) {
     const isSummary = Value(true) 
     obs = api.gathering.obs.gathering(msg.key) 
 
-    const element = h('Message', {attributes: {tabindex:'0'}}, computed([isSummary], (summary) => {
-      const layout = summary ? 'summary' : 'default'
-
-      return api.gathering.html.layout(msg, {layout, isEditing, isSummary, obs})
-    }))
+    const element = h('Message', {attributes: {tabindex:'0'}}, 
+      when(isSummary, 
+        api.gathering.html.layout(msg, {layout: 'summary', isEditing, isSummary, obs}), 
+        api.gathering.html.layout(msg, {layout: 'default', isEditing, isSummary, obs})
+    ))
 
     return api.message.html.decorate(element, { msg })
   }
