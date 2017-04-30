@@ -1,0 +1,7 @@
+Description {
+  textarea {
+    border: 1px solid gainsboro
+    border-top-left-radius: 0
+    border-top-right-radius: 0
+  }
+}

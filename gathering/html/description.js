@@ -13,14 +13,14 @@ exports.create = (api) => {
     const markdown = api.message.html.markdown
     const input = h('textarea', {'ev-input': e => value.set(e.target.value), value: obs.description()})
 
-    const inputWithLabel = h('div', [
+    const inputWithLabel = h('Description', [
       h('label', 'Description'),
       input
     ])
 
     return when(isEditing,
       inputWithLabel,
-      h('div', computed(obs.description, markdown))
+      h('Description', computed(obs.description, markdown))
     )
   }
 }

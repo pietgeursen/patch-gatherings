@@ -54,10 +54,12 @@ exports.create = (api) => {
         description({obs, msg, isEditing, value: editedGathering.description}),
         attendees({ obs, msg }),
         startDateTime({obs, msg, isEditing, value: editedGathering.startDateTime}),
-        h('button', { 'ev-click': () => api.gathering.async.attendees({ attendees: [{ id: myKey }], gathering: msg.key }, console.log) }, 'Attend'),
-        h('button', { 'ev-click': () => api.gathering.async.attendees({ attendees: [{ id: myKey, remove: true }], gathering: msg.key }, console.log) }, 'Not going'),
-        h('button', { 'ev-click': () => isEditing.set(!isEditing()) }, when(isEditing, 'Cancel', 'Edit')),
-        when(isEditing, h('button', {'ev-click': save}, 'Update'))
+        h('section.actions', [
+          h('button', { 'ev-click': () => api.gathering.async.attendees({ attendees: [{ id: myKey }], gathering: msg.key }, console.log) }, 'Attend'),
+          h('button', { 'ev-click': () => api.gathering.async.attendees({ attendees: [{ id: myKey, remove: true }], gathering: msg.key }, console.log) }, 'Not going'),
+          h('button', { 'ev-click': () => isEditing.set(!isEditing()) }, when(isEditing, 'Cancel', 'Edit')),
+          when(isEditing, h('button', {'ev-click': save}, 'Update'))
+        ])
       ])
     ]
 

@@ -1,0 +1,9 @@
+Message {
+  section.content{
+      section.actions {
+      display: flex
+      flex-basis: 100%
+      justify-content: flex-end 
+    }
+  }
+}
