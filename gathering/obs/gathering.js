@@ -31,12 +31,12 @@ exports.create = function (api) {
       pull.drain(gathering.thumbnail.set)
     )
     pull(
-      subsribeToLinksByKey(subscription, 'endDate'),
-      pull.drain(gathering.endDate.set)
+      subsribeToLinksByKey(subscription, 'endDateTime'),
+      pull.drain(gathering.endDateTime.set)
     )
     pull(
-      subsribeToLinksByKey(subscription, 'startDate'),
-      pull.drain(gathering.startDate.set)
+      subsribeToLinksByKey(subscription, 'startDateTime'),
+      pull.drain(gathering.startDateTime.set)
     )
     pull(
       cat([pull.once(gatheringId), subsribeToLinksByKey(subscription, 'title')]),

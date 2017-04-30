@@ -12,6 +12,7 @@ exports.needs = nest({
     'location': 'first',
     'attendees': 'first',
     'hosts': 'first',
+    'startDateTime': 'first',
   },
   'gathering.obs.struct': 'first',
   'keys.sync.load': 'first',
@@ -25,6 +26,7 @@ exports.needs = nest({
     'location': 'first',
     'attendees': 'first',
     'hosts': 'first',
+    'startDateTime': 'first',
   }
 
 })
@@ -39,8 +41,9 @@ exports.create = (api) => {
 
     const { layout, obs, isEditing, isSummary } = opts
 
-    const { attendees, title, images, location, description } = api.gathering.html
+    const { attendees, title, images, location, description, startDateTime } = api.gathering.html
     const editedGathering = api.gathering.obs.struct() 
+    editedGathering(console.log)
 
     const myKey = '@' + api.keys.sync.load().public
 
@@ -52,11 +55,7 @@ exports.create = (api) => {
         location({obs, msg, isEditing, value: editedGathering.location}),
         description({obs, msg, isEditing, value: editedGathering.description}),
         attendees({ obs, msg }),
-        h('section.time', {}, [
-          h('h3', 'When:'),
-          h('div', ['starts: ', obs.startDate]),
-          h('div', ['ends: ', obs.endDate]),
-        ]), 
+        startDateTime({obs, msg, isEditing, value: editedGathering.startDateTime}),
         h('button', {'ev-click': () => api.gathering.async.attendees({attendees: [{id: myKey }], gathering: msg.key}, console.log)}, 'Attend' ),
         h('button', {'ev-click': () => api.gathering.async.attendees({attendees: [{id: myKey, remove: true }], gathering: msg.key}, console.log)}, 'Not going' ),
         h('button', {'ev-click': () => isEditing.set(!isEditing()) }, when(isEditing, 'Cancel', 'Edit')),
