@@ -17,7 +17,7 @@ exports.create = function (api) {
   return nest({'gathering.pull.find': find})
 
   function find(opts){
-    var _opts = Object.assign({},{live: true, future: true, past: false}, opts, {type: 'gathering'})
+    const _opts = Object.assign({},{live: true, future: true, past: false}, opts, {type: 'gathering'})
     return pull(
       messagesByType(_opts),
       pull.filter(gathering => gathering)

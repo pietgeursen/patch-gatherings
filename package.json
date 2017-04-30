@@ -24,6 +24,7 @@
     "pull-cat": "^1.1.11",
     "pull-notify": "^0.1.1",
     "pull-scroll": "^1.0.3",
+    "spacetime": "^1.0.4",
     "suggest-box": "^2.2.3"
   }
 }

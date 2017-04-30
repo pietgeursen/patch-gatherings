@@ -1,9 +1,9 @@
-var h = require('mutant/h')
-var map = require('mutant/map')
-var Value = require('mutant/value')
-var when = require('mutant/when')
-var computed = require('mutant/computed')
-var nest = require('depnest')
+const h = require('mutant/h')
+const map = require('mutant/map')
+const Value = require('mutant/value')
+const when = require('mutant/when')
+const computed = require('mutant/computed')
+const nest = require('depnest')
 
 exports.needs = nest({
   'blob.sync.url': 'first',

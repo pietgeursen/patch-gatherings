@@ -15,7 +15,7 @@ exports.create = function (api) {
 
   function create() {
     const actions = h('button', {'ev-click': () => api.gathering.async.create()}, 'Create')
-    var composer = h('div', [
+    const composer = h('div', [
       actions
     ])
     return composer

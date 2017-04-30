@@ -16,10 +16,8 @@ exports.create = (api) => {
       h('input', { 
         'ev-input': e => {
           const dt = e.target.value + 'Z' //HACK? datetime-local doesn't append the zone so we need to.
-          const st = spacetime(dt)
           value.set(dt)
         }, 
-        value: obs.startDateTime, 
         type: 'datetime-local'
       }), 
       h('div', {}, computed(obs.startDateTime, time => {

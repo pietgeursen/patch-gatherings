@@ -1,5 +1,5 @@
-var nest = require('depnest')
-var { Value, Set, Struct } = require('mutant')
+const nest = require('depnest')
+const { Value, Set, Struct } = require('mutant')
 
 exports.needs = nest({
 })

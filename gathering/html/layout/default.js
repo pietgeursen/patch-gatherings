@@ -43,7 +43,6 @@ exports.create = (api) => {
 
     const { attendees, title, images, location, description, startDateTime } = api.gathering.html
     const editedGathering = api.gathering.obs.struct() 
-    editedGathering(console.log)
 
     const myKey = '@' + api.keys.sync.load().public
 

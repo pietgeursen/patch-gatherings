@@ -1,11 +1,11 @@
-var spacetime = require('spacetime')
-var nest = require('depnest')
-var pull = require('pull-stream')
-var cat = require('pull-cat')
-var sort = require('ssb-sort')
-var Notify = require('pull-notify')
-var ref = require('ssb-ref')
-var { Value, Array, Set, Dict, computed, Struct } = require('mutant')
+const spacetime = require('spacetime')
+const nest = require('depnest')
+const pull = require('pull-stream')
+const cat = require('pull-cat')
+const sort = require('ssb-sort')
+const Notify = require('pull-notify')
+const ref = require('ssb-ref')
+const { Value, Array, Set, Dict, computed, Struct } = require('mutant')
 
 exports.needs = nest({
   'sbot.pull.links': 'first',

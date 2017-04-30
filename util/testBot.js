@@ -1,6 +1,6 @@
-var ssbKeys = require('ssb-keys')
-var createSbot = require('scuttlebot')
-var nest = require('depnest')
+const ssbKeys = require('ssb-keys')
+const createSbot = require('scuttlebot')
+const nest = require('depnest')
 
 exports.gives = nest({
   'sbot': ['close','create', 'whoami'],

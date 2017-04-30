@@ -20,22 +20,22 @@ exports.create = function (api) {
   return nest({ 'gathering.html.edit': edit })
 
   function edit(obs, msg, isEditing) {
-    var channelInputFocused = Value(false)
-    var textAreaFocused = Value(false)
-    var focused = computed([channelInputFocused, textAreaFocused], (a, b) => a || b)
-    var hasContent = Value(false)
-    var getProfileSuggestions = api.about.async.suggest()
-    var imagesToAdd = Set([]) 
-    var allImages = Set([]) 
+    const channelInputFocused = Value(false)
+    const textAreaFocused = Value(false)
+    const focused = computed([channelInputFocused, textAreaFocused], (a, b) => a || b)
+    const hasContent = Value(false)
+    const getProfileSuggestions = api.about.async.suggest()
+    const imagesToAdd = Set([]) 
+    const allImages = Set([]) 
     imagesToAdd(images => forEach(images, image => allImages.add(image.link))) //TODO: so that we still publish an image with all the info but just use the link for now.
     obs.images(images => forEach(images, image => allImages.add(image)))
 
-    var blurTimeout = null
+    const blurTimeout = null
 
-    var description = h('textarea', {}, obs.description)
-    var title = h('textarea', {}, obs.title)
-    var location = h('textarea', {}, obs.location)
-    var images = h('div', {}, map(allImages, image => h('img', {src: api.blob.sync.url(image)} )))
+    const description = h('textarea', {}, obs.description)
+    const title = h('textarea', {}, obs.title)
+    const location = h('textarea', {}, obs.location)
+    const images = h('div', {}, map(allImages, image => h('img', {src: api.blob.sync.url(image)} )))
 
     const cancel = h('button', {'ev-click': () => isEditing.set(false)}, 'Cancel')
     const update = h('button', {'ev-click': () => {
@@ -46,13 +46,13 @@ exports.create = function (api) {
       isEditing.set(false)
     }}, 'Update')
 
-    var fileInput = api.blob.html.input(file => {
+    const fileInput = api.blob.html.input(file => {
       imagesToAdd.add(file)
     })
 
     fileInput.onclick = () => hasContent.set(true)
 
-    var edit = h('ComposeGathering', [
+    const edit = h('ComposeGathering', [
       title,
       images,
       description,
