@@ -1,9 +1,14 @@
 Message {
-  section.content{
+  section.content {
       section.actions {
       display: flex
       flex-basis: 100%
       justify-content: flex-end 
     }
+  }
+  section.title {
+    a {
+      font-size: 2rem 
+    }  
   }
 }

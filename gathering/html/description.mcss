@@ -1,4 +1,6 @@
 Description {
+  display: flex
+  flex-direction: column
   textarea {
     border: 1px solid gainsboro
     border-top-left-radius: 0

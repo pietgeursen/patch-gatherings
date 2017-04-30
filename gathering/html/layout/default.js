@@ -40,7 +40,7 @@ exports.create = (api) => {
 
     const { obs, isEditing, isSummary } = opts
 
-    const { attendees, title, images, location, description, startDateTime } = api.gathering.html
+    const { attendees, title, images, description, startDateTime } = api.gathering.html
     const editedGathering = api.gathering.obs.struct()
 
     const myKey = '@' + api.keys.sync.load().public
@@ -50,10 +50,9 @@ exports.create = (api) => {
       title({ obs, msg, isEditing, value: editedGathering.title }),
       h('section.content', [
         images({obs, msg, isEditing, value: editedGathering.images}),
-        location({obs, msg, isEditing, value: editedGathering.location}),
         description({obs, msg, isEditing, value: editedGathering.description}),
-        attendees({ obs, msg }),
         startDateTime({obs, msg, isEditing, value: editedGathering.startDateTime}),
+        attendees({ obs, msg }),
         h('section.actions', [
           h('button', { 'ev-click': () => api.gathering.async.attendees({ attendees: [{ id: myKey }], gathering: msg.key }, console.log) }, 'Attend'),
           h('button', { 'ev-click': () => api.gathering.async.attendees({ attendees: [{ id: myKey, remove: true }], gathering: msg.key }, console.log) }, 'Not going'),

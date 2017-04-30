@@ -11,16 +11,14 @@ exports.create = (api) => {
   return nest('gathering.html.description', description)
   function description ({obs, isEditing, value}) {
     const markdown = api.message.html.markdown
-    const input = h('textarea', {'ev-input': e => value.set(e.target.value), value: obs.description()})
+    const input = h('textarea', {'ev-input': e => value.set(e.target.value), value: obs.description})
 
-    const inputWithLabel = h('Description', [
-      h('label', 'Description'),
-      input
+    return h('Description', [
+      h('h3', 'Description:'),
+      when(isEditing,
+        input,
+        computed(obs.description, markdown)
+      )
     ])
-
-    return when(isEditing,
-      inputWithLabel,
-      h('Description', computed(obs.description, markdown))
-    )
   }
 }

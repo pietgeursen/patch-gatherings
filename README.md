@@ -1,22 +1,3 @@
-# !!! WIP !!!
-
-- [ ] make and test find api with all the options
-  - [ ] past
-  - [ ] future
-  - [ ] timeless
-- [x] make and test async api
-  - [x] location
-  - [x] start
-  - [x] end
-  - [x] images
-  - [x] attendees
-  - [x] contributors
-  - [x] description
-- [x] rework render to use obs
-- [x?] what to do about live streams of future gatherings when a new startDateTime is published? 
-- [ ] think about how to use message timestamps to throw away outdated messages that are emitted on a stream 
-
-
 > [patchcore](https://github.com/ssbc/patchcore) gatherings [depject](https://github.com/depject/depject) plugin for [secure scuttlebutt](https://github.com/ssbc/secure-scuttlebutt)
 
 `gives` pull-stream sources and async methods for finding and publishing gatherings on secure scuttlebutt

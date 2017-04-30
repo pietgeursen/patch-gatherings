@@ -21,7 +21,7 @@ exports.create = (api) => {
 
     return h('section.images', {}, [
       map(allImages, image => h('img', {src: api.blob.sync.url(image)})),
-      when(isEditing, [h('div','Add an image:'), fileInput])
+      when(isEditing, [h('div', 'Add an image:'), fileInput])
     ])
   }
 }
