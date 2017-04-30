@@ -13,7 +13,6 @@ exports.create = (api) => {
   function attendees ({obs, msg, isEditing}) {
     // TODO handle when hosts / attendees / contributors are not ssb users
     const linkedAttendees = computed(obs.attendees, (attendees) => attendees.map(api.about.html.link))
-    // linkedAttendees(console.log)
     return h('section.attendees', {}, [
       h('h3', 'attending:'),
       h('div', linkedAttendees)

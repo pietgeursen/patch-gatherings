@@ -10,7 +10,6 @@ exports.gives = nest('gathering.html.startDateTime')
 exports.create = (api) => {
   return nest('gathering.html.startDateTime', startDateTime)
   function startDateTime ({obs, msg, isEditing, value}) {
-    obs.startDateTime(console.log)
     return when(isEditing,
       h('input', {
         'ev-input': e => {

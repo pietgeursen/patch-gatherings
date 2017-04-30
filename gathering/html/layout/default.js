@@ -64,7 +64,6 @@ exports.create = (api) => {
     function save () {
       forEachPair(editedGathering, (k, v) => {
         if (api.gathering.async[k] && v) {
-          console.log(k, v)
           api.gathering.async[k]({[k]: v, gathering: msg.key}, console.log)
         }
       })

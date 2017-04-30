@@ -6,7 +6,6 @@ const nest = require('depnest')
 exports.needs = nest({
   'blob.sync.url': 'first',
   'gathering.obs.gathering': 'first',
-  'gathering.html.edit': 'first',
   'gathering.html.layout': 'first',
   'gathering.async.attendees': 'first',
   'feed.html.render': 'first',
