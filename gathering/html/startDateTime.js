@@ -20,9 +20,14 @@ exports.create = (api) => {
           },
           type: 'datetime-local'
         }),
-        h('div', {}, computed(obs.startDateTime, time => {
-          return spacetime(time).format('full')
-        }))
+        [
+          h('div', {}, computed(obs.startDateTime, time => {
+            return spacetime(time).format('time')
+          })),
+          h('div', {}, computed(obs.startDateTime, time => {
+            return spacetime(time).format('full')
+          })),
+        ]
       )
     ])
   }
