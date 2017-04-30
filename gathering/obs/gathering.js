@@ -69,12 +69,9 @@ exports.create = function (api) {
       })
     )
     pull(
-      api.sbot.pull.links({dest: '&', rel: 'image', live: true}),
-      pull.filter(data => data.key),
-      pull.asyncMap(function(data, cb) {
-        api.sbot.async.get(data.key, cb)
-      }),
-      pull.drain(msg => {
+      subscription(),
+      pull.filter(msg => msg.content.image),
+      pull.drain((msg) => {
         const image = msg.content.image
         image.remove ? gathering.images.delete(image.link) : gathering.images.add(image.link)
       })
