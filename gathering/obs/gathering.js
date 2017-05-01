@@ -20,6 +20,7 @@ exports.create = function (api) {
     const subscription = subscribeToLinks(gatheringId)
 
     const gathering = api.gathering.obs.struct()
+    gathering.title.set(gatheringId.substring(0,10)+'...')
 
     pull(
       subsribeToLinksByKey(subscription, 'location'),
@@ -39,7 +40,10 @@ exports.create = function (api) {
       pull.drain(gathering.startDateTime.set)
     )
     pull(
-      cat([pull.once(gatheringId), subsribeToLinksByKey(subscription, 'title')]),
+      // cat([
+      //   pull.once(gatheringId),
+        subsribeToLinksByKey(subscription, 'title'),
+      // ]),
       pull.drain(gathering.title.set)
     )
     pull(

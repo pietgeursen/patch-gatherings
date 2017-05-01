@@ -2,8 +2,7 @@ const nest = require('depnest')
 const { h, computed, when } = require('mutant')
 
 exports.needs = nest({
-  'blob.sync.url': 'first',
-  'message.html.markdown': 'first'
+  'blob.sync.url': 'first'
 })
 
 exports.gives = nest(
@@ -13,12 +12,10 @@ exports.gives = nest(
 exports.create = (api) => {
   return nest('gathering.html.title', title)
   function title ({obs, msg, isEditing, value}) {
-    const markdown = api.message.html.markdown
-
-    return h('section.title',
+    return h('header.title',
       when(isEditing,
         h('input', {'ev-input': e => value.set(e.target.value), value: obs.title}),
-        h('a', {href: msg.key}, computed(obs.title, markdown))
+        obs.title
       )
     )
   }

@@ -1,14 +1,15 @@
 const nest = require('depnest')
-const { h } = require('mutant')
+const { h, computed } = require('mutant')
+const spacetime = require('spacetime')
 
 exports.needs = nest({
   'blob.sync.url': 'first',
   'gathering.obs.gathering': 'first',
+  'gathering.obs.thumbnail': 'first',
   'gathering.html': {
+    'description': 'first',
     'title': 'first',
-    'thumbnail': 'first',
     'location': 'first',
-    'startDateTime': 'first'
   }
 })
 
@@ -22,19 +23,31 @@ exports.create = (api) => {
 
     if (!(layout === undefined || layout === 'mini')) return
 
-    const { title, thumbnail, location, startDateTime } = api.gathering.html
+    const { title, location, description, startDateTime } = api.gathering.html
+
+    const thumbnail = api.gathering.obs.thumbnail({obs, msg})
+    const background = computed(thumbnail, (thumbnail) => `url(${thumbnail})`)
 
     return [
-      h('button', { 'ev-click': () => isMini.set(false) }, 'More...'),
-      h('section.content',
-        h('Message -gathering-mini', [
-          thumbnail({obs, msg}),
+      h('section.content', [
+        h('a', { href: msg.key }, [
+          h('.expand', { 'ev-click': () => isMini.set(false) }, '+'),
           h('.details', [
             title({obs, msg}),
             location({obs, msg}),
-            startDateTime({obs, msg})
-          ])
-        ]))
+            description({obs}),
+          ]),
+          h('.date-splash', 
+            { style: { 'background-image': background } },
+            [
+              h('div', computed(obs.startDateTime, time => {
+                const t = spacetime(time)
+                return `${t.format('date')} ${t.format('month-short')}`
+              }))
+            ]
+          )
+        ])
+      ])
     ]
   }
 }

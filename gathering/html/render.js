@@ -1,7 +1,5 @@
-const h = require('mutant/h')
-const Value = require('mutant/value')
-const when = require('mutant/when')
 const nest = require('depnest')
+const { h, Value, when, computed } = require('mutant')
 
 exports.needs = nest({
   'blob.sync.url': 'first',
@@ -27,13 +25,13 @@ exports.gives = nest({
 
 exports.create = function (api) {
   return nest({
-    'message.html.render': renderGathering,
+    'message.html.render': renderGathering, // TODO : move out
     'gathering.html.render': renderGathering,
     'app.html.tabs': tabs
   })
-  function renderGathering (msg, opts) {
+
+  function renderGathering (msg) {
     if (!msg.value || (msg.value.content.type !== 'gathering')) return
-    
     
     const isEditing = Value(false)
     const isMini = Value(true)
@@ -45,15 +43,19 @@ exports.create = function (api) {
     }
 
     const obs = api.gathering.obs.gathering(msg.key)
+    const className = when(isMini, '-gathering-mini', '-gathering')
+    const layout = when(isMini, 'mini', 'default')
 
-    const element = h('Message -gathering', {attributes: {tabindex: '0'}},
-      when(isMini,
-        api.gathering.html.layout(msg, {layout: 'mini', isEditing, isMini, obs}),
-        api.gathering.html.layout(msg, {layout: 'default', isEditing, isMini, obs})
-    ))
+    const element = h('Message',
+      { className, attributes: {tabindex: '0'} },
+      computed(layout, layout => {
+        return api.gathering.html.layout(msg, { layout, isEditing, isMini, obs })
+      })
+    )
 
     return api.message.html.decorate(element, { msg })
   }
+
   function tabs() {
     return null 
   }

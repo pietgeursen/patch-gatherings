@@ -1,21 +1,21 @@
 const nest = require('depnest')
 const { h, computed } = require('mutant')
 
+exports.gives = nest('gathering.obs.thumbnail')
+
 exports.needs = nest({
   'blob.sync.url': 'first'
 })
 
-exports.gives = nest('gathering.html.thumbnail')
-
 exports.create = (api) => {
-  return nest('gathering.html.thumbnail', thumbnail)
+  return nest('gathering.obs.thumbnail', thumbnail)
+
   function thumbnail ({ obs, msg }) {
     // TODO: Take the last published image as the thumbnail for now. Soon: Make thumbnail message so you can choose one.
-    const src = computed(obs.images, images => {
+    return computed(obs.images, images => {
       return images.length > 0
         ? api.blob.sync.url(images[images.length - 1])
-        : ''
+        : undefined
     })
-    return h('div.thumbnail', h('img', {src}))
   }
 }

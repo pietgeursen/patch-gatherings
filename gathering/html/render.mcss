@@ -1,11 +1,4 @@
-Message -gathering{
-  section.content {
-      section.actions {
-      display: flex
-      flex-basis: 100%
-      justify-content: flex-end 
-    }
-  }
+Message -gathering {
   section.title {
     a {
       font-size: 2rem 
@@ -16,16 +9,74 @@ Message -gathering{
       font-size: 1em
     }
   }
+
+  section.content {
+  }
+
+  section.actions {
+    display: flex
+    flex-basis: 100%
+    justify-content: flex-end 
+  }
 }
 
-Message -gathering-mini{
-  display: flex
-  div.thumbnail {
-    width: 12rem
-    height: 12rem
-  }
-  div.details {
-    flex-grow: 1
-    padding-left: 1rem
+Message -gathering-mini {
+  section.content {
+
+    a {
+      display: flex
+      flex-wrap: wrap
+
+      color: initial 
+      :hover { text-decoration: none }
+
+      div.expand {
+        position: absolute
+        top: 1.8rem
+        right: 1rem
+        border: none
+        border-radius: 0
+        background-color: rgba(255,255,255,0.2)
+        color: #fff;
+        font-size: 1rem;
+        font-weight: 600;
+        line-height: .8rem
+      }
+
+      div.details {
+        flex-grow: 1
+        max-width: 21rem
+        
+        border: 1px gainsboro solid
+        border-right: none
+        padding: .5rem
+
+        header.title {
+          font-size: 2.5rem
+        }
+        section {
+
+        }
+      }
+
+      div.date-splash {
+        flex-basis: 20rem
+        height: 14rem
+        background-size: cover 
+
+        display: flex
+        align-items: center
+        justify-content: center
+
+        div {
+          color: #fff
+          font-weight: 600
+          font-size: 2rem
+        }
+
+        background-color: green
+
+      }
+    }
   }
 }
