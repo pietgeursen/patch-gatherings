@@ -11,13 +11,9 @@
   "author": "pietgeursen",
   "license": "MIT",
   "devDependencies": {
-    "browser-run": "^4.0.2",
-    "browserify": "^14.1.0",
-    "pull-async": "^1.0.0",
     "pull-test": "^1.2.3",
     "scuttlebot": "^9.4.6",
-    "ssb-keys": "^7.0.6",
-    "tape": "^4.6.3"
+    "ssb-keys": "^7.0.6"
   },
   "dependencies": {
     "bulk-require": "^1.0.0",
