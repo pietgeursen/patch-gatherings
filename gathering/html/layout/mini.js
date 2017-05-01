@@ -18,16 +18,16 @@ exports.create = (api) => {
   return nest('gathering.html.layout', gatheringLayout)
 
   function gatheringLayout (msg, opts) {
-    const { layout, obs, isSummary } = opts
+    const { layout, obs, isMini } = opts
 
-    if (!(layout === undefined || layout === 'summary')) return
+    if (!(layout === undefined || layout === 'mini')) return
 
     const { title, thumbnail, location, startDateTime } = api.gathering.html
 
     return [
-      h('button', { 'ev-click': () => isSummary.set(false) }, 'More...'),
+      h('button', { 'ev-click': () => isMini.set(false) }, 'More...'),
       h('section.content',
-        h('Summary', [
+        h('Message -gathering-mini', [
           thumbnail({obs, msg}),
           h('.details', [
             title({obs, msg}),

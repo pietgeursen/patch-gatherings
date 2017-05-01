@@ -38,7 +38,7 @@ exports.gives = nest({
     'images',
     'layout': [
       'default',
-      'summary', 
+      'mini', 
     ],
     'location',
     'render',

@@ -1,4 +1,4 @@
-Message {
+Message -gathering{
   section.content {
       section.actions {
       display: flex
@@ -15,5 +15,17 @@ Message {
       width: 100%
       font-size: 1em
     }
+  }
+}
+
+Message -gathering-mini{
+  display: flex
+  div.thumbnail {
+    width: 12rem
+    height: 12rem
+  }
+  div.details {
+    flex-grow: 1
+    padding-left: 1rem
   }
 }

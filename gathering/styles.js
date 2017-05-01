@@ -17,7 +17,7 @@ exports.create = function (api) {
 
   function mcss (sofar = {}) {
     each(contents, (content, [filename]) => {
-      const name = basename(filename)
+      const name = 'patch-gatherings-' + basename(filename)
       sofar[name] = content
     })
     return sofar

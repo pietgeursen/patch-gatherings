@@ -38,7 +38,7 @@ exports.create = (api) => {
   function gatheringLayout (msg, opts) {
     if (!(opts.layout === undefined || opts.layout === 'default')) return
 
-    const { obs, isEditing, isSummary } = opts
+    const { obs, isEditing, isMini } = opts
 
     const { attendees, title, images, description, startDateTime } = api.gathering.html
     const editedGathering = api.gathering.obs.struct()
@@ -46,7 +46,7 @@ exports.create = (api) => {
     const myKey = '@' + api.keys.sync.load().public
 
     return [
-      h('button', { 'ev-click': () => isSummary.set(true) }, 'Less...'),
+      h('button', { 'ev-click': () => isMini.set(true) }, 'Less...'),
       title({ obs, msg, isEditing, value: editedGathering.title }),
       h('section.content', [
         images({obs, msg, isEditing, value: editedGathering.images}),
