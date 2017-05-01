@@ -21,7 +21,7 @@ exports.create = function (api) {
       const startDateTime = 'piet'
       const link = 1
       api.sbot.create()
-      api.gathering.async.startDateTime({startDateTime, link}, function (err) {
+      api.gathering.async.startDateTime({startDateTime, gathering: link}, function (err) {
         assert(!err)
         api.sbot.close()
         cb()

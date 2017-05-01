@@ -1,8 +1,9 @@
 {
   "name": "patch-gatherings",
-  "version": "2.0.3",
+  "version": "2.0.7",
   "description": "",
   "main": "index.js",
+  "repository": "https://github.com/pietgeursen/patch-gatherings",
   "scripts": {
     "test": "node test.js"
   },
@@ -11,20 +12,17 @@
     "url": "git+https://github.com/pietgeursen/patch-gatherings.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "pietgeursen",
   "license": "MIT",
   "devDependencies": {
-    "browser-run": "^4.0.2",
-    "browserify": "^14.1.0",
-    "pull-async": "^1.0.0",
     "pull-test": "^1.2.3",
     "scuttlebot": "^9.4.6",
-    "ssb-keys": "^7.0.6",
-    "tape": "^4.6.3"
+    "ssb-keys": "^7.0.6"
   },
   "dependencies": {
     "bulk-require": "^1.0.0",
     "depnest": "^1.3.0",
+    "libnested": "^1.2.1",
     "moment": "^2.18.0",
     "mutant": "^3.18.0",
     "pull-cat": "^1.1.11",

@@ -21,7 +21,7 @@ exports.create = function (api) {
       const description = 'piet'
       const link = 1
       api.sbot.create()
-      api.gathering.async.description({description, link}, function (err) {
+      api.gathering.async.description({description, gathering: link}, function (err) {
         assert(!err)
         api.sbot.close()
         cb()

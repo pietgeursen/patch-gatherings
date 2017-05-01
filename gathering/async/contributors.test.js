@@ -18,7 +18,7 @@ exports.create = function (api) {
     }
     tests['creates contributor without error'] = function (assert, cb) {
       api.sbot.create()
-      api.gathering.async.contributors({contributors: [{id: '123'}], link: '456'}, function (err) {
+      api.gathering.async.contributors({contributors: [{id: '123'}], gathering: '456'}, function (err) {
         assert(!err)
         api.sbot.close()
         cb()
