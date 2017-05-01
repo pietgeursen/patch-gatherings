@@ -32,14 +32,14 @@ exports.create = function (api) {
 
   function renderGathering (msg) {
     if (!msg.value || (msg.value.content.type !== 'gathering')) return
-    
+
     const isEditing = Value(false)
     const isMini = Value(true)
 
     const tabs = api.app.html.tabs()
-    if(tabs){
+    if (tabs) {
       const tabId = tabs.getCurrent().firstChild.id
-      if(tabId === msg.key) isMini.set(false)
+      if (tabId === msg.key) isMini.set(false)
     }
 
     const obs = api.gathering.obs.gathering(msg.key)
@@ -56,7 +56,7 @@ exports.create = function (api) {
     return api.message.html.decorate(element, { msg })
   }
 
-  function tabs() {
-    return null 
+  function tabs () {
+    return null
   }
 }

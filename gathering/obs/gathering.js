@@ -1,7 +1,6 @@
 const spacetime = require('spacetime')
 const nest = require('depnest')
 const pull = require('pull-stream')
-const cat = require('pull-cat')
 const Notify = require('pull-notify')
 const ref = require('ssb-ref')
 
@@ -20,7 +19,7 @@ exports.create = function (api) {
     const subscription = subscribeToLinks(gatheringId)
 
     const gathering = api.gathering.obs.struct()
-    gathering.title.set(gatheringId.substring(0,10)+'...')
+    gathering.title.set(gatheringId.substring(0, 10) + '...')
 
     pull(
       subsribeToLinksByKey(subscription, 'location'),
@@ -73,10 +72,10 @@ exports.create = function (api) {
         return link.content[key]
       }),
       pull.filter(link => {
-        if(link.timestamp > timestamp){
+        if (link.timestamp > timestamp) {
           timestamp = link.timestamp
           return true
-        } 
+        }
         return false
       }),
       pull.map(link => link.content[key])

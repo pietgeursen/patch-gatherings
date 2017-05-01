@@ -3,13 +3,14 @@ const { h, computed } = require('mutant')
 const spacetime = require('spacetime')
 
 exports.needs = nest({
+  'about.obs.color': 'first',
   'blob.sync.url': 'first',
   'gathering.obs.gathering': 'first',
   'gathering.obs.thumbnail': 'first',
   'gathering.html': {
     'description': 'first',
     'title': 'first',
-    'location': 'first',
+    'location': 'first'
   }
 })
 
@@ -35,10 +36,15 @@ exports.create = (api) => {
           h('.details', [
             title({obs, msg}),
             location({obs, msg}),
-            description({obs}),
+            description({obs})
           ]),
-          h('.date-splash', 
-            { style: { 'background-image': background } },
+          h('.date-splash',
+            {
+              style: {
+                'background-image': background,
+                'background-color': api.about.obs.color(msg.key)
+              }
+            },
             [
               h('div', computed(obs.startDateTime, time => {
                 const t = spacetime(time)

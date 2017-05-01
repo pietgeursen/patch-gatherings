@@ -26,7 +26,7 @@ exports.create = (api) => {
           })),
           h('div', {}, computed(obs.startDateTime, time => {
             return spacetime(time).format('full')
-          })),
+          }))
         ]
       )
     ])

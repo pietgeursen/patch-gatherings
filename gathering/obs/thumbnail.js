@@ -1,5 +1,5 @@
 const nest = require('depnest')
-const { h, computed } = require('mutant')
+const { computed } = require('mutant')
 
 exports.gives = nest('gathering.obs.thumbnail')
 

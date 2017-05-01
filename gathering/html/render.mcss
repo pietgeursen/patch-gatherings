@@ -73,9 +73,6 @@ Message -gathering-mini {
           font-weight: 600
           font-size: 2rem
         }
-
-        background-color: green
-
       }
     }
   }

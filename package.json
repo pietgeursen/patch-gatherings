@@ -3,13 +3,12 @@
   "version": "2.0.7",
   "description": "",
   "main": "index.js",
-  "repository": "https://github.com/pietgeursen/patch-gatherings",
-  "scripts": {
-    "test": "node test.js"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pietgeursen/patch-gatherings.git"
+  },
+  "scripts": {
+    "test": "node test.js"
   },
   "keywords": [],
   "author": "pietgeursen",
