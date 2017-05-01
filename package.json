@@ -23,6 +23,7 @@
     "tape": "^4.6.3"
   },
   "dependencies": {
+    "bulk-require": "^1.0.0",
     "moment": "^2.18.0",
     "mutant": "^3.18.0",
     "pull-cat": "^1.1.11",
