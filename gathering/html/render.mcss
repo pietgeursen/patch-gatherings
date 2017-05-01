@@ -21,7 +21,16 @@ Message -gathering {
 }
 
 Message -gathering-mini {
+  section.avatar {
+    top: 2.7rem
+  }
+
+  section.timestamp {
+    top: 6.7rem
+  }
+
   section.content {
+    margin-bottom: .5rem
 
     a {
       display: flex
