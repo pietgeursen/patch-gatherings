@@ -7,6 +7,7 @@
 exports.needs = nest({
   'sbot.pull.messagesByType': 'first',
   'sbot.pull.links': 'first',
+  'app.html.tabs': 'first' //provides a default if not given
 })
 ```
 
@@ -29,25 +30,31 @@ exports.gives = nest({
     'images',
   ]
   'gatherings.html': [
-    'attendees',
-    'contributors',
+    'attendees', //TODO
+    'contributors', //TODO
     'create',
     'description',
-    'endDateTime',
-    'hosts',
+    'endDateTime', //TODO
+    'hosts', //TODO
     'images',
     'layout': [
       'default',
       'mini', 
     ],
-    'location',
+    'location', //TODO
     'render',
     'startDateTime',
-    'thumbnail' ,
+    'thumbnail', //TODO
     'title',
   ],
   'gatherings.obs': [
     'gathering'
+  ],
+  'message.html': [
+    'render'
+  ],
+  'app.html': [
+    'tabs'
   ],
 })
 ```
