@@ -26,10 +26,6 @@ exports.create = function (api) {
       pull.drain(gathering.location.set)
     )
     pull(
-      subsribeToLinksByKey(subscription, 'location'),
-      pull.drain(gathering.thumbnail.set)
-    )
-    pull(
       subsribeToLinksByKey(subscription, 'endDateTime'),
       pull.drain(gathering.endDateTime.set)
     )
@@ -66,10 +62,18 @@ exports.create = function (api) {
   })
 
   function subsribeToLinksByKey (subscription, key) {
+    var timestamp = 0
     return pull(
       subscription(),
       pull.filter(link => {
         return link.content[key]
+      }),
+      pull.filter(link => {
+        if(link.timestamp > timestamp){
+          timestamp = link.timestamp
+          return true
+        } 
+        return false
       }),
       pull.map(link => link.content[key])
     )

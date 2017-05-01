@@ -18,7 +18,7 @@ exports.create = function (api) {
     }
     tests['creates host without error'] = function (assert, cb) {
       api.sbot.create()
-      api.gathering.async.hosts({hosts: [{link: '123'}], id: {link: '456'}}, function (err) {
+      api.gathering.async.hosts({hosts: [{link: '123'}], gathering: '456'}, function (err) {
         assert(!err)
         api.sbot.close()
         cb()

@@ -21,7 +21,7 @@ exports.create = function (api) {
       const endDateTime = 'piet'
       const link = 1
       api.sbot.create()
-      api.gathering.async.endDateTime({endDateTime, link}, function (err) {
+      api.gathering.async.endDateTime({endDateTime, gathering: link}, function (err) {
         assert(!err)
         api.sbot.close()
         cb()
