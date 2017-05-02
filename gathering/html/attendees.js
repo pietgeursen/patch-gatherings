@@ -1,5 +1,5 @@
 const nest = require('depnest')
-const { h, computed, map } = require('mutant')
+const { h, map } = require('mutant')
 
 exports.needs = nest({
   'about.html.link': 'first'
