@@ -25,16 +25,18 @@ exports.create = (api) => {
     const { title, thumbnail, location, startDateTime } = api.gathering.html
 
     return [
-      h('button', { 'ev-click': () => isMini.set(false) }, 'More...'),
-      h('section.content',
-        h('Message -gathering-mini', [
-          thumbnail({obs, msg}),
-          h('.details', [
-            title({obs, msg}),
-            location({obs, msg}),
-            startDateTime({obs, msg})
+      h('Message -gathering-mini', [
+        h('button', { 'ev-click': () => isMini.set(false) }, 'More...'),
+        h('section.content',
+          [
+            thumbnail({obs, msg}),
+            h('.details', [
+              title({obs, msg}),
+              location({obs, msg}),
+              startDateTime({obs, msg})
+            ])
           ])
-        ]))
+      ])
     ]
   }
 }

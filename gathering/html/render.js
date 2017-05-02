@@ -46,7 +46,7 @@ exports.create = function (api) {
 
     const obs = api.gathering.obs.gathering(msg.key)
 
-    const element = h('Message -gathering', {attributes: {tabindex: '0'}},
+    const element = h('div', {attributes: {tabindex: '0'}},
       when(isMini,
         api.gathering.html.layout(msg, {layout: 'mini', isEditing, isMini, obs}),
         api.gathering.html.layout(msg, {layout: 'default', isEditing, isMini, obs})

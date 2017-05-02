@@ -45,7 +45,7 @@ exports.create = (api) => {
 
     const myKey = '@' + api.keys.sync.load().public
 
-    return [
+    return h('Message -gathering-mini', [
       h('button', { 'ev-click': () => isMini.set(true) }, 'Less...'),
       title({ obs, msg, isEditing, value: editedGathering.title }),
       h('section.content', [
@@ -60,7 +60,7 @@ exports.create = (api) => {
           when(isEditing, h('button', {'ev-click': save}, 'Update'))
         ])
       ])
-    ]
+    ])
 
     function save () {
       forEachPair(editedGathering, (k, v) => {
