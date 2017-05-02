@@ -3,7 +3,6 @@
   "version": "2.0.9",
   "description": "",
   "main": "index.js",
-  "repository": "https://github.com/pietgeursen/patch-gatherings",
   "scripts": {
     "test": "node test.js"
   },
