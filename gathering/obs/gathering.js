@@ -8,7 +8,8 @@ const ref = require('ssb-ref')
 exports.needs = nest({
   'sbot.pull.links': 'first',
   'sbot.async.get': 'first',
-  'gathering.obs.struct': 'first'
+  'gathering.obs.struct': 'first',
+  'blob.sync.url': 'first'
 })
 
 exports.gives = nest('gathering.obs.gathering')
@@ -18,6 +19,7 @@ exports.create = function (api) {
     if (!ref.isLink(gatheringId)) throw new Error('an id must be specified')
 
     const subscription = subscribeToLinks(gatheringId)
+    const blobToUrl = api.blob.sync.url
 
     const gathering = api.gathering.obs.struct()
 
@@ -61,9 +63,11 @@ exports.create = function (api) {
     pull(
       subscription(),
       pull.filter(msg => msg.content.image),
-      pull.drain((msg) => {
-        const image = msg.content.image
-        gathering.thumbnail.set(image.link)
+      pull.filter(msg => !msg.content.image.remove),
+      pull.map(msg => msg.content.image.link),
+      pull.map(blobToUrl),
+      pull.drain((url) => {
+        gathering.thumbnail.set(url)
       })
     )
     return gathering
