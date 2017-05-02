@@ -8,7 +8,8 @@ const ref = require('ssb-ref')
 exports.needs = nest({
   'sbot.pull.links': 'first',
   'sbot.async.get': 'first',
-  'gathering.obs.struct': 'first'
+  'gathering.obs.struct': 'first',
+  'blob.sync.url': 'first'
 })
 
 exports.gives = nest('gathering.obs.gathering')
@@ -18,16 +19,13 @@ exports.create = function (api) {
     if (!ref.isLink(gatheringId)) throw new Error('an id must be specified')
 
     const subscription = subscribeToLinks(gatheringId)
+    const blobToUrl = api.blob.sync.url
 
     const gathering = api.gathering.obs.struct()
 
     pull(
       subsribeToLinksByKey(subscription, 'location'),
       pull.drain(gathering.location.set)
-    )
-    pull(
-      subsribeToLinksByKey(subscription, 'location'),
-      pull.drain(gathering.thumbnail.set)
     )
     pull(
       subsribeToLinksByKey(subscription, 'endDateTime'),
@@ -62,14 +60,32 @@ exports.create = function (api) {
         image.remove ? gathering.images.delete(image.link) : gathering.images.add(image.link)
       })
     )
+    pull(
+      subscription(),
+      pull.filter(msg => msg.content.image),
+      pull.filter(msg => !msg.content.image.remove),
+      pull.map(msg => msg.content.image.link),
+      pull.map(blobToUrl),
+      pull.drain((url) => {
+        gathering.thumbnail.set(url)
+      })
+    )
     return gathering
   })
 
   function subsribeToLinksByKey (subscription, key) {
+    var timestamp = 0
     return pull(
       subscription(),
       pull.filter(link => {
         return link.content[key]
+      }),
+      pull.filter(link => {
+        if (link.timestamp > timestamp) {
+          timestamp = link.timestamp
+          return true
+        }
+        return false
       }),
       pull.map(link => link.content[key])
     )

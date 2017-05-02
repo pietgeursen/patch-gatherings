@@ -18,14 +18,3 @@ Message -gathering{
   }
 }
 
-Message -gathering-mini{
-  display: flex
-  div.thumbnail {
-    width: 12rem
-    height: 12rem
-  }
-  div.details {
-    flex-grow: 1
-    padding-left: 1rem
-  }
-}

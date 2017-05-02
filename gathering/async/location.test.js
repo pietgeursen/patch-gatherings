@@ -21,7 +21,7 @@ exports.create = function (api) {
       const location = 'piet'
       const link = 1
       api.sbot.create()
-      api.gathering.async.location({location, link}, function (err) {
+      api.gathering.async.location({location, gathering: link}, function (err) {
         assert(!err)
         api.sbot.close()
         cb()
