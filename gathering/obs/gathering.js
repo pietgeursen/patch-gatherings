@@ -58,6 +58,14 @@ exports.create = function (api) {
         image.remove ? gathering.images.delete(image.link) : gathering.images.add(image.link)
       })
     )
+    pull(
+      subscription(),
+      pull.filter(msg => msg.content.image),
+      pull.drain((msg) => {
+        const image = msg.content.image
+        gathering.thumbnail.set(image.link)
+      })
+    )
     return gathering
   })
 
