@@ -5,13 +5,7 @@ exports.needs = nest({
   'about.html.link': 'first',
   'blob.sync.url': 'first',
   'gathering.async': {
-    'title': 'first',
-    'description': 'first',
-    'images': 'first',
-    'location': 'first',
     'attendees': 'first',
-    'hosts': 'first',
-    'startDateTime': 'first'
   },
   'gathering.obs.struct': 'first',
   'keys.sync.load': 'first',
@@ -57,17 +51,13 @@ exports.create = (api) => {
           h('button', { 'ev-click': () => api.gathering.async.attendees({ attendees: [{ id: myKey }], gathering: msg.key }, console.log) }, 'Attend'),
           h('button', { 'ev-click': () => api.gathering.async.attendees({ attendees: [{ id: myKey, remove: true }], gathering: msg.key }, console.log) }, 'Not going'),
           h('button', { 'ev-click': () => isEditing.set(!isEditing()) }, when(isEditing, 'Cancel', 'Edit')),
-          when(isEditing, h('button', {'ev-click': save}, 'Update'))
+          when(isEditing, h('button', {'ev-click': () => save({obs: editedGathering, id:msg.key})}, 'Update'))
         ])
       ])
     ])
 
-    function save () {
-      forEachPair(editedGathering, (k, v) => {
-        if (api.gathering.async[k] && v) {
-          api.gathering.async[k]({[k]: v, gathering: msg.key}, console.log)
-        }
-      })
+    function save ({obs, id}) {
+      obs.save(id)
       isEditing.set(false)
     }
   }
