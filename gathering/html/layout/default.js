@@ -1,11 +1,11 @@
 const nest = require('depnest')
-const { h, when, forEachPair } = require('mutant')
+const { h, when } = require('mutant')
 
 exports.needs = nest({
   'about.html.link': 'first',
   'blob.sync.url': 'first',
   'gathering.async': {
-    'attendees': 'first',
+    'attendees': 'first'
   },
   'gathering.obs.struct': 'first',
   'keys.sync.load': 'first',
@@ -51,7 +51,7 @@ exports.create = (api) => {
           h('button', { 'ev-click': () => api.gathering.async.attendees({ attendees: [{ id: myKey }], gathering: msg.key }, console.log) }, 'Attend'),
           h('button', { 'ev-click': () => api.gathering.async.attendees({ attendees: [{ id: myKey, remove: true }], gathering: msg.key }, console.log) }, 'Not going'),
           h('button', { 'ev-click': () => isEditing.set(!isEditing()) }, when(isEditing, 'Cancel', 'Edit')),
-          when(isEditing, h('button', {'ev-click': () => save({obs: editedGathering, id:msg.key})}, 'Update'))
+          when(isEditing, h('button', {'ev-click': () => save({obs: editedGathering, id: msg.key})}, 'Update'))
         ])
       ])
     ])

@@ -1,5 +1,5 @@
 const nest = require('depnest')
-const { h, computed } = require('mutant')
+const { h } = require('mutant')
 
 exports.needs = nest({
   'blob.sync.url': 'first'

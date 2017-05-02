@@ -81,10 +81,10 @@ exports.create = function (api) {
         return link.content[key]
       }),
       pull.filter(link => {
-        if(link.timestamp > timestamp){
+        if (link.timestamp > timestamp) {
           timestamp = link.timestamp
           return true
-        } 
+        }
         return false
       }),
       pull.map(link => link.content[key])
