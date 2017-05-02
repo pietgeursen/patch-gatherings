@@ -14,7 +14,6 @@ exports.create = (api) => {
     const input = h('textarea', {'ev-input': e => value.set(e.target.value), value: obs.description})
 
     return h('Description', [
-      h('h3', 'Description:'),
       when(isEditing,
         input,
         computed(obs.description, markdown)

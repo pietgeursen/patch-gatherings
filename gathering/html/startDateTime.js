@@ -11,7 +11,6 @@ exports.create = (api) => {
   return nest('gathering.html.startDateTime', startDateTime)
   function startDateTime ({obs, msg, isEditing, value}) {
     return h('StartDateTime', [
-      h('h3', 'Starts at:'),
       when(isEditing,
         h('input', {
           'ev-input': e => {
