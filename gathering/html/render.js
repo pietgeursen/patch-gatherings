@@ -18,7 +18,6 @@ exports.needs = nest({
     link: 'first',
     markdown: 'first'
   },
-  'app.html.tabs': 'first',
 })
 
 exports.gives = nest({
@@ -30,14 +29,15 @@ exports.create = function (api) {
   return nest({
     'message.html.render': renderGathering,
     'gathering.html.render': renderGathering,
-    'app.html.messageLayout': tabs
   })
-  function renderGathering (msg, opts) {
+  function renderGathering (msg, { pageId } = {}) {
     if (!msg.value || (msg.value.content.type !== 'gathering')) return
 
     const isEditing = Value(false)
     const isCard = Value(true)
-    
+   
+    if(pageId === msg.key) isCard.set(false)
+
     const obs = api.gathering.obs.gathering(msg.key)
 
     const element = h('div', {attributes: {tabindex: '0'}},
@@ -47,8 +47,5 @@ exports.create = function (api) {
     ))
 
     return api.message.html.decorate(element, { msg })
-  }
-  function tabs () {
-    return null
   }
 }
