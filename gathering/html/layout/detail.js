@@ -10,7 +10,7 @@ exports.needs = nest({
   'gathering.obs.struct': 'first',
   'keys.sync.load': 'first',
   'message.html': {
-    markdown: 'first'
+    'markdown': 'first'
   },
   'gathering.html': {
     'title': 'first',
@@ -30,9 +30,9 @@ exports.create = (api) => {
   return nest('gathering.html.layout', gatheringLayout)
 
   function gatheringLayout (msg, opts) {
-    if (!(opts.layout === undefined || opts.layout === 'default')) return
+    if (!(opts.layout === undefined || opts.layout === 'detail')) return
 
-    const { obs, isEditing, isMini } = opts
+    const { obs, isEditing, isCard } = opts
 
     const { attendees, title, images, description, startDateTime } = api.gathering.html
     const editedGathering = api.gathering.obs.struct()
@@ -40,7 +40,7 @@ exports.create = (api) => {
     const myKey = '@' + api.keys.sync.load().public
 
     return h('Message -gathering-mini', [
-      h('button', { 'ev-click': () => isMini.set(true) }, 'Less...'),
+      h('button', { 'ev-click': () => isCard.set(true) }, 'Less...'),
       title({ obs, msg, isEditing, value: editedGathering.title }),
       h('section.content', [
         images({obs, msg, isEditing, value: editedGathering.images}),
