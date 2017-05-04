@@ -1,10 +1,20 @@
 const nest = require('depnest')
-const { h } = require('mutant')
+const { h, computed } = require('mutant')
+const spacetime = require('spacetime')
 
 exports.needs = nest({
+  'message.html': {
+    backlinks: 'first',
+    meta: 'map',
+    action: 'map',
+    timestamp: 'first'
+  },
+  'about.html.image': 'first',
+  'about.obs.color': 'first',
   'blob.sync.url': 'first',
   'gathering.obs.gathering': 'first',
   'gathering.html': {
+    'description': 'first',
     'title': 'first',
     'thumbnail': 'first',
     'location': 'first',
@@ -22,20 +32,45 @@ exports.create = (api) => {
 
     if (!(layout === undefined || layout === 'card')) return
 
-    const { title, thumbnail, location, startDateTime } = api.gathering.html
+    const { timestamp, meta, backlinks, action } = api.message.html
 
-    return [
-      h('Message -gathering-card', [
-        h('button', { 'ev-click': () => isCard.set(false) }, 'More...'),
-        h('section.content',
+    const { description, title, thumbnail, location, startDateTime } = api.gathering.html
+
+    const background = computed(obs.thumbnail, (thumbnail) => `url(${thumbnail})`)
+
+    const content = [
+      h('a', { href: msg.key }, [
+        h('.expand', { 'ev-click': () => isMini.set(false) }, '+'),
+        h('.details', [
+          title({title: obs.title, msg}),
+          description({description: obs.description})
+        ]),
+        h('.date-splash',
+          {
+            style: {
+              'background-image': background,
+              'background-color': api.about.obs.color(msg.key)
+            }
+          },
           [
-            thumbnail({thumbnail: obs.thumbnail, msg}),
-            h('.details', [
-              title({title: obs.title, msg}),
-              startDateTime({startDateTime: obs.startDateTime , msg})
-            ])
-          ])
+            h('div', computed(obs.startDateTime, time => {
+              const t = spacetime(time)
+              return `${t.format('date')} ${t.format('month-short')}`
+            }))
+          ]
+        )
       ])
     ]
+
+    return h('Message -gathering-card', [
+      h('section.avatar', {}, api.about.html.image(msg.value.author)),
+      h('section.timestamp', {}, timestamp(msg)),
+      h('section.meta', {}, meta(msg)),
+      h('section.content', {}, content),
+      h('section.actions', {}, action(msg)),
+      h('footer.backlinks', {}, backlinks(msg))
+    ])
+
+
   }
 }
