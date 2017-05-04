@@ -7,7 +7,6 @@ exports.needs = nest({
   'blob.sync.url': 'first',
   'gathering.obs.gathering': 'first',
   'gathering.html': {
-    'initial': 'first',
     'layout': 'first'
   },
   'gathering.async.attendees': 'first',
@@ -39,11 +38,6 @@ exports.create = function (api) {
     const isEditing = Value(false)
     const isCard = Value(true)
     
-    const initialLayout = api.gathering.html.initial(msg.key)
-    if (initialLayout !== 'card') {
-      isCard.set(false)
-    }
-
     const obs = api.gathering.obs.gathering(msg.key)
 
     const element = h('div', {attributes: {tabindex: '0'}},

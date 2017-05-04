@@ -18,7 +18,6 @@ exports.needs = nest({
     'images': 'first',
     'location': 'first',
     'attendees': 'first',
-    'hosts': 'first',
     'startDateTime': 'first'
   }
 
@@ -41,12 +40,12 @@ exports.create = (api) => {
 
     return h('Message -gathering-mini', [
       h('button', { 'ev-click': () => isCard.set(true) }, 'Less...'),
-      title({ obs, msg, isEditing, value: editedGathering.title }),
+      title({ title: obs.title, msg, isEditing, onUpdate: editedGathering.title.set }),
       h('section.content', [
-        images({obs, msg, isEditing, value: editedGathering.images}),
-        description({obs, msg, isEditing, value: editedGathering.description}),
-        startDateTime({obs, msg, isEditing, value: editedGathering.startDateTime}),
-        attendees({ obs, msg }),
+        images({images: obs.images, msg, isEditing, onUpdate: editedGathering.images.add}),
+        description({description: obs.description, msg, isEditing, onUpdate: editedGathering.description.set}),
+        startDateTime({startDateTime: obs.startDateTime, msg, isEditing, onUpdate: editedGathering.startDateTime.set}),
+        attendees({ attendees: obs.attendees, msg }),
         h('section.actions', [
           h('button', { 'ev-click': () => api.gathering.async.attendees({ attendees: [{ id: myKey }], gathering: msg.key }, console.log) }, 'Attend'),
           h('button', { 'ev-click': () => api.gathering.async.attendees({ attendees: [{ id: myKey, remove: true }], gathering: msg.key }, console.log) }, 'Not going'),

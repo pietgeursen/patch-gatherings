@@ -29,11 +29,10 @@ exports.create = (api) => {
         h('button', { 'ev-click': () => isCard.set(false) }, 'More...'),
         h('section.content',
           [
-            thumbnail({obs, msg}),
+            thumbnail({thumbnail: obs.thumbnail, msg}),
             h('.details', [
-              title({obs, msg}),
-              location({obs, msg}),
-              startDateTime({obs, msg})
+              title({title: obs.title, msg}),
+              startDateTime({startDateTime: obs.startDateTime , msg})
             ])
           ])
       ])

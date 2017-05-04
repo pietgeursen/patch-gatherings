@@ -9,7 +9,7 @@ exports.gives = nest('gathering.html.thumbnail')
 
 exports.create = (api) => {
   return nest('gathering.html.thumbnail', thumbnail)
-  function thumbnail ({ obs, msg }) {
-    return h('div.thumbnail', h('img', {src: obs.thumbnail}))
+  function thumbnail ({ thumbnail, msg }) {
+    return h('div.thumbnail', h('img', {src: thumbnail}))
   }
 }
