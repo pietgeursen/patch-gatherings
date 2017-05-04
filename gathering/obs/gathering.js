@@ -1,7 +1,6 @@
 const spacetime = require('spacetime')
 const nest = require('depnest')
 const pull = require('pull-stream')
-const cat = require('pull-cat')
 const Notify = require('pull-notify')
 const ref = require('ssb-ref')
 
@@ -22,6 +21,7 @@ exports.create = function (api) {
     const blobToUrl = api.blob.sync.url
 
     const gathering = api.gathering.obs.struct()
+    gathering.title.set(gatheringId.substring(0, 10)+'...')
 
     pull(
       subsribeToLinksByKey(subscription, 'location'),
@@ -37,7 +37,7 @@ exports.create = function (api) {
       pull.drain(gathering.startDateTime.set)
     )
     pull(
-      cat([pull.once(gatheringId), subsribeToLinksByKey(subscription, 'title')]),
+      subsribeToLinksByKey(subscription, 'title'),
       pull.drain(gathering.title.set)
     )
     pull(

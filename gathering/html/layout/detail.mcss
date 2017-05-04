@@ -1,20 +1,87 @@
-Message -gathering{
+Message -gathering-detail {
+  div.toggle-layout {
+    font-size: 1rem
+    cursor: pointer
+    position: absolute
+    top: 2rem
+
+    width: 1rem
+    display: flex
+    justify-content: center
+
+    border: 1px solid #fff
+
+    :hover {
+      border: 1px solid gainsboro
+    }
+  }
+
+  section.title {
+    font-size: 2rem
+
+    input {
+      font-size: 2rem
+      border: 1px solid gainsboro
+    }
+  }
+
   section.content {
-      section.actions {
+    section {
+      margin-bottom: 1rem
+    }
+    section.images {
+    }
+    
+    section.description {
+      min-height: 3rem
+    }
+
+    section.time {
+      min-height: 4rem
+      (input) {
+        font-size: 1rem
+        border: 1px solid gainsboro
+      }
+
+    }
+
+    section.attendees {
+      header {
+        font-size: .8rem
+        margin-bottom: .5rem
+      }
+      div.people {
+        display: flex
+        flex-wrap: wrap
+
+        a {
+          margin: 0 .2rem .2rem 0
+        }
+
+      }
+    } 
+
+    section.actions {
       display: flex
       flex-basis: 100%
       justify-content: flex-end 
     }
   }
-  section.title {
-    a {
-      font-size: 2rem 
-    }  
-    input {
-      border: 1px solid gainsboro
-      width: 100%
-      font-size: 1em
+
+  section.actions {
+    display: flex
+    justify-content: flex-start
+
+    button.attend {
+      margin-left: 0
     }
+
+    button.edit {
+      margin-left: auto 
+    }
+
   }
 }
+
+
 

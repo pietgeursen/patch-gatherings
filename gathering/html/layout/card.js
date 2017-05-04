@@ -39,7 +39,12 @@ exports.create = (api) => {
     const background = computed(obs.thumbnail, (thumbnail) => `url(${thumbnail})`)
     const content = [
       h('a', { href: msg.key }, [
-        h('.expand', { 'ev-click': () => isCard.set(false) }, '+'),
+        h('.toggle-layout', {
+          'ev-click': e => {
+            e.preventDefault()
+            isCard.set(false)
+          }
+        }, '+'),
         h('.details', [
           title({title: obs.title, msg}),
           description({description: obs.description})

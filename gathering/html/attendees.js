@@ -2,7 +2,9 @@ const nest = require('depnest')
 const { h, map } = require('mutant')
 
 exports.needs = nest({
-  'about.html.link': 'first'
+  'about.html.link': 'first',
+  'about.html.image': 'first',
+  'about.obs.name': 'first',
 })
 
 exports.gives = nest('gathering.html.attendees')
@@ -12,9 +14,9 @@ exports.create = (api) => {
 
   function attendees ({ attendees, msg }) {
     // TODO handle when hosts / attendees / contributors are not ssb users
-    const linkedAttendees = map(attendees, (attendee) => h('div', api.about.html.link(attendee)))
-    return h('section.attendees', {}, [
-      h('div.attendees', linkedAttendees)
-    ])
+    
+    return map(attendees, (attendee) => {
+      return api.about.html.link(attendee, api.about.html.image(attendee))
+    })
   }
 }

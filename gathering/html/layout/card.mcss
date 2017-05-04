@@ -17,9 +17,9 @@ Message -gathering-card {
       color: initial 
       :hover { text-decoration: none }
 
-      div.expand {
+      div.toggle-layout {
         position: absolute
-        top: 1.8rem
+        top: 3.0rem
         right: 1rem
         border: none
         border-radius: 0
@@ -38,8 +38,9 @@ Message -gathering-card {
         border-right: none
         padding: .5rem
 
-        header.title {
-          font-size: 2.5rem
+        section.title {
+          font-size: 1.8rem
+          margin-bottom: 1rem
         }
         section {
 
