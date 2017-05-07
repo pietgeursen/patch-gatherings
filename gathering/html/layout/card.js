@@ -16,7 +16,6 @@ exports.needs = nest({
   'gathering.html': {
     'description': 'first',
     'title': 'first',
-    'thumbnail': 'first',
     'location': 'first',
     'startDateTime': 'first'
   }
@@ -34,7 +33,7 @@ exports.create = (api) => {
 
     const { timestamp, meta, backlinks, action } = api.message.html
 
-    const { description, title, thumbnail, location, startDateTime } = api.gathering.html
+    const { description, title } = api.gathering.html
 
     const background = computed(obs.thumbnail, (thumbnail) => `url(${thumbnail})`)
     const content = [
@@ -74,7 +73,5 @@ exports.create = (api) => {
       h('section.actions', {}, action(msg)),
       h('footer.backlinks', {}, backlinks(msg))
     ])
-
-
   }
 }

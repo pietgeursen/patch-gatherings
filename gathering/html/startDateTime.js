@@ -1,11 +1,10 @@
 const nest = require('depnest')
-const spacetime = require('spacetime')
 const moment = require('moment')
 const fs = require('fs')
 const { h, computed, when } = require('mutant')
 const insertCss = require('insert-css')
 const Pickr = require('flatpickr')
-const stylePath = require.resolve("flatpickr/dist/flatpickr.css");
+const stylePath = require.resolve('flatpickr/dist/flatpickr.css')
 
 const styleCss = fs.readFileSync(stylePath, 'UTF8')
 insertCss(styleCss)
@@ -21,7 +20,7 @@ exports.create = (api) => {
     const input = h('input.date', {
       'ev-change': ({target: {value}}) => {
         onUpdate(value * 1000)
-      },
+      }
     })
     const div = h('div', input)
     const picker = new Pickr(input, {
@@ -31,7 +30,7 @@ exports.create = (api) => {
     })
 
     startDateTime((t) => {
-      if(t && t.epoch) picker.setDate(t.epoch)
+      if (t && t.epoch) picker.setDate(t.epoch)
     })
 
     return h('StartDateTime', [

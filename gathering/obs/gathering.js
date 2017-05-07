@@ -21,7 +21,7 @@ exports.create = function (api) {
     const blobToUrl = api.blob.sync.url
 
     const gathering = api.gathering.obs.struct()
-    gathering.title.set(gatheringId.substring(0, 10)+'...')
+    gathering.title.set(gatheringId.substring(0, 10) + '...')
 
     pull(
       subsribeToLinksByKey(subscription, 'location'),
@@ -36,7 +36,7 @@ exports.create = function (api) {
       pull.map(st => {
         try {
           return spacetime(st)
-        }catch(e){
+        } catch (e) {
         }
       }),
       pull.drain(gathering.startDateTime.set)
