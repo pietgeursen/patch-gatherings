@@ -83,5 +83,12 @@ Message -gathering-detail {
   }
 }
 
-
-
+StartDateTime {
+  div {
+    input {
+      border: 1px solid gainsboro
+      font-size: 1em
+      width: 16rem
+    }
+  }
+}
