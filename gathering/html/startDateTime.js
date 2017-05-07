@@ -1,5 +1,6 @@
 const nest = require('depnest')
 const spacetime = require('spacetime')
+const moment = require('moment')
 const fs = require('fs')
 const { h, computed, when } = require('mutant')
 const insertCss = require('insert-css')
@@ -17,22 +18,31 @@ exports.gives = nest('gathering.html.startDateTime')
 exports.create = (api) => {
   return nest('gathering.html.startDateTime', startDateTime)
   function startDateTime ({startDateTime, msg, isEditing, onUpdate}) {
-    //Todo: borders on inputs
-    //split out time and date
-    //sensible default if none defined
-    console.log(startDateTime())
-    const input = h('input')
-    const picker = new Pickr(input, {})
+    const input = h('input.date', {
+      'ev-change': ({target: {value}}) => {
+        onUpdate(value * 1000)
+      },
+    })
+    const div = h('div', input)
+    const picker = new Pickr(input, {
+      enableTime: true,
+      altInput: true,
+      dateFormat: 'U'
+    })
+
+    startDateTime((t) => {
+      if(t && t.epoch) picker.setDate(t.epoch)
+    })
 
     return h('StartDateTime', [
       when(isEditing,
-        input,
+        div,
         [
           h('div', {}, computed(startDateTime, time => {
-            return spacetime(time).format('time')
+            return time && time.epoch ? moment(time.epoch).format('LT') : ''
           })),
           h('div', {}, computed(startDateTime, time => {
-            return spacetime(time).format('full')
+            return time && time.epoch ? moment(time.epoch).format('LL') : ''
           }))
         ]
       )

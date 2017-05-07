@@ -33,7 +33,12 @@ exports.create = function (api) {
     )
     pull(
       subsribeToLinksByKey(subscription, 'startDateTime'),
-      pull.map(spacetime),
+      pull.map(st => {
+        try {
+          return spacetime(st)
+        }catch(e){
+        }
+      }),
       pull.drain(gathering.startDateTime.set)
     )
     pull(
