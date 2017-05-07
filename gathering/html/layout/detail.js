@@ -45,7 +45,7 @@ exports.create = (api) => {
     }
     const handleUnAttend = () => {
       if (!isAttending()) return
-      api.gathering.async.attendees({ attendees: [{ id: myKey, remove: true }], gathering: msg.key }, console.log) 
+      api.gathering.async.attendees({ attendees: [{ id: myKey, remove: true }], gathering: msg.key }, console.log)
     }
 
     return h('Message -gathering-detail', [
@@ -55,7 +55,7 @@ exports.create = (api) => {
           isCard.set(true)
         }
       }, '-'),
-     title({ title: obs.title, msg, isEditing, onUpdate: editedGathering.title.set }),
+      title({ title: obs.title, msg, isEditing, onUpdate: editedGathering.title.set }),
       h('section.content', [
         images({images: obs.images, msg, isEditing, onUpdate: editedGathering.images.add}),
         h('section.description', description({description: obs.description, msg, isEditing, onUpdate: editedGathering.description.set})),

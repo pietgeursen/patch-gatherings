@@ -20,7 +20,11 @@
   },
   "dependencies": {
     "bulk-require": "^1.0.0",
+    "cssify": "^1.0.3",
+    "depject": "^4.1.0",
     "depnest": "^1.3.0",
+    "flatpickr": "^2.6.1",
+    "insert-css": "^2.0.0",
     "libnested": "^1.2.1",
     "moment": "^2.18.0",
     "mutant": "^3.18.0",

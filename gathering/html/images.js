@@ -12,7 +12,7 @@ exports.create = (api) => {
   return nest('gathering.html.images', images)
   function images ({images, msg, isEditing, onUpdate}) {
     const allImages = Set([])
-    //value(images => forEach(images, image => allImages.add(image.link))) // TODO: so that we still publish an image with all the info but just use the link for now.
+    // value(images => forEach(images, image => allImages.add(image.link))) // TODO: so that we still publish an image with all the info but just use the link for now.
     images(images => forEach(images, image => allImages.add(image)))
 
     const fileInput = api.blob.html.input(file => {

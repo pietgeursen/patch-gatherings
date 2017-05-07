@@ -17,26 +17,26 @@ exports.needs = nest({
     decorate: 'reduce',
     link: 'first',
     markdown: 'first'
-  },
+  }
 })
 
 exports.gives = nest({
   'message.html': ['render'],
-  'gathering.html': ['render'],
+  'gathering.html': ['render']
 })
 
 exports.create = function (api) {
   return nest({
     'message.html.render': renderGathering,
-    'gathering.html.render': renderGathering,
+    'gathering.html.render': renderGathering
   })
   function renderGathering (msg, { pageId } = {}) {
     if (!msg.value || (msg.value.content.type !== 'gathering')) return
 
     const isEditing = Value(false)
     const isCard = Value(true)
-   
-    if(pageId === msg.key) isCard.set(false)
+
+    if (pageId === msg.key) isCard.set(false)
 
     const obs = api.gathering.obs.gathering(msg.key)
 
