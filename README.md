@@ -205,9 +205,10 @@ Please note that this project is released with a [Contributor Code of Conduct](c
 
 ## Acknowledgments
 
-sbot-gatherings was inspired by..
+sbot-gatherings wouldn't be a thing with out the help and encouragement of @mixmix and @ahdinosaur.
 
 ## See Also
+[patchbay-gatherings](https://github.com/pietgeursen/patchbay-gatherings) as an example of how to wire patch-gatherings into a client
 
 
 ## License
