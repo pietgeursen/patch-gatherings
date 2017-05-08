@@ -9,7 +9,6 @@
 exports.needs = nest({
   'sbot.pull.messagesByType': 'first',
   'sbot.pull.links': 'first',
-  'app.html.tabs': 'first' //provides a default if not given
 })
 ```
 
@@ -46,7 +45,7 @@ exports.gives = nest({
     'location', //TODO
     'render',
     'startDateTime',
-    'thumbnail', //TODO
+    'thumbnail', 
     'title',
   ],
   'gatherings.obs': [
@@ -54,9 +53,6 @@ exports.gives = nest({
   ],
   'message.html': [
     'render'
-  ],
-  'app.html': [
-    'tabs'
   ],
 })
 ```
