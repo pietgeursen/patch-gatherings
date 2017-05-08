@@ -2,6 +2,8 @@
 
 `gives` pull-stream sources and async methods for finding and publishing gatherings on secure scuttlebutt
 
+![patch-gatherings in patchbay](./patch-gatherings.gif)
+
 ## Needs
 ```js
 exports.needs = nest({
