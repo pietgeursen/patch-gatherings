@@ -49,8 +49,9 @@ Message -gathering-card {
 
       div.date-splash {
         flex-basis: 20rem
-        height: 14rem
+        min-height: 14rem
         background-size: cover 
+        background-position: center
 
         display: flex
         align-items: center
