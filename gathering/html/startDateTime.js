@@ -24,6 +24,7 @@ exports.create = (api) => {
     })
     const div = h('div', input)
     let picker;
+
     isEditing(isEditing => {
       if(isEditing){
         picker = new Pickr(input, {
@@ -35,7 +36,7 @@ exports.create = (api) => {
         if(t) picker.setDate(t.epoch)
 
       }else {
-        if(picker.destroy) picker.destroy()  
+        if(picker && picker.destroy) picker.destroy()  
       }
     })
     
