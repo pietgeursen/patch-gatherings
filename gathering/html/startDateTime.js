@@ -23,14 +23,24 @@ exports.create = (api) => {
       }
     })
     const div = h('div', input)
-    const picker = new Pickr(input, {
-      enableTime: true,
-      altInput: true,
-      dateFormat: 'U'
-    })
+    let picker;
+    isEditing(isEditing => {
+      if(isEditing){
+        picker = new Pickr(input, {
+          enableTime: true,
+          altInput: true,
+          dateFormat: 'U'
+        })
+        const t = startDateTime()
+        if(t) picker.setDate(t.epoch)
 
+      }else {
+        if(picker.destroy) picker.destroy()  
+      }
+    })
+    
     startDateTime((t) => {
-      if (t && t.epoch) picker.setDate(t.epoch)
+      if (t && t.epoch && picker) picker.setDate(t.epoch)
     })
 
     return h('StartDateTime', [
