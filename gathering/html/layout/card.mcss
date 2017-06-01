@@ -49,7 +49,7 @@ Message -gathering-card {
 
       div.date-splash {
         flex-basis: 20rem
-        height: 14rem
+        min-height: 14rem
         background-size: cover 
 
         display: flex
