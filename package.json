@@ -15,7 +15,7 @@
   "license": "MIT",
   "devDependencies": {
     "pull-test": "^1.2.3",
-    "scuttlebot": "^9.4.6",
+    "scuttlebot": "^10.0.5",
     "ssb-keys": "^7.0.6"
   },
   "dependencies": {
