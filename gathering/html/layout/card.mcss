@@ -51,6 +51,7 @@ Message -gathering-card {
         flex-basis: 20rem
         min-height: 14rem
         background-size: cover 
+        background-position: center
 
         display: flex
         align-items: center
