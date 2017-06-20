@@ -1,7 +1,10 @@
 const nest = require('depnest')
 const pull = require('pull-stream')
 
-exports.gives = nest('tests')
+exports.gives = nest({
+  'tests': true,
+  'blob.sync.url': true
+})
 
 exports.needs = nest({
   'gathering.async.create': 'first',
@@ -15,7 +18,10 @@ exports.needs = nest({
 })
 
 exports.create = function (api) {
-  return nest('tests', tests)
+  return nest({ 
+    'tests': tests,
+    'blob.sync.url': url => url
+  })
 
   function tests (tests) {
     tests['obs.gathering is requireable'] = function (assert, cb) {
