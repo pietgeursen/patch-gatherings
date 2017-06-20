@@ -60,6 +60,7 @@ Message -gathering-card {
           color: #fff
           font-weight: 600
           font-size: 2rem
+          text-shadow: rgba(0, 0, 0, 0.46) 0 0 10px
         }
       }
     }

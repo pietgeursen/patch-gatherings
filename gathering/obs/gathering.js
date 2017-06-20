@@ -62,7 +62,8 @@ exports.create = function (api) {
       pull.filter(msg => msg.content.image),
       pull.drain((msg) => {
         const image = msg.content.image
-        image.remove ? gathering.images.delete(image.link) : gathering.images.add(image.link)
+        const link = typeof image === 'object' ? image.link : image
+        image.remove ? gathering.images.delete(link) : gathering.images.add(link)
       })
     )
     pull(
