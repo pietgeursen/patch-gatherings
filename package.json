@@ -14,6 +14,7 @@
   "author": "pietgeursen",
   "license": "MIT",
   "devDependencies": {
+    "patchcore": "^1.8.1",
     "pull-test": "^1.2.3",
     "scuttlebot": "^9.4.6",
     "ssb-keys": "^7.0.6"
