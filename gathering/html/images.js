@@ -1,5 +1,5 @@
 const nest = require('depnest')
-const { h, Set, map, forEach, when } = require('mutant')
+const { h, map, when } = require('mutant')
 
 exports.needs = nest({
   'blob.sync.url': 'first',
@@ -10,17 +10,12 @@ exports.gives = nest('gathering.html.images')
 
 exports.create = (api) => {
   return nest('gathering.html.images', images)
-  function images ({images, msg, isEditing, onUpdate}) {
-    const allImages = Set([])
-    // value(images => forEach(images, image => allImages.add(image.link))) // TODO: so that we still publish an image with all the info but just use the link for now.
-    images(images => forEach(images, image => allImages.add(image)))
 
-    const fileInput = api.blob.html.input(file => {
-      onUpdate(file)
-    })
+  function images ({images, msg, isEditing, onUpdate}) {
+    const fileInput = api.blob.html.input(file => onUpdate(file))
 
     return h('section.images', {}, [
-      map(allImages, image => h('img', {src: api.blob.sync.url(image)})),
+      map(images, image => h('img', {src: api.blob.sync.url(image)})),
       when(isEditing, [h('div', 'Add an image:'), fileInput])
     ])
   }

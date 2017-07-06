@@ -3,8 +3,11 @@ const nest = require('depnest')
 const pull = require('pull-stream')
 const Notify = require('pull-notify')
 const ref = require('ssb-ref')
+const { computed } = require('mutant')
 
 exports.needs = nest({
+  'about.obs.latestValue': 'first',
+  'about.obs.groupedValues': 'first',
   'sbot.pull.links': 'first',
   'sbot.async.get': 'first',
   'gathering.obs.struct': 'first',
@@ -20,17 +23,20 @@ exports.create = function (api) {
     const subscription = subscribeToLinks(gatheringId)
     const blobToUrl = api.blob.sync.url
 
-    const gathering = api.gathering.obs.struct()
-    gathering.title.set(gatheringId.substring(0, 10) + '...')
+    const { latestValue, groupedValues } = api.about.obs
 
-    pull(
-      subsribeToLinksByKey(subscription, 'location'),
-      pull.drain(gathering.location.set)
-    )
-    pull(
-      subsribeToLinksByKey(subscription, 'endDateTime'),
-      pull.drain(gathering.endDateTime.set)
-    )
+    const imgBlob = (img) => img && img.link ? img.link : img
+
+    const gathering = api.gathering.obs.struct({
+      description: latestValue(gatheringId, 'description'),
+      title: latestValue(gatheringId, 'title'),
+      location: latestValue(gatheringId, 'location'),
+      endDateTime: latestValue(gatheringId, 'endDateTime'),
+      attendees: computed([groupedValues(gatheringId, 'attendee')], Object.keys),
+      images: computed([groupedValues(gatheringId, 'image')], Object.keys),
+      thumbnail: computed(latestValue(gatheringId, 'image'), img => blobToUrl(imgBlob(img)))
+    })
+
     pull(
       subsribeToLinksByKey(subscription, 'startDateTime'),
       pull.map(st => {
@@ -40,41 +46,6 @@ exports.create = function (api) {
         }
       }),
       pull.drain(gathering.startDateTime.set)
-    )
-    pull(
-      subsribeToLinksByKey(subscription, 'title'),
-      pull.drain(gathering.title.set)
-    )
-    pull(
-      subsribeToLinksByKey(subscription, 'description'),
-      pull.drain(gathering.description.set)
-    )
-    pull(
-      subscription(),
-      pull.filter(msg => msg.content.attendee),
-      pull.drain((msg) => {
-        const attendee = msg.content.attendee
-        attendee.remove ? gathering.attendees.delete(attendee.link) : gathering.attendees.add(attendee.link)
-      })
-    )
-    pull(
-      subscription(),
-      pull.filter(msg => msg.content.image),
-      pull.drain((msg) => {
-        const image = msg.content.image
-        const link = typeof image === 'object' ? image.link : image
-        image.remove ? gathering.images.delete(link) : gathering.images.add(link)
-      })
-    )
-    pull(
-      subscription(),
-      pull.filter(msg => msg.content.image),
-      pull.filter(msg => !msg.content.image.remove),
-      pull.map(msg => msg.content.image.link),
-      pull.map(blobToUrl),
-      pull.drain((url) => {
-        gathering.thumbnail.set(url)
-      })
     )
     return gathering
   })

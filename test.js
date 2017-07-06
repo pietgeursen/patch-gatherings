@@ -1,5 +1,6 @@
 const bulk = require('bulk-require')
 const combine = require('depject')
+const patchcore = require('patchcore')
 const nest = require('depnest')
 const {first} = require('depject/apply')
 const test = require('pull-test')
@@ -17,11 +18,15 @@ const depTest = {
   }
 }
 
-const modules = combine(bulk(__dirname, [
-  'gathering/async/*.js',
-  'gathering/obs/*.js',
-  'gathering/pull/*.js',
-  'util/*.js'
-]), depTest)
+const modules = combine(
+  bulk(__dirname, [
+    'gathering/async/*.js',
+    'gathering/obs/*.js',
+    'gathering/pull/*.js',
+    'util/*.js'
+  ]),
+  patchcore, 
+  depTest
+)
 
 first(modules.test)()

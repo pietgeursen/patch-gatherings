@@ -31,9 +31,10 @@ exports.create = function (api) {
     })
 
     Object.keys(opts).forEach((k) => {
-      if (opts[k]) {
-        struct[k].set(opts[k])
-      }
+      if (!opts[k]) return
+
+      if (typeof opts[k] === 'function') struct[k] = opts[k]
+      else struct[k].set(opts[k])
     })
 
     struct.save = (id) => {
