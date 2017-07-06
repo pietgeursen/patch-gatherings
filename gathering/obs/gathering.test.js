@@ -18,7 +18,7 @@ exports.needs = nest({
 })
 
 exports.create = function (api) {
-  return nest({ 
+  return nest({
     'tests': tests,
     'blob.sync.url': url => url
   })
