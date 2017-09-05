@@ -32,6 +32,7 @@
     "pull-scroll": "^1.0.3",
     "read-directory": "^2.0.0",
     "spacetime": "^1.0.4",
+    "ssb-ref": "^2.7.1",
     "suggest-box": "^2.2.3"
   }
 }
