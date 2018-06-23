@@ -1,70 +1,169 @@
 Message -gathering-card {
+  padding: 1rem .5rem
+
+  display: grid
+  grid-template-columns: 5rem auto
+  grid-template-rows: 0 auto
+
   section.avatar {
-    top: 2.7rem
+    grid-column: 1 / 2
+    grid-row: 1 / span 4
+    a img {
+    }
   }
 
-  section.timestamp {
-    top: 6.7rem
+  section.top {
+    grid-column: 2 / 3
+    grid-row: 1 / span 1
+
+    display: flex
+    align-items: baseline
+    
+    div.author {
+      font-weight: 600
+      margin-right: .5rem
+      (a) { color: #222 }
+    }
+
+    div.title {
+      flex-grow: 1
+      font-size: .9rem
+      $textSubtle
+      (a) { $textSubtle }
+    }
+
+    div.meta {
+      display: flex
+      justify-content: flex-end
+      align-items: center
+
+      a {
+        $textSubtle
+        margin-left: .5rem
+      }
+    }
   }
 
   section.content {
+    grid-column: 2 / 3
+    grid-row: 2 / span 1
+
     margin-bottom: .5rem
 
-    a {
-      display: flex
-      flex-wrap: wrap
+    (img) {
+      max-width: 100%
+    }
 
-      color: initial 
-      :hover { text-decoration: none }
+    display: grid
+    grid-template-columns: auto auto
 
-      div.toggle-layout {
-        position: absolute
-        top: 3.0rem
-        right: 1rem
-        border: none
-        border-radius: 0
-        background-color: rgba(255,255,255,0.2)
-        color: #fff;
-        font-size: 1rem;
-        font-weight: 600;
-        line-height: .8rem
+    color: initial 
+    :hover { text-decoration: none }
+
+    div.details {
+      border: 1px gainsboro solid
+      border-right: none
+      padding: .5rem
+
+      section.title {
+        font-size: 1.8rem
+        margin-bottom: 1rem
       }
+      section {
 
-      div.details {
-        flex-grow: 1
-        max-width: 21rem
-        
-        border: 1px gainsboro solid
-        border-right: none
-        padding: .5rem
-
-        section.title {
-          font-size: 1.8rem
-          margin-bottom: 1rem
-        }
-        section {
-
-        }
-      }
-
-      div.date-splash {
-        flex-basis: 20rem
-        min-height: 14rem
-        background-size: cover 
-        background-position: center
-
-        display: flex
-        align-items: center
-        justify-content: center
-
-        div {
-          color: #fff
-          font-weight: 600
-          font-size: 2rem
-          text-shadow: rgba(0, 0, 0, 0.46) 0 0 10px
-        }
       }
     }
+
+    div.date-splash {
+      min-width: 20rem
+      min-height: 14rem
+      background-size: cover 
+      background-position: center
+
+      display: flex
+      align-items: center
+      justify-content: center
+
+      div {
+        color: #fff
+        font-weight: 600
+        font-size: 3rem
+        text-shadow: rgba(0, 0, 0, 0.46) 0 0 10px
+      }
+    }
+
+    div.toggle-layout {
+      position: absolute
+      top: 3.0rem
+      right: 1rem
+      border: none
+      border-radius: 0
+      background-color: rgba(255,255,255,0.2)
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      line-height: .8rem
+    }
+  }
+
+  section.raw-content {
+    grid-column: 2 / 3
+    grid-row: 3 / span 1
+
+    pre {
+      border: 1px gainsboro solid
+      padding: .8rem
+      background-color: #f5f5f5
+      color: #c121dc
+      padding: .3rem
+      white-space: pre-wrap
+      word-wrap: break-word
+
+      span {
+        font-weight: 600
+      }
+      a {
+        word-break: break-all
+      }
+    }
+  }
+
+  section.bottom {
+    grid-column: 2 / 3
+    grid-row: 4 / span 1
+
+    display: flex
+    align-items: center
+
+    div.timestamp {
+      flex-grow: 1
+
+      a {
+        font-size: .9rem
+        $textSubtle
+      }
+    }
+
+    div.actions {
+      display: flex
+      justify-content: flex-end
+
+      font-size: .9rem
+      a {
+        margin-left: .5em
+      }
+
+      a.unlike {
+        $textSubtle
+      }
+    }
+  }
+
+  footer.backlinks {
+    grid-row: 5 / span 1
+
+    grid-column: 2 / 3
+    flex-basis: 100%
   }
 }
 
