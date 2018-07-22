@@ -63,7 +63,7 @@ Message -gathering-card {
     div.details {
       border: 1px gainsboro solid
       border-right: none
-      padding: .5rem
+      padding: 1rem
 
       section.title {
         font-size: 1.8rem
